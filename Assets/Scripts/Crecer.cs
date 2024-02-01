@@ -7,7 +7,7 @@ public class Crecer : MonoBehaviour
     
 {
 
-    public float escalaCrecimiento = 3f;
+    public float escalaCrecimiento = 2f;
 
 
     public bool crecido = false;

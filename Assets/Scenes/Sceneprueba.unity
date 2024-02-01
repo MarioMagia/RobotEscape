@@ -647,6 +647,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerArmature
       objectReference: {fileID: 0}
+    - target: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
       propertyPath: Gravity
@@ -676,6 +681,11 @@ PrefabInstance:
         type: 3}
       propertyPath: pushLayers.m_Bits
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338988566280778634, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5885216827943657505, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
@@ -2475,7 +2485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d9361ac2abb774d87c02da1212c1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  escalaCrecimiento: 2.5
+  escalaCrecimiento: 2
   crecido: 0
 --- !u!114 &1786394074
 MonoBehaviour:
@@ -2491,6 +2501,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Marca: {fileID: 8637310244056167228, guid: 3f94304d6dda4324b9170ddf3d02caf2, type: 3}
   crearMarca: 0
+  posicionDeLaMarca: {x: 0, y: 0, z: 0}
+  nuevaMarca: {fileID: 0}
 --- !u!1 &1956817240
 GameObject:
   m_ObjectHideFlags: 0
