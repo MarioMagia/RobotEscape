@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class Teleport : MonoBehaviour
 {
 
-    public GameObject Marca=null;
+    public GameObject Marca;
     public bool crearMarca = false;
     public Vector3 posicionDeLaMarca;
     public GameObject nuevaMarca;
