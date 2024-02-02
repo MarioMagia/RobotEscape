@@ -11,95 +11,132 @@ namespace StarterAssets
     public class Teleport : NetworkBehaviour
     {
 
-        public GameObject Marca;
+        public GameObject marca;
         public bool crearMarca = false;
         public Vector3 posicionDeLaMarca;
         public ArrayList marks = new ArrayList();
+        public ArrayList markObjects = new ArrayList();
         public GameObject nuevaMarca;
+        public NetworkObject currentMark;
 
 
-        public GameObject CrearMarca()
+        public void CrearMarca()
         {
             // Obtén la posición del jugador
             Vector3 posicionJugador = transform.position;
             // Crea la "Marca" en la posición del 
-            if (!HasMarksServerRpc())
+            if (!HasMarks())
             {
-                MarcarServerRpc(posicionJugador);
+                SpawnMarkServerRpc(posicionJugador);
             }
-            else
-            {
-                nuevaMarca = GetMarksServerRpc();
-            }
-            return nuevaMarca;
 
             // Guarda la posición de la marca en la variable
         }
 
-        [ServerRpc]
-        public bool HasMarksServerRpc(ServerRpcParams serverRpcParams = default)
+        public void BorrarMarca()
         {
-            foreach (Marca marca in marks)
+            Marca? mark = SearchForCreatorMark();
+            if (mark != null)
             {
-                if (marca.JugadorCreador == serverRpcParams.Receive.SenderClientId)
-                {
-                    return true;
-                }
+                DespawnMarkServerRpc(mark.Value);
+                RemoveMarkRpc(mark.Value);
             }
-            return false;
         }
-        [ServerRpc]
-        public GameObject GetMarksServerRpc(ServerRpcParams serverRpcParams = default)
+
+        public Marca? SearchForCreatorMark()
         {
             foreach (Marca marca in marks)
             {
-                if (marca.JugadorCreador == serverRpcParams.Receive.SenderClientId)
+                if (marca.JugadorCreador == NetworkManager.LocalClientId)
                 {
-                    return marca.objeto;
+                    return marca;
                 }
             }
             return null;
         }
 
-        [ServerRpc]
-        public void MarcarServerRpc(Vector3 posicionJugador, ServerRpcParams  serverRpcParams = default)
+        public Marca? SearchForOwnerMark()
+        {
+            foreach (Marca marca in marks)
+            {
+                if (marca.JugadorAsociado == NetworkManager.LocalClientId)
+                {
+                    return marca;
+
+                }
+            }
+            return null;
+        }   
+
+        public bool HasMarks()
+        {
+            
+            return SearchForCreatorMark() != null ? true : false;
+        }
+
+        [Rpc(SendTo.Server)]
+        public void SpawnMarkServerRpc(Vector3 posicionJugador, RpcParams rpcParams = default)
         {
             // Crea la "Marca" en la posición del jugador
             
-            nuevaMarca = Instantiate(Marca, posicionJugador, Quaternion.identity);
+            nuevaMarca = Instantiate(marca, posicionJugador, Quaternion.identity);
             nuevaMarca.GetComponent<NetworkObject>().Spawn(true);
-            marks.Add(new Marca(nuevaMarca, serverRpcParams.Receive.SenderClientId, serverRpcParams.Receive.SenderClientId));
             //posicionDeLaMarca = nuevaMarca.transform.position;
+            Marca mark = new Marca(nuevaMarca.transform.position, rpcParams.Receive.SenderClientId, rpcParams.Receive.SenderClientId);
+            markObjects.Add(new MarcaObject(nuevaMarca, mark));
+            AddNewMarkRpc(mark);
         }
-        
 
-        [ServerRpc]
-        public void DespawnMarkServerRpc(ServerRpcParams serverRpcParams = default)
+        [Rpc(SendTo.Everyone)]
+        public void AddNewMarkRpc(Marca mark)
         {
-            crearMarca = false;
-            // Teleporta al jugador a la posición almacenada en posicionDeLaMarca
-            foreach (Marca marca in marks) {
-                if(marca.JugadorCreador == serverRpcParams.Receive.SenderClientId)
+            marks.Add(mark);
+        }
+
+        [Rpc(SendTo.Everyone)]
+        public void RemoveMarkRpc(Marca mark)
+        {
+            marks.Remove(mark);
+        }
+
+        [Rpc(SendTo.Server)]
+        public void DespawnMarkServerRpc(Marca mark, RpcParams serverRpcParams = default)
+        {
+
+            foreach (MarcaObject marcaObject in markObjects)
+            {
+                if(marcaObject.marca.Equals(mark))
                 {
-                    marca.objeto.GetComponent<NetworkObject>().Despawn(true);
+                    marcaObject.objeto.GetComponent<NetworkObject>().Despawn(true);
                 }
             }
             // Llama a CambiarMarca después de un pequeño retraso (0.1 segundos)
 
         }
-        [ServerRpc]
-        public Vector3 GivePosServerRpc(ServerRpcParams serverRpcParams = default)
+
+        public Vector3 GivePos()
         {
-            
-            foreach (Marca marca in marks)
+
+            Marca? mark = SearchForOwnerMark();
+            if (mark != null)
             {
-                if (marca.JugadorAsociado == serverRpcParams.Receive.SenderClientId)
-                {
-                    return marca.objeto.transform.position;
-                }
+                return mark.Value.posicion;
             }
-            return new Vector3(0,0,0);
+            else
+            {
+                return Vector3.zero;
+            }
         }
     }
 
+}
+public class MarcaObject
+{
+    public GameObject objeto;
+    public Marca marca;
+    public MarcaObject(GameObject obj, Marca mark)
+    {
+        objeto = obj;
+        marca = mark;
+    }
 }

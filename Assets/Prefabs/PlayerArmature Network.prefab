@@ -141,6 +141,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8637310244056167228, guid: 3f94304d6dda4324b9170ddf3d02caf2,
         type: 3}
+    - target: {fileID: 7492989633145338573, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      propertyPath: marca
+      value: 
+      objectReference: {fileID: 8637310244056167228, guid: 3f94304d6dda4324b9170ddf3d02caf2,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 854323012293546706, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
     - {fileID: 5885216827943657505, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}

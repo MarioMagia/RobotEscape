@@ -26,7 +26,6 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
 		{
-			Debug.Log("Movimineto");
 			MoveInput(value.Get<Vector2>());
 		}
 
@@ -40,7 +39,6 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
-			Debug.Log("Salto");
 			JumpInput(value.isPressed);
 		}
 

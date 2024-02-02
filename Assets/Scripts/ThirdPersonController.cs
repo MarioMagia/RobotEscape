@@ -168,7 +168,6 @@ namespace StarterAssets
         private void FixedUpdate()
         {
             marcar();
-            Debug.Log(tp.crearMarca);
             tpearse();
         }
         private void marcar()
@@ -181,13 +180,19 @@ namespace StarterAssets
         }
         private void tpearse()
         {
-            if (_input.teleport && tp.GivePosServerRpc() != Vector3.zero)
+            if (_input.teleport)
             {
-                transform.position = tp.GivePosServerRpc();
-                tp.DespawnMarkServerRpc();
                 _input.teleport = false;
+                Vector3 position = tp.GivePos();
+                if (position != Vector3.zero)
+                {
+                    
+                    transform.position = position;
+                    tp.BorrarMarca();
 
+                }
             }
+            
 
         }
         private void LateUpdate()
