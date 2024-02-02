@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -12,6 +13,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool mark;
+		public bool teleport;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -45,10 +48,30 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnMark(InputValue value)
+		{
+			MarkInput(value.isPressed);
+		}
+
+		public void OnTeleport(InputValue value)
+		{
+			TeleportInput(value.isPressed);
+		}
+
+        private void TeleportInput(bool NewTeleportState)
+        {
+            teleport = NewTeleportState;
+        }
+
+        private void MarkInput(bool newMarkState)
+        {
+			mark = newMarkState;
+        }
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 

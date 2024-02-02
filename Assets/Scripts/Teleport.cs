@@ -5,69 +5,78 @@ using UnityEngine.InputSystem;
 
 
 
-
-public class Teleport : MonoBehaviour
+namespace StarterAssets
 {
-
-    public GameObject Marca;
-    public bool crearMarca = false;
-    public Vector3 posicionDeLaMarca;
-    public GameObject nuevaMarca;
-
-
-
-    void Update()
+    public class Teleport : MonoBehaviour
     {
-        if (Keyboard.current.mKey.isPressed && !crearMarca)
+
+        public GameObject Marca;
+        public bool crearMarca = false;
+        public Vector3 posicionDeLaMarca;
+        public GameObject nuevaMarca;
+
+        private StarterAssetsInputs _input;
+
+
+        private void Start()
         {
-            CrearMarca();
-            crearMarca = true;
+            _input = GetComponent<StarterAssetsInputs>();
+        }
+        void Update()
+        {
+            if (_input.mark && !crearMarca)
+            {  
+                CrearMarca();
+                crearMarca = true;
+                _input.mark = false;
+            }
+
+            if (_input.teleport && crearMarca)
+            {
+                Teleportarse();
+                _input.teleport = false;
+
+            }
         }
 
-        if (Keyboard.current.tKey.isPressed && crearMarca)
+
+        void CrearMarca()
         {
+            // Obtén la posición del jugador
+            Vector3 posicionJugador = transform.position;
 
-            Teleportarse();
-            
+            // Crea la "Marca" en la posición del jugador
+            nuevaMarca = Instantiate(Marca, posicionJugador, Quaternion.identity);
 
+            // Guarda la posición de la marca en la variable
+            posicionDeLaMarca = nuevaMarca.transform.position;
+
+
+        }
+
+        void Teleportarse()
+        {
+            // Teleporta al jugador a la posición almacenada en posicionDeLaMarca
+            transform.position = posicionDeLaMarca;
+
+
+            // Destruye el objeto nuevaMarca
+            if (nuevaMarca != null)
+            {
+                Destroy(nuevaMarca);
+            }
+
+
+            // Llama a CambiarMarca después de un pequeño retraso (0.1 segundos)
+            Invoke("CambiarMarca", 0.1f);
+
+
+        }
+
+        void CambiarMarca()
+        {
+            crearMarca = false;
         }
     }
 
-
-    void CrearMarca()
-    {
-        // Obtén la posición del jugador
-        Vector3 posicionJugador = transform.position;
-
-        // Crea la "Marca" en la posición del jugador
-        nuevaMarca = Instantiate(Marca, posicionJugador, Quaternion.identity);
-
-        // Guarda la posición de la marca en la variable
-        posicionDeLaMarca = nuevaMarca.transform.position;
-
-    }
-
-    void Teleportarse()
-    {
-        // Teleporta al jugador a la posición almacenada en posicionDeLaMarca
-        transform.position = posicionDeLaMarca;
-       
-        
-        // Destruye el objeto nuevaMarca
-        if (nuevaMarca != null)
-        {
-            Destroy(nuevaMarca);
-        }
-       
-
-        // Llama a CambiarMarca después de un pequeño retraso (0.1 segundos)
-        Invoke("CambiarMarca", 0.1f);
-
-
-    }
-
-    void CambiarMarca() {
-        crearMarca = false;
-    }
 }
-
