@@ -63,10 +63,10 @@ public class ClientPlayerMove : NetworkBehaviour
 
         // see the note inside ServerPlayerMove why this step is also necessary for synchronizing initial player
         // position on owning clients
-        m_CharacterController.enabled = true;
-
+        m_CharacterController.enabled = true;        
         var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = m_CameraFollow;
     }
+
 
 }

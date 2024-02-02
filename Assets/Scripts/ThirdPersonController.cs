@@ -87,6 +87,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private Vector3 _posTp; 
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -106,6 +107,8 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private Teleport tp;
+        private GameObject _marca;
 
         private const float _threshold = 0.01f;
 
@@ -140,6 +143,7 @@ namespace StarterAssets
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
+            tp = GetComponent<Teleport>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
             _playerInput = GetComponent<PlayerInput>();
 #else
@@ -161,7 +165,31 @@ namespace StarterAssets
                 Move();
            
         }
+        private void FixedUpdate()
+        {
+            marcar();
+            Debug.Log(tp.crearMarca);
+            tpearse();
+        }
+        private void marcar()
+        {
+            if (_input.mark)
+            {
+                tp.CrearMarca();
+                _input.mark = false;
+            }
+        }
+        private void tpearse()
+        {
+            if (_input.teleport && tp.GivePosServerRpc() != Vector3.zero)
+            {
+                transform.position = tp.GivePosServerRpc();
+                tp.DespawnMarkServerRpc();
+                _input.teleport = false;
 
+            }
+
+        }
         private void LateUpdate()
         {
             CameraRotation();
