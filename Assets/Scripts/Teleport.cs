@@ -57,8 +57,8 @@ public class Teleport : MonoBehaviour
         if (nuevaMarca != null)
         {
             Destroy(nuevaMarca);
-        }       
-
+        }
+       
 
         // Llama a CambiarMarca después de un pequeño retraso (0.1 segundos)
         Invoke("CambiarMarca", 0.1f);
