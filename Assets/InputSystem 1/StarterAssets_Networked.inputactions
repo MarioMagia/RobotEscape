@@ -1,5 +1,5 @@
 {
-    "name": "StarterAssets",
+    "name": "StarterAssets_Networked",
     "maps": [
         {
             "name": "Player",
@@ -42,18 +42,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Drop",
+                    "name": "PickUp",
                     "type": "Button",
-                    "id": "9bbd16a0-9ee5-4ee8-bb66-3d716e26b350",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Recoger",
-                    "type": "Button",
-                    "id": "5564c9cc-773c-49b9-b511-a5334baaaf2f",
+                    "id": "e7da474d-92b6-41e6-bc91-90d37cd5c73d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -239,23 +230,12 @@
                 },
                 {
                     "name": "",
-                    "id": "186f8e5c-6669-49d8-92ee-55787f630683",
-                    "path": "<Keyboard>/f",
+                    "id": "04c89c8b-fa71-46ba-92ff-e6b8e5ecff92",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Drop",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "52bcfdd3-2eb9-46e9-8554-4af9e9151b74",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Recoger",
+                    "groups": "",
+                    "action": "PickUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
