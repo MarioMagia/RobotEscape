@@ -15,6 +15,8 @@ namespace StarterAssets
 		public bool sprint;
 		public bool mark;
 		public bool teleport;
+		public bool takemark;
+		public bool teleportTaken;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -66,10 +68,19 @@ namespace StarterAssets
         {
 			mark = newMarkState;
         }
+		private void TakenInput(bool NewTakenMarkState)
+		{
+			teleport = NewTakenMarkState;
+		}
+
+		private void TpTakenMark(bool NewTeleportState)
+		{
+			mark = NewTeleportState;
+		}
 #endif
 
 
-        public void MoveInput(Vector2 newMoveDirection)
+		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
