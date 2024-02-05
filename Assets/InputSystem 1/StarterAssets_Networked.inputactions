@@ -311,10 +311,10 @@
                 {
                     "name": "",
                     "id": "17d85fd6-1d47-4b9b-aa9e-d42882af4922",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "getDown",
                     "isComposite": false,
                     "isPartOfComposite": false

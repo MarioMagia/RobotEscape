@@ -184,20 +184,18 @@ namespace StarterAssets
                 Move();
             }
             GroundedCheck();
-            if (_input.getDown && !down)
+            if (_input.getDown && !_animator.GetBool("isCrouched"))
             {
                 Debug.Log("Agachado");
                 _input.getDown = false;
-                down = true;
-                _animator.SetTrigger("GetDown");
+                _animator.SetBool("isCrouched", true);
 
             }
-            else if (_input.getDown && !down)
+            else if (_input.getDown && _animator.GetBool("isCrouched"))
             {
                 Debug.Log("Levantado");
                 _input.getDown = false;
-                down = false;
-                _animator.SetTrigger("GetUp");
+                _animator.SetBool("isCrouched", false);
             }
         }
         private void tpearse()
