@@ -195,6 +195,22 @@ namespace StarterAssets
             
 
         }
+        private void TakeMark()
+        {
+            if (_input.takemark)
+            {
+                _input.takemark = false;
+            }
+        }
+        private void tpTaken()
+        {
+            if (_input.teleportTaken)
+            {
+                _input.teleportTaken = false;
+            }
+
+
+        }
         private void LateUpdate()
         {
             CameraRotation();

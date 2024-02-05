@@ -25,13 +25,14 @@ namespace StarterAssets
             // Obtén la posición del jugador
             Vector3 posicionJugador = transform.position;
             // Crea la "Marca" en la posición del 
-            if (!HasMarks())
+            if (HasMarks())
             {
-                SpawnMarkServerRpc(posicionJugador);
+                BorrarMarca();
             }
+            SpawnMarkServerRpc(posicionJugador);
 
-            // Guarda la posición de la marca en la variable
-        }
+                // Guarda la posición de la marca en la variable
+            }
 
         public void BorrarMarca()
         {
@@ -41,6 +42,10 @@ namespace StarterAssets
                 DespawnMarkServerRpc(mark.Value);
                 RemoveMarkRpc(mark.Value);
             }
+        }
+        public void TakeMark()
+        {
+            //Marca marca = 
         }
 
         public Marca? SearchForCreatorMark()
@@ -102,13 +107,18 @@ namespace StarterAssets
         [Rpc(SendTo.Server)]
         public void DespawnMarkServerRpc(Marca mark, RpcParams serverRpcParams = default)
         {
-
+            MarcaObject marktoremove = null;
             foreach (MarcaObject marcaObject in markObjects)
             {
-                if(marcaObject.marca.Equals(mark))
+                if (marcaObject.marca.Equals(mark))
                 {
+                    marktoremove = marcaObject;
                     marcaObject.objeto.GetComponent<NetworkObject>().Despawn(true);
                 }
+            }
+            if (marktoremove != null) { 
+
+                markObjects.Remove(marktoremove);
             }
             // Llama a CambiarMarca después de un pequeño retraso (0.1 segundos)
 
