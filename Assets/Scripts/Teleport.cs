@@ -14,8 +14,8 @@ namespace StarterAssets
         public GameObject marca;
         public bool crearMarca = false;
         public Vector3 posicionDeLaMarca;
-        public ArrayList marks = new ArrayList();
-        public ArrayList markObjects = new ArrayList();
+        public List<Marca> marks = new List<Marca>();
+        public List<MarcaObject> markObjects = new List<MarcaObject>();
         public GameObject nuevaMarca;
         public NetworkObject currentMark;
 
@@ -31,8 +31,8 @@ namespace StarterAssets
             }
             SpawnMarkServerRpc(posicionJugador);
 
-                // Guarda la posición de la marca en la variable
-            }
+            // Guarda la posición de la marca en la variable
+        }
 
         public void BorrarMarca()
         {
@@ -43,9 +43,16 @@ namespace StarterAssets
                 RemoveMarkRpc(mark.Value);
             }
         }
-        public void TakeMark()
+
+        public void TakeMark(Marca mark)
         {
-            //Marca marca = 
+            for (int i = 0; i < marks.Count; i++)
+            {
+                if (marks[i].Equals(mark))
+                {
+                    ChangeMarkRpc(new Marca(marks[i].posicion, marks[i].JugadorCreador, NetworkManager.LocalClientId), marks[i]);
+                }
+            }
         }
 
         public Marca? SearchForCreatorMark()
@@ -96,6 +103,18 @@ namespace StarterAssets
         public void AddNewMarkRpc(Marca mark)
         {
             marks.Add(mark);
+        }
+
+        [Rpc(SendTo.Everyone)]
+        public void ChangeMarkRpc(Marca NewMark, Marca OldMark)
+        {
+            for(int i = 0; i < marks.Count; i++)
+            {
+                if (marks[i].Equals(OldMark))
+                {
+                    marks[i] = NewMark;
+                }
+            }
         }
 
         [Rpc(SendTo.Everyone)]

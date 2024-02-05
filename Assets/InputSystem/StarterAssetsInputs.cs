@@ -68,12 +68,12 @@ namespace StarterAssets
         {
 			mark = newMarkState;
         }
-		private void TakenInput(bool NewTakenMarkState)
+		private void TakeMarkInput(bool NewTakenMarkState)
 		{
 			teleport = NewTakenMarkState;
 		}
 
-		private void TpTakenMark(bool NewTeleportState)
+		private void TPTakenMarkInput(bool NewTeleportState)
 		{
 			mark = NewTeleportState;
 		}
