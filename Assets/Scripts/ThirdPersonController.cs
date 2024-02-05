@@ -14,6 +14,7 @@ namespace StarterAssets
 #endif
     public class ThirdPersonController : MonoBehaviour
     {
+        public bool down = false;
 
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -158,12 +159,8 @@ namespace StarterAssets
         }
         private void Update()
         {
-                _hasAnimator = TryGetComponent(out _animator);
+            StateRevision();
 
-                JumpAndGravity();
-                GroundedCheck();
-                Move();
-           
         }
         private void FixedUpdate()
         {
@@ -176,6 +173,31 @@ namespace StarterAssets
             {
                 tp.CrearMarca();
                 _input.mark = false;
+            }
+        }
+        private void StateRevision()
+        {
+            _hasAnimator = TryGetComponent(out _animator);
+            if (!down)
+            {
+                JumpAndGravity();
+                Move();
+            }
+            GroundedCheck();
+            if (_input.getDown && !down)
+            {
+                Debug.Log("Agachado");
+                _input.getDown = false;
+                down = true;
+                _animator.SetTrigger("GetDown");
+
+            }
+            else if (_input.getDown && !down)
+            {
+                Debug.Log("Levantado");
+                _input.getDown = false;
+                down = false;
+                _animator.SetTrigger("GetUp");
             }
         }
         private void tpearse()
@@ -435,6 +457,14 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.position, FootstepAudioVolume);
+            }
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Meta")
+            {
+                Debug.Log("Has llegado al final");
+                GameManager.Instance.ChangeSceneMethod("Scene 2");
             }
         }
     }

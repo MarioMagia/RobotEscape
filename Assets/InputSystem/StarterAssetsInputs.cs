@@ -17,6 +17,7 @@ namespace StarterAssets
 		public bool teleport;
 		public bool takemark;
 		public bool teleportTaken;
+		public bool getDown;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -98,8 +99,12 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
+        public void DownInput(bool newDownState)
+        {
+            getDown = newDownState;
+        }
 
-		private void OnApplicationFocus(bool hasFocus)
+        private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}

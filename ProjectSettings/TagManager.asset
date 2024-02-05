@@ -8,6 +8,7 @@ TagManager:
   - ObjetoMovil
   - Crecer
   - Teleport
+  - Stone
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Stone
   - 
   - Character
   - Ground
