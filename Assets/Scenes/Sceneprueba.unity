@@ -734,6 +734,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
+      insertIndex: 9
+      addedObject: {fileID: 1786394083}
+    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
       insertIndex: -1
       addedObject: {fileID: 1786394057}
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
@@ -2535,10 +2539,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16434951a86a6e445a46b279376aef45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Marca: {fileID: 8637310244056167228, guid: 3f94304d6dda4324b9170ddf3d02caf2, type: 3}
+  marca: {fileID: 0}
   crearMarca: 0
   posicionDeLaMarca: {x: 0, y: 0, z: 0}
   nuevaMarca: {fileID: 0}
+  currentMark: {fileID: 0}
+--- !u!114 &1786394083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786394049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 797137584
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1956817240
 GameObject:
   m_ObjectHideFlags: 0
