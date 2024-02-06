@@ -18,6 +18,7 @@ namespace StarterAssets
 		public bool takemark;
 		public bool teleportTaken;
 		public bool getDown;
+		public bool pauseMenu;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -69,6 +70,14 @@ namespace StarterAssets
         {
 			mark = newMarkState;
         }
+		public void OnGetDown(InputValue value)
+		{
+			GetDownInput(value.isPressed);
+		}
+		public void OnPauseMenu(InputValue value)
+		{
+			PauseMenuInput(value.isPressed);
+		}
 		private void TakenInput(bool NewTakenMarkState)
 		{
 			teleport = NewTakenMarkState;
@@ -81,7 +90,7 @@ namespace StarterAssets
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -99,9 +108,13 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
-        public void DownInput(bool newDownState)
+        public void GetDownInput(bool newDownState)
         {
             getDown = newDownState;
+        }
+        public void PauseMenuInput(bool newPauseState)
+        {
+            pauseMenu = newPauseState;
         }
 
         private void OnApplicationFocus(bool hasFocus)

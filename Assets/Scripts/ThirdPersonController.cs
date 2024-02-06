@@ -23,6 +23,9 @@ namespace StarterAssets
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
 
+        [Tooltip("Sprint speed of the character in m/s")]
+        public float CrouchSpeed = 1.0f;
+
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -159,6 +162,7 @@ namespace StarterAssets
         }
         private void Update()
         {
+            
             StateRevision();
 
         }
@@ -178,25 +182,32 @@ namespace StarterAssets
         private void StateRevision()
         {
             _hasAnimator = TryGetComponent(out _animator);
+            if (_input.getDown && !_animator.GetBool("isCrouched"))
+            {
+                _input.getDown = false;
+                _animator.SetBool("isCrouched", true);
+                _animator.SetBool("isRunning", false);
+
+            }
+            else if (_input.getDown && _animator.GetBool("isCrouched"))
+            {
+                _input.getDown = false;
+                _animator.SetBool("isCrouched", false);
+            }
+            else if (_animator.GetBool("isCrouched") && _input.sprint && _input.move != Vector2.zero)
+            {
+                
+                _animator.SetBool("isRunning", true);
+                _animator.SetBool("isCrouched", false);
+            }
             if (!down)
             {
                 JumpAndGravity();
                 Move();
             }
             GroundedCheck();
-            if (_input.getDown && !_animator.GetBool("isCrouched"))
-            {
-                Debug.Log("Agachado");
-                _input.getDown = false;
-                _animator.SetBool("isCrouched", true);
 
-            }
-            else if (_input.getDown && _animator.GetBool("isCrouched"))
-            {
-                Debug.Log("Levantado");
-                _input.getDown = false;
-                _animator.SetBool("isCrouched", false);
-            }
+            
         }
         private void tpearse()
         {
@@ -284,6 +295,17 @@ namespace StarterAssets
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            if (_input.sprint)
+            {
+                targetSpeed = SprintSpeed;
+            }
+            else if (_animator.GetBool("isCrouched")) {
+                targetSpeed = CrouchSpeed;
+            }
+            else
+            {
+                targetSpeed = MoveSpeed;
+            }
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -339,6 +361,15 @@ namespace StarterAssets
             // move the player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+            if (_animator.GetBool("isCrouched") && _input.move != Vector2.zero)
+            {
+                _animator.SetBool("isCrouchWalking", true);
+            }
+            else
+            {
+                _animator.SetBool("isCrouchWalking", false);
+            }
 
             // update animator if using character
             if (_hasAnimator)
