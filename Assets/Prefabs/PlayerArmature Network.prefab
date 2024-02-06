@@ -18,6 +18,11 @@ PrefabInstance:
       propertyPath: UseHalfFloatPrecision
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2319891981470189483, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      propertyPath: canPush
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3025501516839136359, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
       propertyPath: GlobalObjectIdHash
@@ -209,12 +214,12 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.28
-  m_Height: 1.8
+  m_Height: 2.1289172
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.16445875, z: 0}
 --- !u!114 &6571305001310778
 MonoBehaviour:
   m_ObjectHideFlags: 0

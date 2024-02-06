@@ -8,6 +8,7 @@ TagManager:
   - ObjetoMovil
   - Crecer
   - Teleport
+  - Stone
   layers:
   - Default
   - TransparentFX
