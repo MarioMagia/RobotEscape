@@ -108,7 +108,6 @@ namespace StarterAssets
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
         private Teleport tp;
-        private GameObject _marca;
 
         private const float _threshold = 0.01f;
 
@@ -169,7 +168,9 @@ namespace StarterAssets
         {
             marcar();
             tpearse();
+            tpTaken();
         }
+        
         private void marcar()
         {
             if (_input.mark)
@@ -185,28 +186,26 @@ namespace StarterAssets
                 _input.teleport = false;
                 Vector3 position = tp.GivePos();
                 if (position != Vector3.zero)
-                {
-                    
+                {                    
                     transform.position = position;
                     tp.BorrarMarca();
-
                 }
             }
             
 
         }
-        private void TakeMark()
-        {
-            if (_input.takemark)
-            {
-                _input.takemark = false;
-            }
-        }
         private void tpTaken()
         {
             if (_input.teleportTaken)
             {
+                Debug.Log("G");
                 _input.teleportTaken = false;
+                Vector3 position = tp.GivePos2();
+                if (position != Vector3.zero)
+                {
+                    transform.position = position;
+                    tp.BorrarMarca2();
+                }
             }
 
 

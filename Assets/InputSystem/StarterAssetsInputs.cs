@@ -68,14 +68,23 @@ namespace StarterAssets
         {
 			mark = newMarkState;
         }
-		private void TakeMarkInput(bool NewTakenMarkState)
+		public void OnTakeMark(InputValue value)
 		{
-			teleport = NewTakenMarkState;
+			TakeMarkInput(value.isPressed);
 		}
 
-		private void TPTakenMarkInput(bool NewTeleportState)
+		public void OnTPtakenMark(InputValue value)
 		{
-			mark = NewTeleportState;
+			TPtakenMarkInput(value.isPressed);
+		}
+		private void TakeMarkInput(bool NewTakenMarkState)
+		{
+			takemark = NewTakenMarkState;
+		}
+
+		private void TPtakenMarkInput(bool NewTeleportState)
+		{
+			teleportTaken = NewTeleportState;
 		}
 #endif
 

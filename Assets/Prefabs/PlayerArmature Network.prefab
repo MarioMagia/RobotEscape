@@ -147,6 +147,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8637310244056167228, guid: 3f94304d6dda4324b9170ddf3d02caf2,
         type: 3}
+    - target: {fileID: 7492989633145338573, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      propertyPath: crearMarca
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 854323012293546706, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
     - {fileID: 5885216827943657505, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
@@ -177,6 +182,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5620829866082979117}
+    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8810414543662324957}
   m_SourcePrefab: {fileID: 100100000, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
 --- !u!95 &2373873035001032563 stripped
 Animator:
@@ -237,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2617226832
+  GlobalObjectIdHash: 3545252863
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -308,6 +317,18 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &8810414543662324957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032616161167077299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62ef0582c9ed844db8fd09e86e46301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9032616161167077304 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544,

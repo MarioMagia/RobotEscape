@@ -12,12 +12,10 @@ namespace StarterAssets
     {
 
         public GameObject marca;
-        public bool crearMarca = false;
-        public Vector3 posicionDeLaMarca;
-        public List<Marca> marks = new List<Marca>();
-        public List<MarcaObject> markObjects = new List<MarcaObject>();
+        public static List<Marca> marks = new List<Marca>();
+        public static List<MarcaObject> markObjects = new List<MarcaObject>();
         public GameObject nuevaMarca;
-        public NetworkObject currentMark;
+        public GameObject currentMark;
 
 
         public void CrearMarca()
@@ -40,7 +38,16 @@ namespace StarterAssets
             if (mark != null)
             {
                 DespawnMarkServerRpc(mark.Value);
-                RemoveMarkRpc(mark.Value);
+                RemoveMarkClientRpc(mark.Value);
+            }
+        }
+        public void BorrarMarca2()
+        {
+            Marca? mark = SearchForOwnerMark2();
+            if (mark != null)
+            {
+                DespawnMarkServerRpc(mark.Value);
+                RemoveMarkClientRpc(mark.Value);
             }
         }
 
@@ -50,7 +57,8 @@ namespace StarterAssets
             {
                 if (marks[i].Equals(mark))
                 {
-                    ChangeMarkRpc(new Marca(marks[i].posicion, marks[i].JugadorCreador, NetworkManager.LocalClientId), marks[i]);
+                    ChangeMarkObjectRpc(new Marca(marks[i].posicion, marks[i].JugadorCreador, NetworkManager.LocalClientId), marks[i]);
+                    ChangeMarkClientRpc(new Marca(marks[i].posicion, marks[i].JugadorCreador, NetworkManager.LocalClientId), marks[i]);
                 }
             }
         }
@@ -66,23 +74,34 @@ namespace StarterAssets
             }
             return null;
         }
-
+    
         public Marca? SearchForOwnerMark()
         {
             foreach (Marca marca in marks)
             {
-                if (marca.JugadorAsociado == NetworkManager.LocalClientId)
+                if (marca.JugadorAsociado == NetworkManager.LocalClientId && marca.JugadorCreador == NetworkManager.LocalClientId)
                 {
                     return marca;
 
                 }
             }
             return null;
-        }   
+        }
+        public Marca? SearchForOwnerMark2()
+        {
+            foreach (Marca marca in marks)
+            {
+                if (marca.JugadorAsociado == NetworkManager.LocalClientId && marca.JugadorCreador != NetworkManager.LocalClientId)
+                {
+                    return marca;
+
+                }
+            }
+            return null;
+        }
 
         public bool HasMarks()
-        {
-            
+        {            
             return SearchForCreatorMark() != null ? true : false;
         }
 
@@ -96,29 +115,29 @@ namespace StarterAssets
             //posicionDeLaMarca = nuevaMarca.transform.position;
             Marca mark = new Marca(nuevaMarca.transform.position, rpcParams.Receive.SenderClientId, rpcParams.Receive.SenderClientId);
             markObjects.Add(new MarcaObject(nuevaMarca, mark));
-            AddNewMarkRpc(mark);
+            AddNewMarkClientRpc(mark);
         }
 
         [Rpc(SendTo.Everyone)]
-        public void AddNewMarkRpc(Marca mark)
+        public void AddNewMarkClientRpc(Marca mark)
         {
             marks.Add(mark);
         }
 
         [Rpc(SendTo.Everyone)]
-        public void ChangeMarkRpc(Marca NewMark, Marca OldMark)
+        public void ChangeMarkClientRpc(Marca NewMark, Marca OldMark)
         {
-            for(int i = 0; i < marks.Count; i++)
-            {
-                if (marks[i].Equals(OldMark))
-                {
-                    marks[i] = NewMark;
-                }
-            }
+            int index = marks.FindIndex(x => x.Equals(OldMark));
+            marks[index] = NewMark;
         }
-
+        [Rpc(SendTo.Server)]
+        public void ChangeMarkObjectRpc(Marca NewMark, Marca OldMark)
+        {
+            int index = markObjects.FindIndex(x => x.marca.Equals(OldMark));
+            markObjects[index].marca = NewMark;
+        }
         [Rpc(SendTo.Everyone)]
-        public void RemoveMarkRpc(Marca mark)
+        public void RemoveMarkClientRpc(Marca mark)
         {
             marks.Remove(mark);
         }
@@ -155,6 +174,31 @@ namespace StarterAssets
             {
                 return Vector3.zero;
             }
+        }
+        public Vector3 GivePos2()
+        {
+
+            Marca? mark = SearchForOwnerMark2();
+            if (mark != null)
+            {
+                return mark.Value.posicion;
+            }
+            else
+            {
+                return Vector3.zero;
+            }
+        }
+        public Marca GetMarca(Vector3 gameObject)
+        {
+            foreach(Marca marca in marks)
+            {
+                if (marca.posicion == (gameObject))
+                {
+                    return marca;
+                }
+            }
+            Debug.Log("No encontre");
+            return new Marca(Vector3.zero, unchecked((ulong)-1), unchecked((ulong)-1));
         }
     }
 
