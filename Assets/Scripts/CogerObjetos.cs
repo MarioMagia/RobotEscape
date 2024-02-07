@@ -28,7 +28,7 @@ public class CogerObjetos : MonoBehaviour
 
         }
 
-        if (Keyboard.current.rKey.isPressed && objetoCogido != null)
+        if (Keyboard.current.vKey.isPressed && objetoCogido != null)
         {
             LiberarObjeto();
         }
@@ -43,9 +43,9 @@ public class CogerObjetos : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("ObjetoMovil"))
+        if (other.gameObject.CompareTag("ObjetoMovil") || other.gameObject.CompareTag("Stone"))
         {
-            if (Keyboard.current.eKey.isPressed && objetoCogido == null)
+            if (Keyboard.current.cKey.isPressed && objetoCogido == null)
             {
                 CogerObjeto(other.gameObject);
             }
@@ -56,7 +56,7 @@ public class CogerObjetos : MonoBehaviour
     {
         objeto.GetComponent<Rigidbody>().useGravity = false;
         objeto.GetComponent<Rigidbody>().isKinematic = false;
-        objeto.GetComponent<Collider>().isTrigger = false;
+        objeto.GetComponent<Collider>().isTrigger = true;
         //Configura el collider como trigger para evitar colisiones mientras está en la mano
 
         //objeto.transform.position = manoCoger.transform.position + Vector3.up * alturaObjeto;
@@ -69,7 +69,7 @@ public class CogerObjetos : MonoBehaviour
     {
         objetoCogido.GetComponent<Rigidbody>().useGravity = true;
         //objetoCogido.GetComponent<Rigidbody>().isKinematic = false;        
-        //objetoCogido.GetComponent<Collider>().isTrigger = false;
+        objetoCogido.GetComponent<Collider>().isTrigger = false;
         objetoCogido.gameObject.transform.SetParent(null);
         objetoCogido = null;
     }
