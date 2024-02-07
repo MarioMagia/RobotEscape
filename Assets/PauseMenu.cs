@@ -1,4 +1,5 @@
-/*using System.Collections;
+using StarterAssets;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
@@ -14,11 +15,12 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool menuShown = false;
     public GameObject pauseMenuUI;
-    private StarterAssetsInputs _input;
+    public StarterAssetsInputs _input;
     // Update is called once per frame
     void Update()
     {
         if (_input.pauseMenu) {
+            _input.pauseMenu = false;
             if (menuShown)
             {
                 Resume();
@@ -38,4 +40,3 @@ public class PauseMenu : MonoBehaviour
         menuShown = true;
     }
 }
-*/
