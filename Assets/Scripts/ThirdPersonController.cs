@@ -196,8 +196,12 @@ namespace StarterAssets
             }
             else if (_animator.GetBool("isCrouched") && _input.sprint && _input.move != Vector2.zero)
             {
-                
+
                 _animator.SetBool("isRunning", true);
+                _animator.SetBool("isCrouched", false);
+            }
+            else if (_animator.GetBool("isCrouched") && _input.jump)
+            {
                 _animator.SetBool("isCrouched", false);
             }
             if (!down)
