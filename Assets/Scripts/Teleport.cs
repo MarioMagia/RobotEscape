@@ -11,11 +11,9 @@ namespace StarterAssets
     public class Teleport : NetworkBehaviour
     {
 
-        public GameObject marca;
+        public GameObject marcaPrefab;
         public static List<Marca> marks = new List<Marca>();
         public static List<MarcaObject> markObjects = new List<MarcaObject>();
-        public GameObject nuevaMarca;
-        public GameObject currentMark;
 
 
         public void CrearMarca()
@@ -25,25 +23,14 @@ namespace StarterAssets
             // Crea la "Marca" en la posición del 
             if (HasMarks())
             {
-                BorrarMarca();
+                BorrarMarca(true);
             }
             SpawnMarkServerRpc(posicionJugador);
-
-            // Guarda la posición de la marca en la variable
         }
 
-        public void BorrarMarca()
+        public void BorrarMarca(bool cual)
         {
-            Marca? mark = SearchForCreatorMark();
-            if (mark != null)
-            {
-                DespawnMarkServerRpc(mark.Value);
-                RemoveMarkClientRpc(mark.Value);
-            }
-        }
-        public void BorrarMarca2()
-        {
-            Marca? mark = SearchForOwnerMark2();
+            Marca? mark = cual ? SearchForCreatorMark() : SearchForOwnerMark(false);
             if (mark != null)
             {
                 DespawnMarkServerRpc(mark.Value);
@@ -75,23 +62,11 @@ namespace StarterAssets
             return null;
         }
     
-        public Marca? SearchForOwnerMark()
+        public Marca? SearchForOwnerMark(bool IgualCreador)
         {
             foreach (Marca marca in marks)
             {
-                if (marca.JugadorAsociado == NetworkManager.LocalClientId && marca.JugadorCreador == NetworkManager.LocalClientId)
-                {
-                    return marca;
-
-                }
-            }
-            return null;
-        }
-        public Marca? SearchForOwnerMark2()
-        {
-            foreach (Marca marca in marks)
-            {
-                if (marca.JugadorAsociado == NetworkManager.LocalClientId && marca.JugadorCreador != NetworkManager.LocalClientId)
+                if (marca.JugadorAsociado == NetworkManager.LocalClientId && (IgualCreador ? marca.JugadorCreador == NetworkManager.LocalClientId : marca.JugadorCreador != NetworkManager.LocalClientId))
                 {
                     return marca;
 
@@ -109,10 +84,9 @@ namespace StarterAssets
         public void SpawnMarkServerRpc(Vector3 posicionJugador, RpcParams rpcParams = default)
         {
             // Crea la "Marca" en la posición del jugador
-            
-            nuevaMarca = Instantiate(marca, posicionJugador, Quaternion.identity);
+
+            GameObject nuevaMarca = Instantiate(marcaPrefab, posicionJugador, Quaternion.identity);
             nuevaMarca.GetComponent<NetworkObject>().Spawn(true);
-            //posicionDeLaMarca = nuevaMarca.transform.position;
             Marca mark = new Marca(nuevaMarca.transform.position, rpcParams.Receive.SenderClientId, rpcParams.Receive.SenderClientId);
             markObjects.Add(new MarcaObject(nuevaMarca, mark));
             AddNewMarkClientRpc(mark);
@@ -130,12 +104,14 @@ namespace StarterAssets
             int index = marks.FindIndex(x => x.Equals(OldMark));
             marks[index] = NewMark;
         }
+
         [Rpc(SendTo.Server)]
         public void ChangeMarkObjectRpc(Marca NewMark, Marca OldMark)
         {
             int index = markObjects.FindIndex(x => x.marca.Equals(OldMark));
             markObjects[index].marca = NewMark;
         }
+
         [Rpc(SendTo.Everyone)]
         public void RemoveMarkClientRpc(Marca mark)
         {
@@ -143,42 +119,43 @@ namespace StarterAssets
         }
 
         [Rpc(SendTo.Server)]
-        public void DespawnMarkServerRpc(Marca mark, RpcParams serverRpcParams = default)
+        public void DespawnMarkServerRpc(Marca mark)
         {
-            MarcaObject marktoremove = null;
+            MarcaObject markToRemove = null;
+
             foreach (MarcaObject marcaObject in markObjects)
             {
                 if (marcaObject.marca.Equals(mark))
                 {
-                    marktoremove = marcaObject;
-                    marcaObject.objeto.GetComponent<NetworkObject>().Despawn(true);
+                    markToRemove = marcaObject;
+                    // Verificar si el GameObject asociado a la marca aún existe
+                    if (marcaObject.objeto != null)
+                    {
+                        // Acceder al componente NetworkObject y despawnearlo
+                        NetworkObject networkObject = marcaObject.objeto.GetComponent<NetworkObject>();
+                        if (networkObject != null)
+                        {
+                            networkObject.Despawn(true);
+                        }
+                    }
+                    break;
                 }
             }
-            if (marktoremove != null) { 
 
-                markObjects.Remove(marktoremove);
+            // Verificar si se encontró un objeto para eliminar
+            if (markToRemove != null)
+            {
+                markObjects.Remove(markToRemove);
             }
-            // Llama a CambiarMarca después de un pequeño retraso (0.1 segundos)
-
         }
 
-        public Vector3 GivePos()
+
+
+
+        public Vector3 GivePos(bool cual)
         {
 
-            Marca? mark = SearchForOwnerMark();
-            if (mark != null)
-            {
-                return mark.Value.posicion;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
-        }
-        public Vector3 GivePos2()
-        {
-
-            Marca? mark = SearchForOwnerMark2();
+            Marca? mark = SearchForOwnerMark(cual);
             if (mark != null)
             {
                 return mark.Value.posicion;
@@ -197,7 +174,6 @@ namespace StarterAssets
                     return marca;
                 }
             }
-            Debug.Log("No encontre");
             return new Marca(Vector3.zero, unchecked((ulong)-1), unchecked((ulong)-1));
         }
     }

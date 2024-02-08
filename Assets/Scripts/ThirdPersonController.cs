@@ -87,7 +87,6 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
-        private Vector3 _posTp; 
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -106,12 +105,14 @@ namespace StarterAssets
         private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
+        private GameOptions options;
         private GameObject _mainCamera;
         private Teleport tp;
 
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        private float NextTP = 0f;
 
         private bool IsCurrentDeviceMouse
         {
@@ -140,6 +141,7 @@ namespace StarterAssets
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator);
+            options = GetComponent<GameOptions>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
             tp = GetComponent<Teleport>();
@@ -162,33 +164,44 @@ namespace StarterAssets
                 JumpAndGravity();
                 GroundedCheck();
                 Move();
-           
+                if (options.AllowTPs)
+                {
+                    marcar();
+                }
+
         }
         private void FixedUpdate()
         {
-            marcar();
-            tpearse();
-            tpTaken();
+            if (options.AllowTPs) {
+                    tpearse();
+                    if (options.TakeTPs)
+                    {
+                        tpTaken();
+                    }
+            }
+
         }
         
         private void marcar()
         {
-            if (_input.mark)
-            {
-                tp.CrearMarca();
-                _input.mark = false;
+                if (_input.mark && Time.time > NextTP)
+                {
+                    tp.CrearMarca();
             }
+            _input.mark = false;
+
         }
         private void tpearse()
         {
             if (_input.teleport)
             {
                 _input.teleport = false;
-                Vector3 position = tp.GivePos();
+                Vector3 position = tp.GivePos(true);
                 if (position != Vector3.zero)
                 {                    
                     transform.position = position;
-                    tp.BorrarMarca();
+                    NextTP = Time.time + options.TP_CD;
+                    tp.BorrarMarca(true);
                 }
             }
             
@@ -198,13 +211,12 @@ namespace StarterAssets
         {
             if (_input.teleportTaken)
             {
-                Debug.Log("G");
                 _input.teleportTaken = false;
-                Vector3 position = tp.GivePos2();
+                Vector3 position = tp.GivePos(false);
                 if (position != Vector3.zero)
                 {
                     transform.position = position;
-                    tp.BorrarMarca2();
+                    tp.BorrarMarca(false);
                 }
             }
 
