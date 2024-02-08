@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-public class CogerObjetos : MonoBehaviour
+public class CogerObjetos : NetworkBehaviour
 {
     public GameObject manoCoger;
-    public float alturaObjeto = 0.1f;  // Altura a la que se mantiene el objeto respecto a la mano
+    public float alturaObjeto = 1.8f;  // Altura a la que se mantiene el objeto respecto a la mano
+    public float distancia = 1.5f;  // Altura a la que se mantiene el objeto respecto a la mano
 
 
     private GameObject objetoCogido = null;
@@ -16,12 +18,16 @@ public class CogerObjetos : MonoBehaviour
 
     {
       
-        if (objetoCogido != null)
-        {
-            // Mantén la posición del objeto a una distancia constante desde la mano
-            objetoCogido.transform.position = manoCoger.transform.position;
+        if (objetoCogido != null)        {
+           
 
-            //objetoCogido.transform.position = manoCoger.transform.position + Vector3.up * alturaObjeto;
+            // Calcula la posición del objeto para colocarlo más adelante del personaje
+            Vector3 nuevaPosicion = manoCoger.transform.position + manoCoger.transform.forward * distancia + Vector3.up * alturaObjeto;
+
+            // Asigna la nueva posición al objeto
+            objetoCogido.transform.position = nuevaPosicion;
+
+          
 
             // Evita que el objeto rote con la cámara
             objetoCogido.transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -61,16 +67,21 @@ public class CogerObjetos : MonoBehaviour
 
         //objeto.transform.position = manoCoger.transform.position + Vector3.up * alturaObjeto;
         objeto.GetComponent<Collider>().enabled = true;
-        objeto.transform.SetParent(manoCoger.gameObject.transform);       
+        setObjectParentRpc(objeto, manoCoger.gameObject);  
         objetoCogido = objeto;
     }
 
+    [Rpc(SendTo.Server)]
+    private void setObjectParentRpc(GameObject objeto, GameObject parent)
+    {
+        objeto.transform.SetParent(parent.transform);
+    }
     private void LiberarObjeto()
     {
         objetoCogido.GetComponent<Rigidbody>().useGravity = true;
         //objetoCogido.GetComponent<Rigidbody>().isKinematic = false;        
         objetoCogido.GetComponent<Collider>().isTrigger = false;
-        objetoCogido.gameObject.transform.SetParent(null);
+        setObjectParentRpc(objetoCogido.gameObject, null);
         objetoCogido = null;
     }
 

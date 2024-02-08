@@ -98,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440f8c529daf5cc4b9518069d423b05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manoCoger: {fileID: 3084486377989341665}
-  alturaObjeto: 0.1
+  manoCoger: {fileID: 9032616161167077299}
+  alturaObjeto: 1.8
+  distancia: 1
   characterController: {fileID: 9032616161167077305}
 --- !u!1001 &4617982183637820770
 PrefabInstance:
@@ -377,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3545252863
+  GlobalObjectIdHash: 2617226832
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
