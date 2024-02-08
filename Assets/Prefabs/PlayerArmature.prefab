@@ -1037,10 +1037,6 @@ GameObject:
   - component: {fileID: 5885216827943657505}
   - component: {fileID: 135756642000475821}
   - component: {fileID: 4416926081852918493}
-  - component: {fileID: 7881800711321056107}
-  - component: {fileID: 444067642154952499}
-  - component: {fileID: 2319891981470189483}
-  - component: {fileID: 204277638923190888}
   - component: {fileID: -5328997343200786010}
   - component: {fileID: 7492989633145338573}
   m_Layer: 8
@@ -1298,64 +1294,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7881800711321056107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926081852918481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 440f8c529daf5cc4b9518069d423b05e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manoCoger: {fileID: 0}
-  alturaObjeto: 0.1
-  characterController: {fileID: 0}
---- !u!114 &444067642154952499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926081852918481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5d9361ac2abb774d87c02da1212c1b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  escalaCrecimiento: 3
-  crecido: 0
---- !u!114 &2319891981470189483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926081852918481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 123fd7c457ecc024f9cd5f76628782dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canPush: 0
-  strength: 1.1
---- !u!114 &204277638923190888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926081852918481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4094ea59c56684595e3116df7dd467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterController: {fileID: 0}
-  movimientoNormal: 2
-  superVelocidad: 10
 --- !u!114 &-5328997343200786010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1368,7 +1306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1508096214
+  GlobalObjectIdHash: 1957633848
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1389,11 +1327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16434951a86a6e445a46b279376aef45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  marca: {fileID: 0}
-  crearMarca: 0
-  posicionDeLaMarca: {x: 0, y: 0, z: 0}
-  nuevaMarca: {fileID: 0}
-  currentMark: {fileID: 0}
+  marcaPrefab: {fileID: 0}
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0

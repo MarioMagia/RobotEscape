@@ -11,7 +11,7 @@ public class CogerObjetos : NetworkBehaviour
     public float distancia = 1.5f;  // Altura a la que se mantiene el objeto respecto a la mano
 
 
-    private GameObject objetoCogido = null;
+    private NetworkObject objetoCogido = null;
     public CharacterController characterController;
 
     void Update()
@@ -53,12 +53,12 @@ public class CogerObjetos : NetworkBehaviour
         {
             if (Keyboard.current.cKey.isPressed && objetoCogido == null)
             {
-                CogerObjeto(other.gameObject);
+                CogerObjeto(other.gameObject.GetComponent<NetworkObject>());
             }
         }
     }
 
-    private void CogerObjeto(GameObject objeto)
+    private void CogerObjeto(NetworkObject objeto)
     {
         objeto.GetComponent<Rigidbody>().useGravity = false;
         objeto.GetComponent<Rigidbody>().isKinematic = false;
@@ -67,21 +67,38 @@ public class CogerObjetos : NetworkBehaviour
 
         //objeto.transform.position = manoCoger.transform.position + Vector3.up * alturaObjeto;
         objeto.GetComponent<Collider>().enabled = true;
-        setObjectParentRpc(objeto, manoCoger.gameObject);  
-        objetoCogido = objeto;
+        setObjectParentRpc(objeto.NetworkObjectId);  
     }
 
     [Rpc(SendTo.Server)]
-    private void setObjectParentRpc(GameObject objeto, GameObject parent)
+    private void setObjectParentRpc(ulong objToPickupID)
     {
-        objeto.transform.SetParent(parent.transform);
+        NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(objToPickupID, out var objectToPickup);
+        if (objectToPickup == null || objectToPickup.transform.parent != null) return; // object already picked up, server authority says no
+        if (objectToPickup.TryGetComponent(out NetworkObject networkObject) && networkObject.TrySetParent(transform))
+        {
+            objetoCogido = networkObject;
+            objectToPickup.transform.localPosition = manoCoger.transform.position + Vector3.up * alturaObjeto + Vector3.forward * distancia;
+        }
     }
+
+    [ServerRpc]
+    public void DropObjectServerRpc()
+    {
+        if (objetoCogido != null)
+        {
+            // can be null if enter drop zone while carrying
+            objetoCogido.transform.parent = null;
+            objetoCogido = null;
+        }
+    }
+
     private void LiberarObjeto()
     {
         objetoCogido.GetComponent<Rigidbody>().useGravity = true;
         //objetoCogido.GetComponent<Rigidbody>().isKinematic = false;        
         objetoCogido.GetComponent<Collider>().isTrigger = false;
-        setObjectParentRpc(objetoCogido.gameObject, null);
+        DropObjectServerRpc();
         objetoCogido = null;
     }
 
@@ -115,4 +132,15 @@ public class CogerObjetos : NetworkBehaviour
 
    
 
+}
+public struct ObjectParent : INetworkSerializeByMemcpy
+{
+    public GameObject objeto { get; set; }
+    public GameObject parent { get; set; }
+
+    public ObjectParent(GameObject objeto, GameObject parent)
+    {
+        this.objeto = objeto;
+        this.parent = parent;
+    }
 }

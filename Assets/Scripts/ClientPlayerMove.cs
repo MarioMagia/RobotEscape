@@ -12,6 +12,9 @@ using UnityEngine.InputSystem;
 public class ClientPlayerMove : NetworkBehaviour
 {
     [SerializeField]
+    ServerPlayerMove m_ServerPlayerMove;
+
+    [SerializeField]
     CharacterController m_CharacterController;
 
     [SerializeField]
@@ -60,13 +63,37 @@ public class ClientPlayerMove : NetworkBehaviour
         // player input is only enabled on owning players
         m_PlayerInput.enabled = true;
         m_ThirdPersonController.enabled = true;
-
-        // see the note inside ServerPlayerMove why this step is also necessary for synchronizing initial player
-        // position on owning clients
         m_CharacterController.enabled = true;        
         var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = m_CameraFollow;
     }
 
+    void OnPickUp()
+    {
+        if (m_ServerPlayerMove.isObjectPickedUp.Value)
+        {
+            m_ServerPlayerMove.DropObjectServerRpc();
+        }
+        else
+        {
 
+            var hits = Physics.BoxCastNonAlloc(transform.position,
+                Vector3.one,
+                transform.forward,
+                m_HitColliders,
+                Quaternion.identity,
+                1f,
+                LayerMask.GetMask(new[] { "PickupItems" }),
+                QueryTriggerInteraction.Ignore);
+            if (hits > 0)
+            {
+                var objeto = m_HitColliders[0].collider.gameObject.GetComponent<ServerObject>();
+                if (objeto != null)
+                {
+                    var netObj = objeto.NetworkObjectId;
+                    m_ServerPlayerMove.PickupObjectServerRpc(netObj);
+                }
+            }
+        }
+    }
 }
