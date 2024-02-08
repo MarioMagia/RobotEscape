@@ -394,6 +394,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "pauseMenu",
+                    "type": "Button",
+                    "id": "be77a441-3915-4e23-9c09-481bcd8b1496",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -812,6 +821,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b74b9419-b59f-4341-bd08-b89810445d06",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "pauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

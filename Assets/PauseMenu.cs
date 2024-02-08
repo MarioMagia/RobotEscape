@@ -22,18 +22,20 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
+        Cursor.visible = false;
     }
     // Update is called once per frame
     void Update()
     {
-        if (_input.pauseMenu) {
-            _input.pauseMenu = false;
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) {
             if (menuShown)
             {
                 Resume();
+                Cursor.visible = false;
             }
             else {
                 Show();
+                Cursor.visible = true;
             }
         }
     }
