@@ -13,7 +13,7 @@ public class TriggerDoor : MonoBehaviour
     [SerializeField] private GameObject InvisibleDoor = null;
 
 
-    /*private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
         Debug.Log(other.gameObject);
         if (other.gameObject.CompareTag(Tag))
@@ -23,7 +23,7 @@ public class TriggerDoor : MonoBehaviour
             MoveDoor.Play(DoorOpen, 0, 0.0f);
         }
 
-    }*/
+    }
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject);
@@ -45,7 +45,7 @@ public class TriggerDoor : MonoBehaviour
         }
     }
 
-    /*private void OnCollisionExit(Collision other)
+    private void OnCollisionExit(Collision other)
     {
         
         if (other.gameObject.CompareTag(Tag))
@@ -53,7 +53,7 @@ public class TriggerDoor : MonoBehaviour
             Debug.Log("Detecta sale la Stone");
             MoveDoor.Play(DoorClose, 0, 0.0f);
         }
-    }*/
+    }
 
 }
 
