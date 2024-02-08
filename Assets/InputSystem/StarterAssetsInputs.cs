@@ -58,25 +58,16 @@ namespace StarterAssets
 		{
 			TeleportInput(value.isPressed);
 		}
-
-        private void TeleportInput(bool NewTeleportState)
-        {
-            teleport = NewTeleportState;
-        }
-
-        private void MarkInput(bool newMarkState)
-        {
-			mark = newMarkState;
-        }
-		private void TakenInput(bool NewTakenMarkState)
+		public void OnTakeMark(InputValue value)
 		{
-			teleport = NewTakenMarkState;
+			TakeMarkInput(value.isPressed);
 		}
 
-		private void TpTakenMark(bool NewTeleportState)
+		public void OnTPtakenMark(InputValue value)
 		{
-			mark = NewTeleportState;
+			TPtakenMarkInput(value.isPressed);
 		}
+
 #endif
 
 
@@ -98,7 +89,25 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
+		private void TeleportInput(bool NewTeleportState)
+		{
+			teleport = NewTeleportState;
+		}
 
+		private void MarkInput(bool newMarkState)
+		{
+			mark = newMarkState;
+		}
+
+		private void TakeMarkInput(bool NewTakenMarkState)
+		{
+			takemark = NewTakenMarkState;
+		}
+
+		private void TPtakenMarkInput(bool NewTeleportState)
+		{
+			teleportTaken = NewTeleportState;
+		}
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
