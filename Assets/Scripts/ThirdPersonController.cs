@@ -14,6 +14,7 @@ namespace StarterAssets
 #endif
     public class ThirdPersonController : MonoBehaviour
     {
+        public bool down = false;
 
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -21,6 +22,9 @@ namespace StarterAssets
 
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
+
+        [Tooltip("Sprint speed of the character in m/s")]
+        public float CrouchSpeed = 1.0f;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -159,7 +163,8 @@ namespace StarterAssets
         }
         private void Update()
         {
-                _hasAnimator = TryGetComponent(out _animator);
+            
+            StateRevision();
 
                 JumpAndGravity();
                 GroundedCheck();
@@ -190,6 +195,40 @@ namespace StarterAssets
             }
             _input.mark = false;
 
+        }
+        private void StateRevision()
+        {
+            _hasAnimator = TryGetComponent(out _animator);
+            if (_input.getDown && !_animator.GetBool("isCrouched"))
+            {
+                _input.getDown = false;
+                _animator.SetBool("isCrouched", true);
+                _animator.SetBool("isRunning", false);
+
+            }
+            else if (_input.getDown && _animator.GetBool("isCrouched"))
+            {
+                _input.getDown = false;
+                _animator.SetBool("isCrouched", false);
+            }
+            else if (_animator.GetBool("isCrouched") && _input.sprint && _input.move != Vector2.zero)
+            {
+
+                _animator.SetBool("isRunning", true);
+                _animator.SetBool("isCrouched", false);
+            }
+            else if (_animator.GetBool("isCrouched") && _input.jump)
+            {
+                _animator.SetBool("isCrouched", false);
+            }
+            if (!down)
+            {
+                JumpAndGravity();
+                Move();
+            }
+            GroundedCheck();
+
+            
         }
         private void tpearse()
         {
@@ -275,6 +314,17 @@ namespace StarterAssets
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            if (_input.sprint)
+            {
+                targetSpeed = SprintSpeed;
+            }
+            else if (_animator.GetBool("isCrouched")) {
+                targetSpeed = CrouchSpeed;
+            }
+            else
+            {
+                targetSpeed = MoveSpeed;
+            }
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -330,6 +380,15 @@ namespace StarterAssets
             // move the player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+            if (_animator.GetBool("isCrouched") && _input.move != Vector2.zero)
+            {
+                _animator.SetBool("isCrouchWalking", true);
+            }
+            else
+            {
+                _animator.SetBool("isCrouchWalking", false);
+            }
 
             // update animator if using character
             if (_hasAnimator)
@@ -446,6 +505,14 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.position, FootstepAudioVolume);
+            }
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Meta")
+            {
+                Debug.Log("Has llegado al final");
+                GameManager.Instance.ChangeSceneMethod("Scene 2");
             }
         }
     }

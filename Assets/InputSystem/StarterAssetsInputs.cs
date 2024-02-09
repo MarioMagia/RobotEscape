@@ -17,6 +17,8 @@ namespace StarterAssets
 		public bool teleport;
 		public bool takemark;
 		public bool teleportTaken;
+		public bool getDown;
+		public bool pauseMenu;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -58,7 +60,25 @@ namespace StarterAssets
 		{
 			TeleportInput(value.isPressed);
 		}
-		public void OnTakeMark(InputValue value)
+
+        private void TeleportInput(bool NewTeleportState)
+        {
+            teleport = NewTeleportState;
+        }
+
+        private void MarkInput(bool newMarkState)
+        {
+			mark = newMarkState;
+        }
+		public void OnGetDown(InputValue value)
+		{
+			GetDownInput(value.isPressed);
+		}
+		public void OnPauseMenu(InputValue value)
+		{
+			PauseMenuInput(value.isPressed);
+		}
+		private void TakenInput(bool NewTakenMarkState)
 		{
 			TakeMarkInput(value.isPressed);
 		}
@@ -71,7 +91,7 @@ namespace StarterAssets
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -89,26 +109,16 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
-		private void TeleportInput(bool NewTeleportState)
-		{
-			teleport = NewTeleportState;
-		}
+        public void GetDownInput(bool newDownState)
+        {
+            getDown = newDownState;
+        }
+        public void PauseMenuInput(bool newPauseState)
+        {
+            pauseMenu = newPauseState;
+        }
 
-		private void MarkInput(bool newMarkState)
-		{
-			mark = newMarkState;
-		}
-
-		private void TakeMarkInput(bool NewTakenMarkState)
-		{
-			takemark = NewTakenMarkState;
-		}
-
-		private void TPtakenMarkInput(bool NewTeleportState)
-		{
-			teleportTaken = NewTeleportState;
-		}
-		private void OnApplicationFocus(bool hasFocus)
+        private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}
@@ -116,6 +126,7 @@ namespace StarterAssets
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			
 		}
 	}
 	
