@@ -29,6 +29,9 @@ public class ClientPlayerMove : NetworkBehaviour
     [SerializeField]
     PlayerInput m_PlayerInput;
 
+    [SerializeField]
+    GameObject pauseScreen;
+
     RaycastHit[] m_HitColliders = new RaycastHit[4];
 
     void Awake()
@@ -45,6 +48,7 @@ public class ClientPlayerMove : NetworkBehaviour
         m_ThirdPersonController.enabled = false;
         m_CapsuleCollider.enabled = false;
         m_CharacterController.enabled = false;
+        pauseScreen = Instantiate(pauseScreen);
     }
 
     public override void OnNetworkSpawn()
@@ -95,5 +99,11 @@ public class ClientPlayerMove : NetworkBehaviour
                 }
             }
         }
+    }
+
+    void OnPauseMenu()
+    {
+        Debug.Log("Pause input");
+        pauseScreen.GetComponent<PauseMenu>().changePauseState();
     }
 }

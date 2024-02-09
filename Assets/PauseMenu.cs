@@ -18,10 +18,6 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
 
-    public StarterAssetsInputs _input;
-
-    private PlayerInput _playerInput;
-
     public GameObject settingsMenuUI;
 
     public AudioMixer audioMixer;
@@ -33,9 +29,6 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
-    }
-    void Start() {
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -55,29 +48,27 @@ public class PauseMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
-    // Update is called once per frame
-    void Update()
-    {
-        if (_input.pauseMenu) {
-            _input.pauseMenu = false;
-            if (settingShown) {
-                Debug.Log("Settings Out");
-                Cursor.lockState = CursorLockMode.None;
-                QuitSettings();
-            }
-            else if (menuShown)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Resume();
-                Cursor.visible = false;
-            }
-            else
-            {
 
-                Cursor.lockState = CursorLockMode.None;
-                Show();
-                Cursor.visible = true;
-            }
+    public void changePauseState()
+    {
+        if (settingShown)
+        {
+            Debug.Log("Settings Out");
+            Cursor.lockState = CursorLockMode.None;
+            QuitSettings();
+        }
+        else if (menuShown)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Resume();
+            Cursor.visible = false;
+        }
+        else
+        {
+
+            Cursor.lockState = CursorLockMode.None;
+            Show();
+            Cursor.visible = true;
         }
     }
 

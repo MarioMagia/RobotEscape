@@ -331,6 +331,8 @@ MonoBehaviour:
   m_CapsuleCollider: {fileID: 4068557893077432464}
   m_CameraFollow: {fileID: 3723447471891093231}
   m_PlayerInput: {fileID: 9032616161167077311}
+  pauseScreen: {fileID: 8134047326023975247, guid: d37847047004e794888ec990cc3243e0,
+    type: 3}
 --- !u!114 &-5596521789721804874
 MonoBehaviour:
   m_ObjectHideFlags: 0

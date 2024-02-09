@@ -3721,7 +3721,7 @@ GameObject:
   - component: {fileID: 6081776421005399514}
   - component: {fileID: 3016400720126492966}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PauseScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3823,7 +3823,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 6939697586244547024}
-  _input: {fileID: 0}
   settingsMenuUI: {fileID: 8784774551922288210}
   audioMixer: {fileID: 24100000, guid: eb1b55acec9801b45b7269b2692a2efb, type: 2}
   resolutionDropdown: {fileID: 6916836646010968267}
