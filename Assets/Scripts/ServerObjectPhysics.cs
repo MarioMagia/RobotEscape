@@ -12,10 +12,16 @@ public class ServerObjectPhysics : NetworkBehaviour
 
     [SerializeField]
     Rigidbody m_Rigidbody;
+    [SerializeField]
+    Vector3 Spawnpooinrttregreg;
 
     public override void OnNetworkObjectParentChanged(NetworkObject parentNetworkObject)
     {
         SetPhysics(parentNetworkObject == null);
+    }
+    public void ResetSpawnPoint()
+    {
+        transform.position = Spawnpooinrttregreg;
     }
 
     void SetPhysics(bool isEnabled)
