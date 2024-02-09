@@ -11,10 +11,6 @@ using UnityEngine.Windows;
 #endif
 
 
-[RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM 
-    [RequireComponent(typeof(PlayerInput))]
-#endif
 public class PauseMenu : MonoBehaviour
 {
     public static bool menuShown = false;

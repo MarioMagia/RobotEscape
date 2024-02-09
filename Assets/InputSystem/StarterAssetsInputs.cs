@@ -78,15 +78,25 @@ namespace StarterAssets
 		{
 			PauseMenuInput(value.isPressed);
 		}
-		private void TakenInput(bool NewTakenMarkState)
+		private void TakenInput(InputValue value)
 		{
 			TakeMarkInput(value.isPressed);
 		}
 
-		public void OnTPtakenMark(InputValue value)
+        private void TakeMarkInput(bool newTakeMarkState)
+        {
+			takemark = newTakeMarkState;
+        }
+
+        public void OnTPtakenMark(InputValue value)
 		{
 			TPtakenMarkInput(value.isPressed);
 		}
+
+        private void TPtakenMarkInput(bool newTPtakenState)
+        {
+            teleportTaken = newTPtakenState;
+        }
 
 #endif
 
