@@ -2183,6 +2183,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoveDoor (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8207310834100592565, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9124456783520085551, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3695,12 +3700,12 @@ PrefabInstance:
     - target: {fileID: 5360882354804411139, guid: 8f6dd6876fe953f428a438f482dce894,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.73
+      value: 16.93
       objectReference: {fileID: 0}
     - target: {fileID: 5360882354804411139, guid: 8f6dd6876fe953f428a438f482dce894,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.11
+      value: 1.34
       objectReference: {fileID: 0}
     - target: {fileID: 5360882354804411139, guid: 8f6dd6876fe953f428a438f482dce894,
         type: 3}
@@ -4233,7 +4238,7 @@ PrefabInstance:
     - target: {fileID: 8665528142934700048, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.669876
+      value: 16.9
       objectReference: {fileID: 0}
     - target: {fileID: 8665528142934700048, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
         type: 3}
@@ -4663,6 +4668,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MoveDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207310834100592565, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9124456783520085551, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
