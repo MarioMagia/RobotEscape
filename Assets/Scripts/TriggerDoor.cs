@@ -5,53 +5,44 @@ using UnityEngine.Animations;
 
 public class TriggerDoor : MonoBehaviour
 {
-
-    [SerializeField] private Animator MoveDoor = null;
-    [SerializeField] private string DoorOpen = "DoorOpen";
-    [SerializeField] private string DoorClose = "DoorClose";
     [SerializeField] private string Tag = "Player";
-    [SerializeField] private GameObject InvisibleDoor = null;
+    [SerializeField] private GameObject puerta;
+    [SerializeField] private bool CollisionActivation;
 
 
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other.gameObject);
-        if (other.gameObject.CompareTag(Tag))
-        {
-
-            Debug.Log("Detecta Stone");
-            MoveDoor.Play(DoorOpen, 0, 0.0f);
-        }
-
-    }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject);
+        if (CollisionActivation) return;
         if (other.gameObject.CompareTag(Tag))
         {
-            MoveDoor.Play(DoorOpen, 0, 0.0f);
-            InvisibleDoor.SetActive(false);
+            puerta.GetComponent<DoorController>().Abrir();
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!CollisionActivation) return; 
+        if (collision.gameObject.CompareTag(Tag))
+        {
+            puerta.GetComponent<DoorController>().Abrir();
+        }
+
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!CollisionActivation) return;
+        if (collision.gameObject.CompareTag(Tag))
+        {
+            puerta.GetComponent<DoorController>().Abrir();
+        }
+
+    }
     private void OnTriggerExit(Collider other)
     {
-        
-        Debug.Log(other.gameObject);
+        if (CollisionActivation) return;
         if (other.gameObject.CompareTag(Tag))
         {
-            MoveDoor.Play(DoorClose, 0, 0.0f);
-            InvisibleDoor.SetActive(true);
-        }
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        
-        if (other.gameObject.CompareTag(Tag))
-        {
-            Debug.Log("Detecta sale la Stone");
-            MoveDoor.Play(DoorClose, 0, 0.0f);
+            puerta.GetComponent<DoorController>().Cerrar();
         }
     }
 
