@@ -126,7 +126,7 @@ PrefabInstance:
     - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
       propertyPath: JumpHeight
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3545252863
+  GlobalObjectIdHash: 2617226832
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -333,6 +333,7 @@ MonoBehaviour:
   m_PlayerInput: {fileID: 9032616161167077311}
   pauseScreen: {fileID: 8134047326023975247, guid: d37847047004e794888ec990cc3243e0,
     type: 3}
+  detect: {fileID: 4989753237841064067}
 --- !u!114 &-5596521789721804874
 MonoBehaviour:
   m_ObjectHideFlags: 0

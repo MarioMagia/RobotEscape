@@ -32,6 +32,9 @@ public class ClientPlayerMove : NetworkBehaviour
     [SerializeField]
     GameObject pauseScreen;
 
+    [SerializeField]
+    DetectMarks detect;
+
     RaycastHit[] m_HitColliders = new RaycastHit[4];
 
     void Awake()
@@ -99,6 +102,11 @@ public class ClientPlayerMove : NetworkBehaviour
                 }
             }
         }
+    }
+    void OnTakeMark()
+    {
+            Debug.Log("TOCAAAA");
+            detect.TM();
     }
 
     void OnPauseMenu()

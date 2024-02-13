@@ -15,7 +15,6 @@ namespace StarterAssets
 		public bool sprint;
 		public bool mark;
 		public bool teleport;
-		public bool takemark;
 		public bool teleportTaken;
 		public bool getDown;
 		public bool pauseMenu;
@@ -78,15 +77,6 @@ namespace StarterAssets
 		{
 			PauseMenuInput(value.isPressed);
 		}
-		private void TakenInput(InputValue value)
-		{
-			TakeMarkInput(value.isPressed);
-		}
-
-        private void TakeMarkInput(bool newTakeMarkState)
-        {
-			takemark = newTakeMarkState;
-        }
 
         public void OnTPtakenMark(InputValue value)
 		{
