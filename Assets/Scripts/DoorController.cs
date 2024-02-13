@@ -8,12 +8,12 @@ public class DoorController : MonoBehaviour
     [SerializeField] private GameObject puertaInvisible;
     public void Abrir()
     {
-        animator.Play("DoorOpen", 0, 0.0f);
+        animator.SetBool("isOpen", true);
         puertaInvisible.SetActive(false);
     }
     public void Cerrar()
     {
-        animator.Play("DoorClose", 0, 0.0f);
+        animator.SetBool("isOpen", false);
         puertaInvisible.SetActive(true);
     }
 }

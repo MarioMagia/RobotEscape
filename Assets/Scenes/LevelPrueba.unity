@@ -1432,7 +1432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tag: Player
-  puerta: {fileID: 4511408850050812903}
+  puerta: {fileID: 1205892486}
   CollisionActivation: 0
 --- !u!65 &746264720
 BoxCollider:
@@ -2181,7 +2181,22 @@ PrefabInstance:
     - target: {fileID: 692405890096529434, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_Name
-      value: MoveDoor (1)
+      value: myDoor (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392307627558949603, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2058694403503759871, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: m_Name
+      value: MoveDoor1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605534363369705398, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8207310834100592565, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
@@ -2191,7 +2206,7 @@ PrefabInstance:
     - target: {fileID: 9124456783520085551, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.50975
+      value: 9.31
       objectReference: {fileID: 0}
     - target: {fileID: 9124456783520085551, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
@@ -2261,6 +2276,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e981121f6670bfd4b92f44d7a01eb537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &966029057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2058694403503759871, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+    type: 3}
+  m_PrefabInstance: {fileID: 912242140}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1028513131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,7 +2558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tag: Stone
-  puerta: {fileID: 1239524943}
+  puerta: {fileID: 966029057}
   CollisionActivation: 1
 --- !u!1001 &1057011452
 PrefabInstance:
@@ -2922,6 +2943,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1205892486 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2058694403503759871, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5735274904676326136}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1221041499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3030,12 +3057,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
---- !u!1 &1239524943 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 692405890096529434, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
-    type: 3}
-  m_PrefabInstance: {fileID: 912242140}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1302143339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4650,12 +4671,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 915170018}
   m_SourcePrefab: {fileID: 100100000, guid: 81f93affd7512574da124327b74efe17, type: 3}
---- !u!1 &4511408850050812903 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 692405890096529434, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5735274904676326136}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5735274904676326136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4667,7 +4682,7 @@ PrefabInstance:
     - target: {fileID: 692405890096529434, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_Name
-      value: MoveDoor
+      value: myDoor
       objectReference: {fileID: 0}
     - target: {fileID: 8207310834100592565, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
