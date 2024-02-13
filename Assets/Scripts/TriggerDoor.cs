@@ -33,7 +33,7 @@ public class TriggerDoor : MonoBehaviour
         if (!CollisionActivation) return;
         if (collision.gameObject.CompareTag(Tag))
         {
-            puerta.GetComponent<DoorController>().Abrir();
+            puerta.GetComponent<DoorController>().Cerrar();
         }
 
     }
