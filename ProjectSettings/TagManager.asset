@@ -9,6 +9,7 @@ TagManager:
   - Crecer
   - Teleport
   - Stone
+  - PlayerHUD
   layers:
   - Default
   - TransparentFX

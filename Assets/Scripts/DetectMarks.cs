@@ -29,13 +29,13 @@ public class DetectMarks : MonoBehaviour
             
         }
     
-    public void TM()
+    public Marca? TM()
     {
         if (marca != null)
         {
             tp.TakeMark((Marca)marca);
         }
-        
+        return marca;
     }
 
     private void OnTriggerExit(Collider other)
