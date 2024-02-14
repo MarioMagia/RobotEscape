@@ -286,11 +286,33 @@
                 },
                 {
                     "name": "",
+                    "id": "92b510bb-c782-4088-8355-7047c51e1432",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Mark",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bbe177f7-1875-47ed-81f1-124e08d0b1d1",
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Teleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b066cdc-a450-4e1c-a4c7-516f9f7e66a7",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Teleport",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -308,11 +330,33 @@
                 },
                 {
                     "name": "",
+                    "id": "e51661fc-2215-4d2b-ac61-081e1c8ade02",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "TakeMark",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bf66703c-2665-4c9d-841b-96dc8008312d",
                     "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "TPtakenMark",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a36939f-6250-4d4e-9fe9-00cea211e573",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "TPtakenMark",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -330,11 +374,33 @@
                 },
                 {
                     "name": "",
+                    "id": "0fde0a71-0c77-4f65-9dfa-b6c5f6465aa7",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PickUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5b752195-146e-4ec3-aa3b-cc4c18d385fc",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72ca7d9d-03c0-4105-8378-e14675831aa3",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "PauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
