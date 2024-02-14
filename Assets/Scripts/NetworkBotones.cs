@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class NetworkButtons : MonoBehaviour
 {
-    private string IP = "Client IP";
+    private string IP = "127.0.0.1";
     private ushort serverPort = 7777;
 
     private void OnGUI()
