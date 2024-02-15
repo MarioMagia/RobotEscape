@@ -13,7 +13,7 @@ public class DoorController : MonoBehaviour
 
     private void Awake()
     {
-        audioSource.GetComponent<AudioSource> ();
+        audioSource = GetComponent<AudioSource>();
     }
     public void Abrir()
     {
