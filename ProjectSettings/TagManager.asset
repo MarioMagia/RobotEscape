@@ -10,6 +10,7 @@ TagManager:
   - Teleport
   - Stone
   - PlayerHUD
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
