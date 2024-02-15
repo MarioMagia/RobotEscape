@@ -4,27 +4,30 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+
+public class ManagerJuego : MonoBehaviour
 {
     public GameObject player;
     public Text nivel;
 
-    private static GameManager _instance;
+    private static ManagerJuego _instance;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(disappearText());   
+        StartCoroutine(disappearText());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    public static GameManager Instance 
+    public static ManagerJuego Instance
     {
-        get {
-            if (_instance is null) {
+        get
+        {
+            if (_instance is null)
+            {
                 Debug.LogError("GameManager is null");
             }
             return _instance;
@@ -38,7 +41,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
-    IEnumerator disappearText() {
+    IEnumerator disappearText()
+    {
         yield return new WaitForSeconds(5);
         nivel.text = "";
     }
