@@ -1229,6 +1229,11 @@ PrefabInstance:
       propertyPath: puertaInvisible
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8753711053007691677, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: haspuertainvisible
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9124456783520085551, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_LocalScale.z

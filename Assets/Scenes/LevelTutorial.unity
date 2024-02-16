@@ -1552,6 +1552,11 @@ PrefabInstance:
       propertyPath: puertaInvisible
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8753711053007691677, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: haspuertainvisible
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9124456783520085551, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_LocalScale.z
@@ -5049,6 +5054,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1426232013}
+    - target: {fileID: 1363275682688230582, guid: 6f596688ae4f41345ad484c8d7e49943,
+        type: 3}
+      propertyPath: haspuertainvisible
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1526910255642856708, guid: 6f596688ae4f41345ad484c8d7e49943,
         type: 3}
       propertyPath: m_LocalPosition.x
