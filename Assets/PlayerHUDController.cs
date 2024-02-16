@@ -10,11 +10,7 @@ public class PlayerHUDController : MonoBehaviour
     public Image tpImage;
     public Image tp2Image;
     public Image input1Image;
-    public Image input2Image;
-    public GameObject textParent;
-    public GameObject textParent1;
-    public GameObject textParent2;
-    public GameObject textParent3;
+    public Image input2Image;   
     public Sprite emptyTp;
     public Sprite tp1;
     public Sprite tp2;
@@ -22,31 +18,8 @@ public class PlayerHUDController : MonoBehaviour
     public Sprite input1Active;
     public Sprite input2Active;
     public Sprite input1Inactive;
-    public Sprite input2Inactive;
+    public Sprite input2Inactive;  
 
-
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Controls1"))
-        {
-            textParent.SetActive(false);
-            textParent1.SetActive(true);
-
-        }
-        if (other.gameObject.CompareTag("Controls2"))
-        {
-            textParent1.SetActive(false);
-            textParent2.SetActive(true);
-
-        }
-        if (other.gameObject.CompareTag("Controls3"))
-        {
-            textParent2.SetActive(false);
-            textParent3.SetActive(true);
-
-        }
-    }
 
 
     // Start is called before the first frame update 

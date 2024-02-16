@@ -1177,10 +1177,6 @@ MonoBehaviour:
   tp2Image: {fileID: 8934147356044995117}
   input1Image: {fileID: 3604416520879204273}
   input2Image: {fileID: 4377028055295629183}
-  textParent: {fileID: 7612476516141359089}
-  textParent1: {fileID: 2024219038676440961}
-  textParent2: {fileID: 4548008108923783628}
-  textParent3: {fileID: 5029929250501496161}
   emptyTp: {fileID: 21300000, guid: e3576a71a8abdc149b8308e660f3991e, type: 3}
   tp1: {fileID: 21300000, guid: 91e3a279b4aa8a249b9f178d549ac01e, type: 3}
   tp2: {fileID: 21300000, guid: f8dac614309707e4aa962127280a5090, type: 3}

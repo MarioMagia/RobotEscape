@@ -11,6 +11,8 @@ TagManager:
   - Stone
   - PlayerHUD
   - Checkpoint
+  - Checkpoint1
+  - Checkpoint2
   layers:
   - Default
   - TransparentFX
