@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     public void Play()
     {
-        SceneManager.LoadScene("Playground");   
+        SceneManager.LoadScene("LevelTutorial");   
     }
 
     // Update is called once per frame
