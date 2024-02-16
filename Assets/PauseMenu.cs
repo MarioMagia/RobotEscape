@@ -145,6 +145,7 @@ public class PauseMenu : MonoBehaviour
             });
             keyboardControlsPanel.SetActive(true);
             gamepadControlsPanel.SetActive(false);
+            controlsDropdown.value = 0;
             controlsDropdown.Select();
         }
 
