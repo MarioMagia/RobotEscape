@@ -8,6 +8,7 @@ using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using TMPro;
 #endif
 
 
@@ -30,6 +31,12 @@ public class PauseMenu : MonoBehaviour
 
     public Button resumeButton;
     public Dropdown renderDropdown;
+
+    public TMP_Dropdown controlsDropdown;
+    public GameObject keyboardControlsPanel;
+    public GameObject gamepadControlsPanel;
+
+    public PlayerInput _playerInput;
 
     Resolution[] resolutions;
 
@@ -55,35 +62,34 @@ public class PauseMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
-    void Start()
-    {
-        resumeButton.Select();
-
-    }
     public int changePauseState()
     {
         //0 - pauseOut
         //1 - pauseIn
-        if (settingShown || controlsShown)
+        if (controlsShown && (keyboardControlsPanel.activeInHierarchy || gamepadControlsPanel.activeInHierarchy))
         {
-            Debug.Log("Settings Out");
+            QuitScreen("controls");
+            return 1;
+        }
+        else if (settingShown || controlsShown)
+        {
             Cursor.lockState = CursorLockMode.None;
 
             if (settingShown)
             {
                 QuitScreen("settings");
-                
+
             }
             else if (controlsShown) {
                 QuitScreen("controls");
-               
+
             }
             return 1;
-            
+
         }
         else if (menuShown)
         {
-            
+
             Cursor.lockState = CursorLockMode.Locked;
             Hide();
             Cursor.visible = false;
@@ -91,7 +97,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-
+            resumeButton.Select();
             Cursor.lockState = CursorLockMode.None;
             Show();
             Cursor.visible = true;
@@ -103,7 +109,11 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         darkLayer.SetActive(false);
         menuShown = false;
-       // input_Manager.Resume();
+        _playerInput.actions.FindActionMap("UI").Disable();
+        _playerInput.actions.FindActionMap("Player").Enable();
+        Cursor.visible = false;
+
+        // input_Manager.Resume();
     }
 
     void Hide() {
@@ -129,6 +139,13 @@ public class PauseMenu : MonoBehaviour
             controlsMenuUI.SetActive(true);
             pauseMenuUI.SetActive(false);
             controlsShown = true;
+            // Subscribe to the OnValueChanged event of the dropdown
+            controlsDropdown.onValueChanged.AddListener(delegate {
+                DropdownValueChanged(controlsDropdown);
+            });
+            keyboardControlsPanel.SetActive(true);
+            gamepadControlsPanel.SetActive(false);
+            controlsDropdown.Select();
         }
 
     }
@@ -144,6 +161,7 @@ public class PauseMenu : MonoBehaviour
             controlsMenuUI.SetActive(false);
             pauseMenuUI.SetActive(true);
             controlsShown = false;
+            
         }
     }
     
@@ -164,6 +182,20 @@ public class PauseMenu : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    void DropdownValueChanged(TMP_Dropdown change)
+    {
+        if (change.value == 0) // Keyboard Controls selected
+        {
+            gamepadControlsPanel.SetActive(false);
+            keyboardControlsPanel.SetActive(true);
+        }
+        else if (change.value == 1) // Gamepad Controls selected
+        {
+            keyboardControlsPanel.SetActive(false);
+            gamepadControlsPanel.SetActive(true);
+        }
     }
 
 }
