@@ -183,6 +183,7 @@ public class PauseMenu : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        //GetComponent<CanvasScaler>().referenceResolution = new Vector2(resolution.width, resolution.height);
     }
 
     void DropdownValueChanged(TMP_Dropdown change)
