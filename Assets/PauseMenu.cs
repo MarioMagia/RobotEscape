@@ -8,6 +8,7 @@ using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using TMPro;
 #endif
 
 
@@ -15,17 +16,30 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool menuShown = false;
     public static bool settingShown = false;
+    public static bool controlsShown = false;
 
     public GameObject pauseMenuUI;
 
     public GameObject settingsMenuUI;
+
+    public GameObject controlsMenuUI;
 
     public AudioMixer audioMixer;
 
     public Dropdown resolutionDropdown;
     public GameObject darkLayer;
 
+    public Button resumeButton;
+    public Dropdown renderDropdown;
+
+    public TMP_Dropdown controlsDropdown;
+    public GameObject keyboardControlsPanel;
+    public GameObject gamepadControlsPanel;
+
+    public PlayerInput _playerInput;
+
     Resolution[] resolutions;
+
 
     private void Awake()
     {
@@ -48,53 +62,107 @@ public class PauseMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
-
-    public void changePauseState()
+    public int changePauseState()
     {
-        if (settingShown)
+        //0 - pauseOut
+        //1 - pauseIn
+        if (controlsShown && (keyboardControlsPanel.activeInHierarchy || gamepadControlsPanel.activeInHierarchy))
         {
-            Debug.Log("Settings Out");
+            QuitScreen("controls");
+            return 1;
+        }
+        else if (settingShown || controlsShown)
+        {
             Cursor.lockState = CursorLockMode.None;
-            QuitSettings();
+
+            if (settingShown)
+            {
+                QuitScreen("settings");
+
+            }
+            else if (controlsShown) {
+                QuitScreen("controls");
+
+            }
+            return 1;
+
         }
         else if (menuShown)
         {
+
             Cursor.lockState = CursorLockMode.Locked;
-            Resume();
+            Hide();
             Cursor.visible = false;
+            return 0;
         }
         else
         {
-
+            resumeButton.Select();
             Cursor.lockState = CursorLockMode.None;
             Show();
             Cursor.visible = true;
+            return 1;
         }
     }
 
     public void Resume() {
         pauseMenuUI.SetActive(false);
-        menuShown = false;
         darkLayer.SetActive(false);
+        menuShown = false;
+        _playerInput.actions.FindActionMap("UI").Disable();
+        _playerInput.actions.FindActionMap("Player").Enable();
+        Cursor.visible = false;
+
+        // input_Manager.Resume();
     }
 
-
+    void Hide() {
+        pauseMenuUI.SetActive(false);
+        darkLayer.SetActive(false);
+        menuShown = false;
+    }
     void Show() {
         pauseMenuUI.SetActive(true);
         menuShown = true;
         darkLayer.SetActive(true);
     }
-    public void LoadSettings() 
+    public void LoadScreen(string screen) 
     {
-        settingsMenuUI.SetActive(true);
-        pauseMenuUI.SetActive(false);
-        settingShown = true;
+        if (screen == "settings")
+        {
+            settingsMenuUI.SetActive(true);
+            pauseMenuUI.SetActive(false);
+            settingShown = true;
+            renderDropdown.Select();
+        }
+        else if (screen == "controls") {
+            controlsMenuUI.SetActive(true);
+            pauseMenuUI.SetActive(false);
+            controlsShown = true;
+            // Subscribe to the OnValueChanged event of the dropdown
+            controlsDropdown.onValueChanged.AddListener(delegate {
+                DropdownValueChanged(controlsDropdown);
+            });
+            keyboardControlsPanel.SetActive(true);
+            gamepadControlsPanel.SetActive(false);
+            controlsDropdown.Select();
+        }
 
     }
-    public void QuitSettings() {
-        settingsMenuUI.SetActive(false);
-        pauseMenuUI.SetActive(true);
-        settingShown = false;
+    public void QuitScreen(string screen) {
+        if (screen == "settings")
+        {
+            settingsMenuUI.SetActive(false);
+            pauseMenuUI.SetActive(true);
+            settingShown = false;
+        }
+        else if (screen == "controls")
+        {
+            controlsMenuUI.SetActive(false);
+            pauseMenuUI.SetActive(true);
+            controlsShown = false;
+            
+        }
     }
     
     public void QuitGame()
@@ -115,4 +183,19 @@ public class PauseMenu : MonoBehaviour
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
+
+    void DropdownValueChanged(TMP_Dropdown change)
+    {
+        if (change.value == 0) // Keyboard Controls selected
+        {
+            gamepadControlsPanel.SetActive(false);
+            keyboardControlsPanel.SetActive(true);
+        }
+        else if (change.value == 1) // Gamepad Controls selected
+        {
+            keyboardControlsPanel.SetActive(false);
+            gamepadControlsPanel.SetActive(true);
+        }
+    }
+
 }

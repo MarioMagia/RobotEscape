@@ -13,7 +13,7 @@ public class ClientPlayerMove : NetworkBehaviour
 {
     [SerializeField]
     ServerPlayerMove m_ServerPlayerMove;
-
+    
     [SerializeField]
     CharacterController m_CharacterController;
 
@@ -114,6 +114,21 @@ public class ClientPlayerMove : NetworkBehaviour
     void OnPauseMenu()
     {
         Debug.Log("Pause input");
-        pauseScreen.GetComponent<PauseMenu>().changePauseState();
+        int pauseState = pauseScreen.GetComponent<PauseMenu>().changePauseState();
+        if (pauseState == 1)
+        {
+            m_PlayerInput.actions.FindActionMap("Player").Disable();
+            m_PlayerInput.actions.FindActionMap("UI").Enable();
+            Debug.Log("Hola");
+        }
+        else
+        {
+
+            m_PlayerInput.actions.FindActionMap("UI").Disable();
+            m_PlayerInput.actions.FindActionMap("Player").Enable();
+            Debug.Log("Adi�s");
+        }
     }
+
+
 }
