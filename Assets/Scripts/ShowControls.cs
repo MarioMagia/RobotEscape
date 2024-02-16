@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShowControls : MonoBehaviour
-{
+
+{ 
+   
+    
+    public GameObject textParent;
+    public GameObject textParent1;
+    public GameObject textParent2;
+    public GameObject textParent3;
 
     
-    public GameObject playerHUD;    
-    
-    private GameObject textParent;
-    private GameObject textParent1;
-    private GameObject textParent2;
-    private GameObject textParent3;
-
-    public void Start()
-    {
-       textParent = playerHUD.transform.Find("textParent").gameObject;
-       textParent1 = playerHUD.transform.Find("textParent1").gameObject;
-       textParent2 = playerHUD.transform.Find("textParent1").gameObject;
-       textParent3 = playerHUD.transform.Find("textParent1").gameObject;
-}
 
     private void OnTriggerEnter(Collider other)
     {
