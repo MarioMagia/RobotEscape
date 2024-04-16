@@ -20,6 +20,7 @@ public class OptionsMenu : MonoBehaviour
 
     private void Awake()
     {
+       
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -56,5 +57,9 @@ public class OptionsMenu : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         //GetComponent<CanvasScaler>().referenceResolution = new Vector2(resolution.width, resolution.height);
     }
-   
+    public void SetVolume(float volume)
+    {
+        audioMixer.SetFloat("MainMixer", Mathf.Log10(volume)*20);
+    }
+
 }
