@@ -57,14 +57,14 @@ public class OptionsMenu : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         //GetComponent<CanvasScaler>().referenceResolution = new Vector2(resolution.width, resolution.height);
     }
-    public void SetVolumeMusic(float volume)
+    public void SetVolumeMusic(float volumeMusic)
     {
-        audioMixer.SetFloat("volume", volume);
+        audioMixer.SetFloat("volumeMusic", volumeMusic);
     }
 
-    public void SetVolumeSound(float volume)
+    public void SetVolumeSound(float volumeSFX)
     {
-        audioMixer.SetFloat("volume", volume);
+        audioMixer.SetFloat("volumeSFX", volumeSFX);
     }
 
 }

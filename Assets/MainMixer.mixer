@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!245 &-8943857261881547979
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pausado
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: f61c70ae20eefcd48a287b798180501f
+  m_FloatValues:
+    e9fe4601c1d891f47bfb75612234a6e6: 0
+    15db5cf29c33e7b4980432d43c35e552: 3.06
+    df79cce7f0b39cb42b171f0f8d254d79: 11
+    a0d20e68cd85d9b448428d01f0566fc0: 1334
+    ef3c495cc91768c4d8e353d104f72c6e: 0
+    f672b74ec27fbd44faa4889555ee4ab6: -0.02577656
+    f520a82f5da7a8743ab175bc290ed877: -28.300053
+  m_TransitionOverrides: {}
+--- !u!244 &-7384291840384753092
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 72f127145f430bf4fa50b204d2501650
+  m_EffectName: Send
+  m_MixLevel: e9fe4601c1d891f47bfb75612234a6e6
+  m_Parameters: []
+  m_SendTarget: {fileID: -7266156329101903893}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &-7266156329101903893
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: e3cbf5b8de630734b9dd39d035afe6b9
+  m_EffectName: Duck Volume
+  m_MixLevel: fb3913c9d367ee840b70b24696111501
+  m_Parameters:
+  - m_ParameterName: Threshold
+    m_GUID: f520a82f5da7a8743ab175bc290ed877
+  - m_ParameterName: Ratio
+    m_GUID: 15db5cf29c33e7b4980432d43c35e552
+  - m_ParameterName: Attack Time
+    m_GUID: 8dafc3d85efd3344dbe7ce69a697ee22
+  - m_ParameterName: Release Time
+    m_GUID: df456d5aab1418f4aa2c0ec752b3703f
+  - m_ParameterName: Make-up Gain
+    m_GUID: 6190c07d60614164ba700f1737aae008
+  - m_ParameterName: Knee
+    m_GUID: df79cce7f0b39cb42b171f0f8d254d79
+  - m_ParameterName: Sidechain Mix
+    m_GUID: 2076dafa1acc9464a8d96d18f4eb6a7e
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-5012959547830870325
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -43,6 +103,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -5012959547830870325}
+  - {fileID: -7384291840384753092}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -58,6 +119,7 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
+  - {fileID: -8943857261881547979}
   m_StartSnapshot: {fileID: 24500006}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
@@ -65,6 +127,10 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: ef3c495cc91768c4d8e353d104f72c6e
     name: volume
+  - guid: f672b74ec27fbd44faa4889555ee4ab6
+    name: volumeMusic
+  - guid: 7972643c4e481ed4c92964a9754c7482
+    name: volumeSFX
   m_AudioMixerGroupViews:
   - guids:
     - d46a8c001107ebe4b871f39efd96765f
@@ -114,12 +180,16 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: SinPausa
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: b5941c3521bd3d34c9d277675009364e
   m_FloatValues:
+    e9fe4601c1d891f47bfb75612234a6e6: 0
+    15db5cf29c33e7b4980432d43c35e552: 3.06
+    df79cce7f0b39cb42b171f0f8d254d79: 11
     ef3c495cc91768c4d8e353d104f72c6e: 0
     f672b74ec27fbd44faa4889555ee4ab6: -0.02577656
+    f520a82f5da7a8743ab175bc290ed877: -28.300053
   m_TransitionOverrides: {}
 --- !u!243 &1691796053106734627
 AudioMixerGroupController:
@@ -136,7 +206,25 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -4525552806949921325}
+  - {fileID: -7266156329101903893}
+  - {fileID: 6550705623778532930}
   m_UserColorIndex: 2
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &6550705623778532930
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 00c0cab025c24a74e9d55af2511a1c62
+  m_EffectName: Lowpass Simple
+  m_MixLevel: 48887ea91c706074c9f18833d6172eb0
+  m_Parameters:
+  - m_ParameterName: Cutoff freq
+    m_GUID: a0d20e68cd85d9b448428d01f0566fc0
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0

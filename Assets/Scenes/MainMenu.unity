@@ -1029,12 +1029,12 @@ PrefabInstance:
     - target: {fileID: 133488570071043106, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
       propertyPath: m_MaxValue
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 133488570071043106, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
       propertyPath: m_MinValue
-      value: -20
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 133488570071043106, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
@@ -1049,12 +1049,19 @@ PrefabInstance:
     - target: {fileID: 133488570071043106, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetVolume
+      value: SetVolumeMusic
       objectReference: {fileID: 0}
     - target: {fileID: 133488570071043106, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: OptionsMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 186030187838270853, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_text
+      value: 'VOLUME MUSIC
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 579121399765383277, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
@@ -1065,6 +1072,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 604167808246566924, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Name
+      value: VolumeMusic
       objectReference: {fileID: 0}
     - target: {fileID: 613593395445515088, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
@@ -1099,12 +1111,27 @@ PrefabInstance:
     - target: {fileID: 1647535204785438033, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2731587776665908656, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.70000076
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860019580413348987, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 315.6163
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860019580413348987, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860019580413348987, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -93
       objectReference: {fileID: 0}
     - target: {fileID: 3078673399127457166, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
