@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
 
@@ -9,17 +9,22 @@ using UnityEngine.InputSystem;
 namespace StarterAssets
 {
     [RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
     public class ThirdPersonController : MonoBehaviour
     {
+        public bool down = false;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
+
+        [Tooltip("Sprint speed of the character in m/s")]
+        public float CrouchSpeed = 1.0f;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -31,6 +36,8 @@ namespace StarterAssets
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+        public GameObject HUD;
+        public DetectMarks detectMarks;
 
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -87,6 +94,9 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
+        //HUD
+        private GameObject _activeHUD;
+
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
@@ -98,17 +108,20 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
         private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
+        private GameOptions options;
         private GameObject _mainCamera;
+        private Teleport tp;
 
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        private float NextTP = 0f;
 
         private bool IsCurrentDeviceMouse
         {
@@ -135,10 +148,12 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
+            options = GetComponent<GameOptions>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
+            tp = GetComponent<Teleport>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
             _playerInput = GetComponent<PlayerInput>();
 #else
@@ -150,17 +165,108 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            _activeHUD = Instantiate(HUD);
         }
-
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
+            
+            StateRevision();
 
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+                if (options.AllowTPs)
+                {
+                    marcar();
+                }
+
         }
+        private void FixedUpdate()
+        {
+            if (options.AllowTPs) {
+                    tpearse();
+                    if (options.TakeTPs)
+                    {
+                        tpTaken();
+                    }
+            }
 
+        }
+        
+        private void marcar()
+        {
+                if (_input.mark && Time.time > NextTP)
+                {
+                    tp.CrearMarca();
+            }
+            _input.mark = false;
+
+        }
+        private void StateRevision()
+        {
+            _hasAnimator = TryGetComponent(out _animator);
+            if (_input.getDown && !_animator.GetBool("isCrouched"))
+            {
+                _input.getDown = false;
+                _animator.SetBool("isCrouched", true);
+                _animator.SetBool("isRunning", false);
+
+            }
+            else if (_input.getDown && _animator.GetBool("isCrouched"))
+            {
+                _input.getDown = false;
+                _animator.SetBool("isCrouched", false);
+            }
+            else if (_animator.GetBool("isCrouched") && _input.sprint && _input.move != Vector2.zero)
+            {
+
+                _animator.SetBool("isRunning", true);
+                _animator.SetBool("isCrouched", false);
+            }
+            else if (_animator.GetBool("isCrouched") && _input.jump)
+            {
+                _animator.SetBool("isCrouched", false);
+            }
+            if (!down)
+            {
+                JumpAndGravity();
+                Move();
+            }
+            GroundedCheck();
+
+            
+        }
+        private void tpearse()
+        {
+            if (_input.teleport)
+            {
+                _input.teleport = false;
+                Vector3 position = tp.GivePos(true);
+                if (position != Vector3.zero)
+                {                    
+                    transform.position = position;
+                    NextTP = Time.time + options.TP_CD;
+                    tp.BorrarMarca(true);
+                }
+            }
+            
+
+        }
+        private void tpTaken()
+        {
+            if (_input.teleportTaken)
+            {
+                _input.teleportTaken = false;
+                Vector3 position = tp.GivePos(false);
+                if (position != Vector3.zero)
+                {
+                    transform.position = position;
+                    tp.BorrarMarca(false);
+                }
+            }
+
+
+        }
         private void LateUpdate()
         {
             CameraRotation();
@@ -174,7 +280,6 @@ namespace StarterAssets
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
-
         private void GroundedCheck()
         {
             // set sphere position, with offset
@@ -215,6 +320,17 @@ namespace StarterAssets
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            if (_input.sprint)
+            {
+                targetSpeed = SprintSpeed;
+            }
+            else if (_animator.GetBool("isCrouched")) {
+                targetSpeed = CrouchSpeed;
+            }
+            else
+            {
+                targetSpeed = MoveSpeed;
+            }
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -270,6 +386,15 @@ namespace StarterAssets
             // move the player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+            if (_animator.GetBool("isCrouched") && _input.move != Vector2.zero)
+            {
+                _animator.SetBool("isCrouchWalking", true);
+            }
+            else
+            {
+                _animator.SetBool("isCrouchWalking", false);
+            }
 
             // update animator if using character
             if (_hasAnimator)
@@ -376,7 +501,7 @@ namespace StarterAssets
                 if (FootstepAudioClips.Length > 0)
                 {
                     var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.position, FootstepAudioVolume);
                 }
             }
         }
@@ -385,7 +510,15 @@ namespace StarterAssets
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.position, FootstepAudioVolume);
+            }
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Meta")
+            {
+                Debug.Log("Has llegado al final");
+                GameManager.Instance.ChangeSceneMethod("Scene 2");
             }
         }
     }

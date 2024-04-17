@@ -1,5 +1,6 @@
+using System;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
@@ -12,6 +13,11 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool mark;
+		public bool teleport;
+		public bool teleportTaken;
+		public bool getDown;
+		public bool pauseMenu;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -20,7 +26,7 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -43,10 +49,49 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnMark(InputValue value)
+		{
+			MarkInput(value.isPressed);
+		}
+
+		public void OnTeleport(InputValue value)
+		{
+			TeleportInput(value.isPressed);
+		}
+
+        private void TeleportInput(bool NewTeleportState)
+        {
+            teleport = NewTeleportState;
+        }
+
+        private void MarkInput(bool newMarkState)
+        {
+			mark = newMarkState;
+        }
+		public void OnGetDown(InputValue value)
+		{
+			GetDownInput(value.isPressed);
+		}
+		public void OnPauseMenu(InputValue value)
+		{
+			PauseMenuInput(value.isPressed);
+		}
+
+        public void OnTPtakenMark(InputValue value)
+		{
+			TPtakenMarkInput(value.isPressed);
+		}
+
+        private void TPtakenMarkInput(bool newTPtakenState)
+        {
+            teleportTaken = newTPtakenState;
+        }
+
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -60,13 +105,20 @@ namespace StarterAssets
 		{
 			jump = newJumpState;
 		}
-
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
 		}
+        public void GetDownInput(bool newDownState)
+        {
+            getDown = newDownState;
+        }
+        public void PauseMenuInput(bool newPauseState)
+        {
+            pauseMenu = newPauseState;
+        }
 
-		private void OnApplicationFocus(bool hasFocus)
+        private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}
@@ -74,6 +126,7 @@ namespace StarterAssets
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			
 		}
 	}
 	

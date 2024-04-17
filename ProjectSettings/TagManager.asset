@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - ObjetoMovil
+  - Crecer
+  - Teleport
+  - Stone
+  - PlayerHUD
+  - Checkpoint
+  - Checkpoint1
+  - Checkpoint2
   layers:
   - Default
   - TransparentFX
@@ -12,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - PickupItems
   - 
   - Character
   - Ground
