@@ -59,12 +59,20 @@ public class OptionsMenu : MonoBehaviour
     }
     public void SetVolumeMusic(float volumeMusic)
     {
+        //Seteamos el audiomixer de Musica con el volumen que escogemos con la barra de volumen
         audioMixer.SetFloat("volumeMusic", volumeMusic);
+
+        //Guardamos el volumen de la musica que acabamos de configurar en Playerprefs para poder coger ese valor en cualquier otra scene o al iniciar el juego
+        PlayerPrefs.SetFloat("volumeMusic", volumeMusic);
     }
 
-    public void SetVolumeSound(float volumeSFX)
+    public void SetVolumeSFX(float volumeSFX)
     {
+        //Seteamos el audiomixer de los SFX con el volumen que escogemos con la barra de volumen
         audioMixer.SetFloat("volumeSFX", volumeSFX);
+
+        //Guardamos el volumen de los SFX que acabamos de configurar en Playerprefs para poder coger ese valor en cualquier otra scene o al iniciar el juego
+        PlayerPrefs.SetFloat("volumeSFX", volumeSFX);
     }
 
 }

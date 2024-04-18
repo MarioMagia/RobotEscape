@@ -138,6 +138,12 @@ namespace StarterAssets
 
         private void Awake()
         {
+            // Obtenemos el valor del sonido de los SFX de PlayerPrefs que viene en db
+            float volumeSFXdB = PlayerPrefs.GetFloat("volumeSFX");
+
+            // Lo convertimos de dB a escala lineal (0 a 1) y lo guardamos en FootstepAudioVolume
+            FootstepAudioVolume = Mathf.Pow(10f, volumeSFXdB / 20f);
+            
             // get a reference to our main camera
             if (_mainCamera == null)
             {
