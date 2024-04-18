@@ -50,7 +50,8 @@ public class PauseMenu : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat("volumeMusic");
 
         //Configuramos el slider de los SFX al iniciar  para que se vea en el punto donde lo guardamos
-        SFXSlider.value = PlayerPrefs.GetFloat("volumeSFX"); ;
+        SFXSlider.value = PlayerPrefs.GetFloat("volumeSFX"); 
+        
 
 
         resolutions = Screen.resolutions;
