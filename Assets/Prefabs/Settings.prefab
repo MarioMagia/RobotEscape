@@ -49,3 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: eb1b55acec9801b45b7269b2692a2efb, type: 2}
+  musicSlider: {fileID: 5437694416748002715, guid: c9bb87d9414ca5246a813cf54e7fea71,
+    type: 3}
+  SFXSlider: {fileID: 7148879108907891352, guid: 8ab398dcff18a9744a979d7e292720c2,
+    type: 3}

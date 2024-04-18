@@ -16,6 +16,8 @@ namespace StarterAssets
     {
         public bool down = false;
 
+        private float volumeSFXdB;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -138,12 +140,8 @@ namespace StarterAssets
 
         private void Awake()
         {
-            // Obtenemos el valor del sonido de los SFX de PlayerPrefs que viene en db
-            float volumeSFXdB = PlayerPrefs.GetFloat("volumeSFX");
+            volumenPasos();
 
-            // Lo convertimos de dB a escala lineal (0 a 1) y lo guardamos en FootstepAudioVolume
-            FootstepAudioVolume = Mathf.Pow(10f, volumeSFXdB / 20f);
-            
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -175,7 +173,8 @@ namespace StarterAssets
         }
         private void Update()
         {
-            
+            volumenPasos();
+
             StateRevision();
 
                 JumpAndGravity();
@@ -206,6 +205,16 @@ namespace StarterAssets
                     tp.CrearMarca();
             }
             _input.mark = false;
+
+        }
+
+        private void volumenPasos()
+        {
+            // Obtenemos el valor del sonido de los SFX de PlayerPrefs que viene en db
+            volumeSFXdB = PlayerPrefs.GetFloat("volumeSFX");
+
+            // Lo convertimos de dB a escala lineal (0 a 1) y lo guardamos en FootstepAudioVolume
+            FootstepAudioVolume = Mathf.Pow(10f, volumeSFXdB / 20f);
 
         }
         private void StateRevision()

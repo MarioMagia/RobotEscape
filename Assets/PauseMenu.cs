@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject controlsMenuUI;
 
-    public AudioMixer audioMixer;
+    [SerializeField] private AudioMixer audioMixer;
 
     public Dropdown resolutionDropdown;
     public GameObject darkLayer;
@@ -38,11 +38,21 @@ public class PauseMenu : MonoBehaviour
 
     public PlayerInput _playerInput;
 
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider SFXSlider;
+
     Resolution[] resolutions;
 
 
     private void Awake()
     {
+        //Configuramos el slider de la musica al iniciar para que se vea en el punto donde lo guardamos
+        musicSlider.value = PlayerPrefs.GetFloat("volumeMusic");
+
+        //Configuramos el slider de los SFX al iniciar  para que se vea en el punto donde lo guardamos
+        SFXSlider.value = PlayerPrefs.GetFloat("volumeSFX"); ;
+
+
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -198,6 +208,24 @@ public class PauseMenu : MonoBehaviour
             keyboardControlsPanel.SetActive(false);
             gamepadControlsPanel.SetActive(true);
         }
+    }
+
+    public void SetVolumeMusic(float volumeMusic)
+    {
+        //Seteamos el audiomixer de Musica con el volumen que escogemos con la barra de volumen
+        audioMixer.SetFloat("volumeMusic", volumeMusic);
+
+        //Guardamos el volumen de la musica que acabamos de configurar en Playerprefs para poder coger ese valor en cualquier otra scene o al iniciar el juego
+        PlayerPrefs.SetFloat("volumeMusic", volumeMusic);
+    }
+
+    public void SetVolumeSFX(float volumeSFX)
+    {
+        //Seteamos el audiomixer de los SFX con el volumen que escogemos con la barra de volumen
+        audioMixer.SetFloat("volumeSFX", volumeSFX);
+
+        //Guardamos el volumen de los SFX que acabamos de configurar en Playerprefs para poder coger ese valor en cualquier otra scene o al iniciar el juego
+        PlayerPrefs.SetFloat("volumeSFX", volumeSFX);
     }
 
 }
