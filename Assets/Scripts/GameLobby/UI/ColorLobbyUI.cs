@@ -33,33 +33,6 @@ namespace LobbyRelaySample.UI
             lobby.LocalLobbyColor.onChanged += ChangeColors;
         }
 
-        public void ToggleWhite(bool toggle)
-        {
-            if (!toggle)
-                return;
-            GameManager.Instance.SetLocalLobbyColor(0);
-        }
-
-        public void ToggleOrange(bool toggle)
-        {
-            if (!toggle)
-                return;
-            GameManager.Instance.SetLocalLobbyColor(1);
-        }
-
-        public void ToggleGreen(bool toggle)
-        {
-            if (!toggle)
-                return;
-            GameManager.Instance.SetLocalLobbyColor(2);
-        }
-
-        public void ToggleBlue(bool toggle)
-        {
-            if (!toggle)
-                return;
-            GameManager.Instance.SetLocalLobbyColor(3);
-        }
 
         void ChangeColors(LobbyColor lobbyColor)
         {

@@ -158,6 +158,7 @@ namespace LobbyRelaySample.ngo
         /// </summary>
         void BeginGame()
         {
+            Debug.Log("Game Started");
             m_canSpawnInGameObjects = true;
             GameManager.Instance.BeginGame();
             onGameBeginning?.Invoke();

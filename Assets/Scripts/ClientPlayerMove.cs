@@ -23,6 +23,7 @@ public class ClientPlayerMove : NetworkBehaviour
     [SerializeField]
     CapsuleCollider m_CapsuleCollider;
 
+    [Header("Camera Follow")]
     [SerializeField]
     Transform m_CameraFollow;
 

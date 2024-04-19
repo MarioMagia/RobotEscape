@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport;
+using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
@@ -71,6 +73,7 @@ namespace LobbyRelaySample.ngo
             UnityTransport transport = NetworkManager.Singleton.GetComponentInChildren<UnityTransport>();
 
             var allocation = await Relay.Instance.CreateAllocationAsync(m_lobby.MaxPlayerCount.Value);
+            transport.SetRelayServerData(new RelayServerData(allocation, "dtls"));
             var joincode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
             GameManager.Instance.HostSetRelayCode(joincode);
 
@@ -87,6 +90,7 @@ namespace LobbyRelaySample.ngo
             UnityTransport transport = NetworkManager.Singleton.GetComponentInChildren<UnityTransport>();
 
             var joinAllocation = await Relay.Instance.JoinAllocationAsync(m_lobby.RelayCode.Value);
+            transport.SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
             bool isSecure = false;
             var endpoint = GetEndpointForAllocation(joinAllocation.ServerEndpoints,
                 joinAllocation.RelayServer.IpV4, joinAllocation.RelayServer.Port, out isSecure);

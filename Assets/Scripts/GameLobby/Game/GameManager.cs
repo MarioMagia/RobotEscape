@@ -11,6 +11,14 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Samples;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode.Transports.UTP;
+using Unity.Netcode;
+using Unity.Networking.Transport.Relay;
+using Unity.Services.Relay.Models;
+
+using Unity.Services.Relay;
+
+
 
 #if UNITY_EDITOR
 using ParrelSync;
@@ -52,6 +60,7 @@ namespace LobbyRelaySample
 
         LocalPlayer m_LocalUser;
         LocalLobby m_LocalLobby;
+        string codigoAll;
 
         LobbyColor m_lobbyColorFilter;
 
@@ -138,17 +147,9 @@ namespace LobbyRelaySample
             SendLocalUserData();
         }
 
-        public void SetLocalLobbyColor(int color)
-        {
-            if (m_LocalLobby.PlayerCount < 1)
-                return;
-            m_LocalLobby.LocalLobbyColor.Value = (LobbyColor)color;
-            SendLocalLobbyData();
-        }
-
         bool updatingLobby;
 
-        async void SendLocalLobbyData()
+        public async void SendLocalLobbyData()
         {
             await LobbyManager.UpdateLobbyDataAsync(LobbyConverters.LocalToRemoteLobbyData(m_LocalLobby));
         }
@@ -214,11 +215,23 @@ namespace LobbyRelaySample
             m_countdown.CancelCountDown();
         }
 
-        public void FinishedCountDown()
-        {
 
+        public async void FinishedCountDown()
+        {
             SceneManager.LoadScene("LevelPrueba");
-            m_setupInGame.StartNetworkedGame(m_LocalLobby, m_LocalUser);
+            if (m_LocalUser.IsHost.Value)
+            {
+                string code = await INICIO.setup(m_LocalLobby.MaxPlayerCount.Value);
+            }
+            else
+            {
+                string codigo = PlayerPrefs.GetString("joinCode");
+                Debug.Log("CODIGO ALLOCATION : "+codigo);
+                Debug.Log("CODIGO RELAY : " + m_LocalLobby.RelayCode.Value);
+                Debug.Log("CODIGO LOBBY : " + m_LocalLobby.LobbyCode.Value);
+                INICIO.setup2(codigo);
+            }
+
         }
 
         public void BeginGame()
@@ -227,10 +240,9 @@ namespace LobbyRelaySample
             {
                 m_LocalLobby.LocalLobbyState.Value = LobbyState.InGame;
                 m_LocalLobby.Locked.Value = true;*/
-                SendLocalLobbyData();
+            //SendLocalLobbyData();
             //}
 
-            SceneManager.LoadScene("LevelPrueba");
         }
 
         public void ClientQuitGame()
