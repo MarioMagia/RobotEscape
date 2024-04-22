@@ -36,6 +36,8 @@ namespace StarterAssets
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+        public GameObject HUD;
+        public DetectMarks detectMarks;
 
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -91,6 +93,9 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+
+        //HUD
+        private GameObject _activeHUD;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -160,6 +165,7 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            _activeHUD = Instantiate(HUD);
         }
         private void Update()
         {

@@ -96,6 +96,15 @@ namespace StarterAssets
         public void AddNewMarkClientRpc(Marca mark)
         {
             marks.Add(mark);
+            if(mark.JugadorCreador == NetworkManager.LocalClientId)
+            {
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().fillTp1();
+            }
+            else
+            {
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().inactiveTp2();
+            }
+            
         }
 
         [Rpc(SendTo.Everyone)]
@@ -103,6 +112,26 @@ namespace StarterAssets
         {
             int index = marks.FindIndex(x => x.Equals(OldMark));
             marks[index] = NewMark;
+            if (NewMark.JugadorCreador == NetworkManager.LocalClientId && NewMark.JugadorAsociado == NetworkManager.LocalClientId)
+            {
+                Debug.Log("you are owner and creator");
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().fillTp1();
+            }
+            else if (NewMark.JugadorCreador != NetworkManager.LocalClientId && NewMark.JugadorAsociado == NetworkManager.LocalClientId)
+            {
+                Debug.Log("you are owner, not creator");
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().fillTp2();
+            }
+            else if (NewMark.JugadorCreador == NetworkManager.LocalClientId && NewMark.JugadorAsociado != NetworkManager.LocalClientId)
+            {
+                Debug.Log("you are creator, not owner");
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().inactiveTp1();
+            }
+            else
+            {
+                Debug.Log("you are not creator or owner");
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().inactiveTp2();
+            }
         }
 
         [Rpc(SendTo.Server)]
@@ -116,6 +145,14 @@ namespace StarterAssets
         public void RemoveMarkClientRpc(Marca mark)
         {
             marks.Remove(mark);
+            if (mark.JugadorCreador == NetworkManager.LocalClientId)
+            {
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().emptyTp1();
+            }
+            else
+            {
+                GameObject.FindGameObjectWithTag("PlayerHUD").GetComponent<PlayerHUDController>().emptyTp2();
+            }
         }
 
         [Rpc(SendTo.Server)]
