@@ -119,14 +119,12 @@ public class ClientPlayerMove : NetworkBehaviour
         {
             m_PlayerInput.actions.FindActionMap("Player").Disable();
             m_PlayerInput.actions.FindActionMap("UI").Enable();
-            Debug.Log("Hola");
         }
         else
         {
 
             m_PlayerInput.actions.FindActionMap("UI").Disable();
             m_PlayerInput.actions.FindActionMap("Player").Enable();
-            Debug.Log("Adi�s");
         }
     }
 
