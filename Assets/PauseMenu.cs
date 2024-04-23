@@ -64,54 +64,64 @@ public class PauseMenu : MonoBehaviour
     }
     public int changePauseState()
     {
-        //0 - pauseOut
-        //1 - pauseIn
-        if (controlsShown && (keyboardControlsPanel.activeInHierarchy || gamepadControlsPanel.activeInHierarchy))
+        if (GameManager.Instance.GetGameState() == GameManager.GameState.OnGoing)
         {
-            QuitScreen("controls");
-            return 1;
-        }
-        else if (settingShown || controlsShown)
-        {
-            Cursor.lockState = CursorLockMode.None;
-
-            if (settingShown)
+            //0 - pauseOut
+            //1 - pauseIn
+            if (controlsShown && (keyboardControlsPanel.activeInHierarchy || gamepadControlsPanel.activeInHierarchy))
             {
-                QuitScreen("settings");
-
-            }
-            else if (controlsShown) {
                 QuitScreen("controls");
+                return 1;
+            }
+            else if (settingShown || controlsShown)
+            {
+                Cursor.lockState = CursorLockMode.None;
+
+                if (settingShown)
+                {
+                    QuitScreen("settings");
+
+                }
+                else if (controlsShown)
+                {
+                    QuitScreen("controls");
+
+                }
+                return 1;
 
             }
-            return 1;
+            else if (menuShown)
+            {
 
+                Cursor.lockState = CursorLockMode.Locked;
+                Hide();
+                Cursor.visible = false;
+                return 0;
+            }
+            else
+            {
+                resumeButton.Select();
+                Cursor.lockState = CursorLockMode.None;
+                Show();
+                Cursor.visible = true;
+                return 1;
+            }
         }
-        else if (menuShown)
-        {
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Hide();
-            Cursor.visible = false;
-            return 0;
-        }
-        else
-        {
-            resumeButton.Select();
-            Cursor.lockState = CursorLockMode.None;
-            Show();
-            Cursor.visible = true;
-            return 1;
-        }
+        return 0;
+           
     }
 
     public void Resume() {
-        pauseMenuUI.SetActive(false);
-        darkLayer.SetActive(false);
-        menuShown = false;
-        _playerInput.actions.FindActionMap("UI").Disable();
-        _playerInput.actions.FindActionMap("Player").Enable();
-        Cursor.visible = false;
+        if (GameManager.Instance.GetGameState() == GameManager.GameState.OnGoing)
+        {
+            pauseMenuUI.SetActive(false);
+            darkLayer.SetActive(false);
+            menuShown = false;
+            _playerInput.actions.FindActionMap("UI").Disable();
+            _playerInput.actions.FindActionMap("Player").Enable();
+            Cursor.visible = false;
+        }
+            
 
         // input_Manager.Resume();
     }
