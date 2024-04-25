@@ -73,7 +73,6 @@ public class PressAllPlatesScript : NetworkBehaviour
                 {
                     myTriggers[myTrigger] = true;
                     triggersActivated++;
-                    Debug.Log("Triggers: " + triggersActivated);
                     checkComplete();
                 }
             }

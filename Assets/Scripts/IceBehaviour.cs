@@ -33,7 +33,6 @@ public class IceBehaviour : NetworkBehaviour
     private void playerOnIceRpc()
     {
         playerCount++;
-        Debug.Log("Players in ice: " + playerCount);
         if (playerCount > 1)
         {
             breakGlassRpc();
@@ -49,18 +48,15 @@ public class IceBehaviour : NetworkBehaviour
     
     IEnumerator enableObject()
     {
-        Debug.Log("Spawning plane...");
         plane.SetActive(false);
         yield return new WaitForSeconds(3.0f);
         plane.SetActive(true);
-        Debug.Log("Spawned plane");
     }
 
     [Rpc(SendTo.Owner)]
     private void playerOutIceRpc()
     {
         playerCount--;
-        Debug.Log("Players in ice: " + playerCount);
     }
 
     private void OnTriggerExit(Collider other)
