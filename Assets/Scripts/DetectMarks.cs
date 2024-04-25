@@ -40,7 +40,6 @@ public class DetectMarks : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-            Debug.Log("no toca");
             marca = null;
             Destroy(nuevo);
     }

@@ -13,7 +13,6 @@ public class CreateGoal : MonoBehaviour
         if (other.gameObject.CompareTag(Tag))
         {
             Goal.SetActive(true);
-            Debug.Log("Detecta Stone");
             
         }
 
@@ -24,7 +23,6 @@ public class CreateGoal : MonoBehaviour
         if (other.gameObject.CompareTag(Tag))
         {
             Goal.SetActive(false);
-            Debug.Log("Detecta sale la Stone");
             
         }
     }

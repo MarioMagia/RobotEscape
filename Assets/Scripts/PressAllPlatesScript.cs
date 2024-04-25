@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PressAllPlatesScript : MonoBehaviour
+public class PressAllPlatesScript : NetworkBehaviour
 {
     public List<GameObject> triggers;
+    private Dictionary<GameObject, bool> myTriggers;
     public Material unpressedMaterial;
     public Material pressedMaterial;
     public float countdownTimer;
@@ -17,6 +19,11 @@ public class PressAllPlatesScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myTriggers = new Dictionary<GameObject, bool>();
+        foreach (GameObject trigger in triggers)
+        {
+            myTriggers.Add(trigger, false);
+        }
         unpressTriggers();
         timeRemaining = countdownTimer;
     }
@@ -27,7 +34,7 @@ public class PressAllPlatesScript : MonoBehaviour
         if (completed) return;
         if (countdownStarted)
         {
-            if(timeRemaining > 0)
+            if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
             }
@@ -48,6 +55,7 @@ public class PressAllPlatesScript : MonoBehaviour
             if (trigger != null)
             {
                 trigger.GetComponent<Renderer>().material = unpressedMaterial;
+                myTriggers[trigger] = false;
             }
         }
     }
@@ -57,12 +65,17 @@ public class PressAllPlatesScript : MonoBehaviour
         if (completed) return;
         foreach (GameObject myTrigger in triggers)
         {
-            if(myTrigger == trigger)
+            if (myTrigger == trigger)
             {
-                myTrigger.GetComponent<Renderer>().material = pressedMaterial;
+                trigger.GetComponent<Renderer>().material = pressedMaterial;
                 countdownStarted = true;
-                triggersActivated++;
-                checkComplete();
+                if (!myTriggers[myTrigger])
+                {
+                    myTriggers[myTrigger] = true;
+                    triggersActivated++;
+                    Debug.Log("Triggers: " + triggersActivated);
+                    checkComplete();
+                }
             }
         }
     }
@@ -71,8 +84,25 @@ public class PressAllPlatesScript : MonoBehaviour
     {
         if (triggersActivated == triggers.Count)
         {
-            completed = true;
-            puerta.GetComponent<DoorController>().Abrir();
+            StartCoroutine(OpenDoor());
         }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void OpenDoorRpc()
+    {
+        puerta.GetComponent<DoorController>().Abrir();
+    }
+
+    IEnumerator OpenDoor()
+    {
+        yield return new WaitForSeconds(0.5f);
+        IceBehaviour ice = FindObjectOfType<IceBehaviour>();
+        if (ice.plane.activeSelf)
+        {
+            completed = true;
+            OpenDoorRpc();
+        }
+        
     }
 }

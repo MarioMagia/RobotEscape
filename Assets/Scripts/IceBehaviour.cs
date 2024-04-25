@@ -23,25 +23,30 @@ public class IceBehaviour : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("a");
         if (other.gameObject.CompareTag("Player"))
         {
             playerOnIceRpc();
         }
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
+    [Rpc(SendTo.Owner)]
     private void playerOnIceRpc()
     {
         playerCount++;
         Debug.Log("Players in ice: " + playerCount);
         if (playerCount > 1)
         {
-            
-            StartCoroutine(enableObject());
+            breakGlassRpc();
         }
     }
 
+    [Rpc(SendTo.ClientsAndHost)]
+    private void breakGlassRpc()
+    {
+        StartCoroutine(enableObject());
+    }
+
+    
     IEnumerator enableObject()
     {
         Debug.Log("Spawning plane...");
@@ -51,7 +56,7 @@ public class IceBehaviour : NetworkBehaviour
         Debug.Log("Spawned plane");
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
+    [Rpc(SendTo.Owner)]
     private void playerOutIceRpc()
     {
         playerCount--;
