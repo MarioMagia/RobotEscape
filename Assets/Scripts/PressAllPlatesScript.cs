@@ -84,8 +84,7 @@ public class PressAllPlatesScript : NetworkBehaviour
     {
         if (triggersActivated == triggers.Count)
         {
-            completed = true;
-            OpenDoorRpc();
+            StartCoroutine(OpenDoor());
         }
     }
 
@@ -93,5 +92,17 @@ public class PressAllPlatesScript : NetworkBehaviour
     private void OpenDoorRpc()
     {
         puerta.GetComponent<DoorController>().Abrir();
+    }
+
+    IEnumerator OpenDoor()
+    {
+        yield return new WaitForSeconds(0.5f);
+        IceBehaviour ice = FindObjectOfType<IceBehaviour>();
+        if (ice.plane.activeSelf)
+        {
+            completed = true;
+            OpenDoorRpc();
+        }
+        
     }
 }
