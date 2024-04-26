@@ -7,6 +7,7 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using System;
 using Random = System.Random;
+using TMPro;
 
 public class TestLobby : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class TestLobby : MonoBehaviour
     private float actualizacionLobby;
     private string nombreJug = "Player";
     private string empezado;
+    [SerializeField] private TMP_Text codeText;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -62,6 +64,7 @@ public class TestLobby : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(nombreLobby, maxJug, createLobbyOptions);
             lobbyCreado = lobby;
             Debug.Log("LOBY CODIGO : " + lobbyCreado.LobbyCode);
+            codeText.SetText(lobbyCreado.LobbyCode);
             Debug.Log("HOST CODIGO : " + lobbyCreado.HostId);
             lobbyUnido = lobbyCreado;
         }
