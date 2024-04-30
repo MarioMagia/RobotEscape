@@ -4,16 +4,24 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
     public Text nivel;
-
+    public enum GameState
+    {
+        OnGoing,
+        End
+    }
+    private GameState _currentState;
     private static GameManager _instance;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(disappearText());   
+        _currentState = GameState.OnGoing;
+        //StartCoroutine(disappearText());  
+        
     }
 
     // Update is called once per frame
@@ -38,8 +46,20 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
+    /*
     IEnumerator disappearText() {
         yield return new WaitForSeconds(5);
         nivel.text = "";
     }
+    */
+
+    public void SetGameState(GameState newState)
+    {
+        _currentState = newState;
+    }
+    public GameState GetGameState()
+    {
+        return _currentState;
+    }
+
 }

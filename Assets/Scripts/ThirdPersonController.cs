@@ -533,7 +533,7 @@ namespace StarterAssets
             if (other.gameObject.tag == "Meta")
             {
                 Debug.Log("Has llegado al final");
-                GameManager.Instance.ChangeSceneMethod("Scene 2");
+                ManagerJuego.Instance.ChangeSceneMethod("Scene 2");
             }
         }
     }

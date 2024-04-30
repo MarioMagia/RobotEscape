@@ -23,6 +23,7 @@ public class ClientPlayerMove : NetworkBehaviour
     [SerializeField]
     CapsuleCollider m_CapsuleCollider;
 
+    [Header("Camera Follow")]
     [SerializeField]
     Transform m_CameraFollow;
 
@@ -31,6 +32,9 @@ public class ClientPlayerMove : NetworkBehaviour
 
     [SerializeField]
     GameObject pauseScreen;
+
+    [SerializeField]
+    GameObject endGamePanel;
 
     [SerializeField]
     DetectMarks detect;
@@ -51,7 +55,14 @@ public class ClientPlayerMove : NetworkBehaviour
         m_ThirdPersonController.enabled = false;
         m_CapsuleCollider.enabled = false;
         m_CharacterController.enabled = false;
+        endGamePanel = Instantiate(endGamePanel);
+        endGamePanel.SetActive(false);
         pauseScreen = Instantiate(pauseScreen);
+    }
+
+    public GameObject GetEndGamePanel()
+    {
+        return endGamePanel;
     }
 
     public override void OnNetworkSpawn()
@@ -119,14 +130,12 @@ public class ClientPlayerMove : NetworkBehaviour
         {
             m_PlayerInput.actions.FindActionMap("Player").Disable();
             m_PlayerInput.actions.FindActionMap("UI").Enable();
-            Debug.Log("Hola");
         }
         else
         {
 
             m_PlayerInput.actions.FindActionMap("UI").Disable();
             m_PlayerInput.actions.FindActionMap("Player").Enable();
-            Debug.Log("Adi�s");
         }
     }
 
