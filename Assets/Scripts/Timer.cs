@@ -9,16 +9,20 @@ public class Timer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI generalTimerText;
     [SerializeField] private TextMeshProUGUI levelCountdownText;
 
+
+    
     private float timerUp = 0f;
     private float timerDown = 300f;
 
     private bool isPaused = false;
 
     private void Start()
-    {      
+    {
+        //Mostramos el tiempo al inico
+        formatTime();
 
         // Iniciar la actualización del temporizador cada segundo
-        InvokeRepeating("UpdateTimer", 0f, 1f);
+        InvokeRepeating("UpdateTimer", 1f, 1f);
     }
 
     // Método para actualizar el temporizador
@@ -33,6 +37,36 @@ public class Timer : MonoBehaviour
         // Restar a la cuenta atras
         timerDown -= 1f;
 
+        formatTime();
+        }
+    }
+
+    // Método para iniciar el temporizador y la cuenta atras
+    public void StartTimer()
+    {
+        isPaused = false;
+    }
+
+    // Método para pausar el temporizador y la cuenta atras
+    public void PauseTimer()
+    {
+        isPaused = true;
+        Debug.Log("Tiempo: " + generalTimerText.text);
+        Debug.Log("Cuenta atrás: " + levelCountdownText.text);
+
+    }
+
+    // Método para reiniciar la cuenta atras
+    public void ResetCountdown(float tiempo)
+    {
+        timerDown = tiempo;
+        formatTime();
+
+    }
+
+    // Método para formatear el tiempo
+    public void formatTime()
+    {
         // Actualizar el texto del temporizador en formato de minutos y segundos
         int minutesUp = Mathf.FloorToInt(timerUp / 60f);
         int secondsUp = Mathf.FloorToInt(timerUp % 60f);
@@ -42,18 +76,6 @@ public class Timer : MonoBehaviour
         int secondsDown = Mathf.FloorToInt(timerDown % 60f);
         generalTimerText.text = string.Format("{0:00}:{1:00}", minutesUp, secondsUp);
         levelCountdownText.text = string.Format("{0:00}:{1:00}", minutesDown, secondsDown);
-        }
-    }
 
-    // Método para iniciar el temporizador
-    public void StartTimer()
-    {
-        isPaused = false;
-    }
-
-    // Método para pausar el temporizador
-    public void PauseTimer()
-    {
-        isPaused = true;
     }
 }
