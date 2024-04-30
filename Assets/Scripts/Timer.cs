@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI generalTimerText;
     [SerializeField] private TextMeshProUGUI levelCountdownText;
 
-    private float timerUp = 3599f;
+    private float timerUp = 0f;
     private float timerDown = 300f;
 
     private bool isPaused = false;
