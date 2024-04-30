@@ -8,6 +8,10 @@ using UnityEngine;
 using System;
 using Random = System.Random;
 using TMPro;
+#if UNITY_EDITOR
+using ParrelSync;
+#endif
+using System.Text;
 
 public class TestLobby : MonoBehaviour
 {
@@ -17,9 +21,17 @@ public class TestLobby : MonoBehaviour
     private Lobby lobbyUnido;
     private float palpito;
     private float actualizacionLobby;
-    private string nombreJug = "Player";
-    private string empezado;
+    private string nombreJug;
     [SerializeField] private TMP_Text codeText;
+    [SerializeField] private TMP_Dropdown level_selection;
+    [SerializeField] private TMP_Dropdown mode_selection;
+    [SerializeField] private TMP_Text level;
+    [SerializeField] private TMP_Text mode;
+    [SerializeField] private TMP_Text player1;
+    [SerializeField] private TMP_Text player2;
+    [SerializeField] private Canvas canvaPreLobby;
+    [SerializeField] private Canvas canvaLobby;
+    botones botones;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -29,17 +41,44 @@ public class TestLobby : MonoBehaviour
     {
         Random random = new Random();
         InitializationOptions initializationOptions = new InitializationOptions();
-        initializationOptions.SetProfile("Player"+random.Next(10));
-
+#if UNITY_EDITOR
+        initializationOptions.SetProfile(GetCloneNameEnd());
+#else
+        initializationOptions.SetProfile("original"+ random.Next(100));
+#endif
         await UnityServices.InitializeAsync(initializationOptions);
 
-        AuthenticationService.Instance.SignedIn += () => {
+        AuthenticationService.Instance.SignedIn += () =>
+        {
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
         };
 
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        botones = FindAnyObjectByType<botones>();
+        nombreJug = NameGenerator.GetName(AuthenticationService.Instance.PlayerId);
     }
+#if UNITY_EDITOR
+    static string GetCloneNameEnd()
+    {
+        //The code below makes it possible for the clone instance to log in as a different user profile in Authentication service.
+        //This allows us to test services integration locally by utilising Parrelsync.
+        if (ClonesManager.IsClone())
+        {
+            var cloneName = ClonesManager.GetCurrentProject().name;
+            var lastUnderscoreIndex = cloneName.LastIndexOf("_"); // Get the last occurrence of "_" in the string
+            var numberStr =
+                cloneName.Substring(lastUnderscoreIndex +
+                    1); // Extract the substring that follows the last occurrence of "_"
+            Debug.Log("NumberStr: " + numberStr);
+            return numberStr;
+        }
+        else
+        {
+            return "original";
+        }
+    }
+#endif
     private void Update()
     {
         LobbyPalpito();
@@ -47,32 +86,71 @@ public class TestLobby : MonoBehaviour
     }
     public async void CreateLobby(string nombreLobby, int maxJug)
     {
-        string nivel = "lvl2";
-        empezado = "no";
+        string nivel = "LevelTutorial";
         try
         {
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
                 IsPrivate = true,
-                Player = GetPlayer(),
+                Player = GetPlayer("si"),
                 Data = new Dictionary<string, DataObject>
                 {
                     {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, nivel) },
-                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, empezado) }
+                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, "no") },
+                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, "history") }
                 }
             };
+            player1.SetText(nombreJug);
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(nombreLobby, maxJug, createLobbyOptions);
+            var callbacks = new LobbyEventCallbacks();
+            callbacks.PlayerDataChanged += onPlayerDataChange;
+            callbacks.PlayerLeft += onPlayerLeft;
+            callbacks.PlayerJoined += onPlayerJoined;
+            await Lobbies.Instance.SubscribeToLobbyEventsAsync(lobby.Id, callbacks);
             lobbyCreado = lobby;
             Debug.Log("LOBY CODIGO : " + lobbyCreado.LobbyCode);
             codeText.SetText(lobbyCreado.LobbyCode);
             Debug.Log("HOST CODIGO : " + lobbyCreado.HostId);
             lobbyUnido = lobbyCreado;
+            if (botones != null)
+            {
+                botones.UnirLobby();
+            }
+            else
+            {
+                Debug.LogError("Botones is null!");
+            }
         }
         catch (LobbyServiceException e)
         {
-            Debug.Log(e);
+            botones.FallodeConexion();
         }
     }
+
+    private void onPlayerJoined(List<LobbyPlayerJoined> list)
+    {
+        player2.SetText(list[0].Player.Data["NombreJug"].Value);
+    }
+
+    private void onPlayerLeft(List<int> list)
+    {
+        player2.SetText("Player 2");
+
+    }
+    private void OnApplicationQuit()
+    {
+        LeaveLobby();
+    }
+    private void onPlayerDataChange(Dictionary<int, Dictionary<string, ChangedOrRemovedLobbyValue<PlayerDataObject>>> dictionary)
+    {
+        Debug.Log("player cambios");
+    }
+    private void onLobbyDeleted()
+    {
+        LeaveLobby();
+    }
+
+
     private async void LobbyPalpito()
     {
         if (lobbyCreado != null)
@@ -91,7 +169,7 @@ public class TestLobby : MonoBehaviour
     {
         if (lobbyUnido != null)
         {
-            
+
             actualizacionLobby -= Time.deltaTime;
             if (actualizacionLobby < 0F)
             {
@@ -99,12 +177,6 @@ public class TestLobby : MonoBehaviour
                 actualizacionLobby = maxPal;
                 Lobby lobby = await LobbyService.Instance.GetLobbyAsync(lobbyUnido.Id);
                 lobbyUnido = lobby;
-                if (empezado == "si" && lobbyUnido.HostId != AuthenticationService.Instance.PlayerId)
-                {
-                    Debug.Log("ERMERESFD");
-                    empesar.crearCLient();
-                    empezado = "no";
-                }
             }
         }
     }
@@ -114,26 +186,44 @@ public class TestLobby : MonoBehaviour
         {
             JoinLobbyByCodeOptions joinLobbyByCode = new JoinLobbyByCodeOptions
             {
-                Player = GetPlayer()
+                Player = GetPlayer("no")
             };
-            Lobby lobby = await Lobbies.Instance.JoinLobbyByCodeAsync(code);
+            Lobby lobby = await Lobbies.Instance.JoinLobbyByCodeAsync(code, joinLobbyByCode);
             lobbyUnido = lobby;
             var callbacks = new LobbyEventCallbacks();
             callbacks.LobbyChanged += OnLobbyChanged;
-            await Lobbies.Instance.SubscribeToLobbyEventsAsync(lobbyUnido.Id, callbacks);
+            callbacks.LobbyDeleted += onLobbyDeleted;
+            callbacks.PlayerLeft += onPlayerLeft;
+            callbacks.PlayerDataChanged += onPlayerDataChange;
+            await Lobbies.Instance.SubscribeToLobbyEventsAsync(lobby.Id, callbacks);
+            codeText.SetText(lobbyUnido.LobbyCode);
+            level.SetText(lobbyUnido.Data["Nivel"].Value);
+            mode.SetText(lobbyUnido.Data["Mode"].Value);
+            level_selection.gameObject.SetActive(false);
+            mode_selection.gameObject.SetActive(false);
+            level.gameObject.SetActive(true);
+            mode.gameObject.SetActive(true);
+            player1.SetText(lobbyUnido.Players[0].Data["NombreJug"].Value);
+            player2.SetText(nombreJug);
+            botones.UnirLobby();
         }
         catch (LobbyServiceException e)
         {
-            Debug.Log(e);
+            botones.FallodeConexion();
         }
     }
 
-    private Player GetPlayer()
+    private Player GetPlayer(string estado)
     {
         return new Player
         {
             Data = new Dictionary<string, PlayerDataObject> {
-                        { "NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nombreJug) }
+                        { "NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nombreJug) },
+                        {
+            "Ready", new PlayerDataObject(
+                visibility: PlayerDataObject.VisibilityOptions.Member,
+                value: estado)
+        }
                     }
         };
     }
@@ -150,11 +240,14 @@ public class TestLobby : MonoBehaviour
             lobbyCreado = await Lobbies.Instance.UpdateLobbyAsync(lobbyCreado.Id, new UpdateLobbyOptions
             {
                 Data = new Dictionary<string, DataObject>
-            {
-                { "Nivel", new DataObject(DataObject.VisibilityOptions.Public, nivel)}
-            }
+                {
+                    {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, nivel) },
+                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Empezado"].Value) },
+                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Mode"].Value) }
+                }
             });
             lobbyUnido = lobbyCreado;
+
         }
         catch (LobbyServiceException e)
         {
@@ -169,7 +262,7 @@ public class TestLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, PlayerDataObject>
             {
-                {"Nombre", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nuevoNombre) }
+                {"NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nuevoNombre) }
             }
             });
         }
@@ -189,30 +282,69 @@ public class TestLobby : MonoBehaviour
             Debug.Log(e);
         }
     }
+    public async void KickPlayer()
+    {
+        try
+        {
+            await LobbyService.Instance.RemovePlayerAsync(lobbyUnido.Id, lobbyUnido.Players[1].Id);
+            player2.SetText("Player 2");
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
     private void OnLobbyChanged(ILobbyChanges changes)
     {
         Debug.Log("Lobby changed");
-        if (changes.Data.Changed)
+        changes.ApplyToLobby(lobbyUnido);
+        level.SetText(lobbyUnido.Data["Nivel"].Value);
+        mode.SetText(lobbyUnido.Data["Mode"].Value);  
+        if (changes.PlayerLeft.Changed)
         {
-            empesar.crearCLient();
+            if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
+            {
+                LeaveLobby();
+                lobbyUnido = null;
+                canvaLobby.gameObject.SetActive(false);
+                canvaPreLobby.gameObject.SetActive(true);
+            }
+        }      
+        if (changes.Data.Value["Empezado"].Changed)
+        {
+            Debug.Log("ERMERESFD");
+            if (lobbyUnido.Data.TryGetValue("Nivel", out DataObject dataObject))
+            {
+                empesar.crearCLient(dataObject.Value);
+            }
         }
-
     }
-    public void setEmpezar()
+    public bool imHost()
     {
-        empezado = "si";
+        if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
+        {
+            Debug.Log("Soy el host");
+            return true;
+        }
+        return false;
     }
     public async void Empezado()
     {
-        empezado = "si";
         try
         {
+            var callbacks = new LobbyEventCallbacks();
+            callbacks.LobbyChanged += (lobby) =>
+            {
+                Debug.Log("Lobby changed: " + lobby);
+            };
             lobbyUnido = await Lobbies.Instance.UpdateLobbyAsync(lobbyUnido.Id, new UpdateLobbyOptions
             {
                 Data = new Dictionary<string, DataObject>
-            {
-                { "Empezado", new DataObject(DataObject.VisibilityOptions.Public, empezado)}
-            }
+                {
+                    {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Nivel"].Value) },
+                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, "si") },
+                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Mode"].Value) }
+                }
             });
         }
         catch (LobbyServiceException e)
@@ -234,5 +366,133 @@ public class TestLobby : MonoBehaviour
         {
             Debug.Log(e);
         }
+    }
+    public async void ChangeMode(string mode)
+    {
+        try
+        {
+            var callbacks = new LobbyEventCallbacks();
+            callbacks.LobbyChanged += (lobby) =>
+            {
+                Debug.Log("Lobby changed: " + lobby);
+            };
+            lobbyCreado = await Lobbies.Instance.UpdateLobbyAsync(lobbyCreado.Id, new UpdateLobbyOptions
+            {
+                Data = new Dictionary<string, DataObject>
+            {
+                {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Nivel"].Value) },
+                {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Empezado"].Value) },
+                {"Mode", new DataObject(DataObject.VisibilityOptions.Public, mode) }
+            }
+            });
+            lobbyUnido = lobbyCreado;
+
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+    public async void ChangeStatus()
+    {
+        string ready = "si";
+        try
+        {
+            await LobbyService.Instance.UpdatePlayerAsync(lobbyUnido.Id, AuthenticationService.Instance.PlayerId, new UpdatePlayerOptions
+            {
+                Data = new Dictionary<string, PlayerDataObject>
+            {
+                {"NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nombreJug) },
+                {"Ready", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, ready) }
+            }
+            });
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+    public bool iReady()
+    {
+        foreach (var player in lobbyUnido.Players)
+        {
+            if (player.Id == AuthenticationService.Instance.PlayerId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool uReady()
+    {
+        foreach (var player in lobbyUnido.Players)
+        {
+            if (player.Id != AuthenticationService.Instance.PlayerId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+public static class NameGenerator
+{
+    public static string GetName(string userId)
+    {
+        int seed = userId.GetHashCode();
+        seed *= Math.Sign(seed);
+        StringBuilder nameOutput = new StringBuilder();
+        #region Word part
+        int word = seed % 22;
+        if (word == 0) // Note that some more data-driven approach would be better.
+            nameOutput.Append("Ant");
+        else if (word == 1)
+            nameOutput.Append("Bear");
+        else if (word == 2)
+            nameOutput.Append("Crow");
+        else if (word == 3)
+            nameOutput.Append("Dog");
+        else if (word == 4)
+            nameOutput.Append("Eel");
+        else if (word == 5)
+            nameOutput.Append("Frog");
+        else if (word == 6)
+            nameOutput.Append("Gopher");
+        else if (word == 7)
+            nameOutput.Append("Heron");
+        else if (word == 8)
+            nameOutput.Append("Ibex");
+        else if (word == 9)
+            nameOutput.Append("Jerboa");
+        else if (word == 10)
+            nameOutput.Append("Koala");
+        else if (word == 11)
+            nameOutput.Append("Llama");
+        else if (word == 12)
+            nameOutput.Append("Moth");
+        else if (word == 13)
+            nameOutput.Append("Newt");
+        else if (word == 14)
+            nameOutput.Append("Owl");
+        else if (word == 15)
+            nameOutput.Append("Puffin");
+        else if (word == 16)
+            nameOutput.Append("Rabbit");
+        else if (word == 17)
+            nameOutput.Append("Snake");
+        else if (word == 18)
+            nameOutput.Append("Trout");
+        else if (word == 19)
+            nameOutput.Append("Vulture");
+        else if (word == 20)
+            nameOutput.Append("Wolf");
+        else
+            nameOutput.Append("Zebra");
+        #endregion
+
+        int number = seed % 1000;
+        nameOutput.Append(number.ToString("000"));
+
+        return nameOutput.ToString();
     }
 }
