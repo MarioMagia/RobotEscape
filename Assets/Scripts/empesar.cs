@@ -25,6 +25,11 @@ public class empesar : MonoBehaviour
             textoReady1.text = "Ready";
             textoReady1.color = Color.green;
         }
+        if (game.uReady())
+        {
+            textoReady1.text = "Ready";
+            textoReady1.color = Color.green;
+        }
     }
     void level_selectionValueChanged(TMP_Dropdown change)
     {
@@ -41,6 +46,13 @@ public class empesar : MonoBehaviour
         }
         else
         {
+            game.ChangeStatus();
+        }
+    }
+    void Update()
+    {
+        if (!game.imHost())
+        {
             if (game.iReady())
             {
                 textoReady2.text = "Ready";
@@ -51,7 +63,19 @@ public class empesar : MonoBehaviour
                 textoReady2.text = "Not Ready";
                 textoReady2.color = Color.white;
             }
-            game.ChangeStatus();
+        }
+        else
+        {
+            if (game.uReady())
+            {
+                textoReady2.text = "Ready";
+                textoReady2.color = Color.green;
+            }
+            else
+            {
+                textoReady2.text = "Not Ready";
+                textoReady2.color = Color.white;
+            }
         }
     }
     public void crearHost()

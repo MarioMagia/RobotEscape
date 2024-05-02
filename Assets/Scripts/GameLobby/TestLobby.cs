@@ -22,6 +22,7 @@ public class TestLobby : MonoBehaviour
     private float palpito;
     private float actualizacionLobby;
     private string nombreJug;
+    private bool ready;
     [SerializeField] private TMP_Text codeText;
     [SerializeField] private TMP_Dropdown level_selection;
     [SerializeField] private TMP_Dropdown mode_selection;
@@ -92,7 +93,7 @@ public class TestLobby : MonoBehaviour
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
                 IsPrivate = true,
-                Player = GetPlayer("si"),
+                Player = GetPlayer(true),
                 Data = new Dictionary<string, DataObject>
                 {
                     {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, nivel) },
@@ -186,7 +187,7 @@ public class TestLobby : MonoBehaviour
         {
             JoinLobbyByCodeOptions joinLobbyByCode = new JoinLobbyByCodeOptions
             {
-                Player = GetPlayer("no")
+                Player = GetPlayer(false)
             };
             Lobby lobby = await Lobbies.Instance.JoinLobbyByCodeAsync(code, joinLobbyByCode);
             lobbyUnido = lobby;
@@ -213,8 +214,9 @@ public class TestLobby : MonoBehaviour
         }
     }
 
-    private Player GetPlayer(string estado)
+    private Player GetPlayer(bool status)
     {
+        string estado = status ? "si" : "no";
         return new Player
         {
             Data = new Dictionary<string, PlayerDataObject> {
@@ -323,7 +325,6 @@ public class TestLobby : MonoBehaviour
     {
         if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
         {
-            Debug.Log("Soy el host");
             return true;
         }
         return false;
@@ -395,7 +396,8 @@ public class TestLobby : MonoBehaviour
     }
     public async void ChangeStatus()
     {
-        string ready = "si";
+        ready = !ready;
+        string estado = ready ? "si":"no";
         try
         {
             await LobbyService.Instance.UpdatePlayerAsync(lobbyUnido.Id, AuthenticationService.Instance.PlayerId, new UpdatePlayerOptions
@@ -403,7 +405,7 @@ public class TestLobby : MonoBehaviour
                 Data = new Dictionary<string, PlayerDataObject>
             {
                 {"NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nombreJug) },
-                {"Ready", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, ready) }
+                {"Ready", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, estado) }
             }
             });
         }
@@ -418,7 +420,8 @@ public class TestLobby : MonoBehaviour
         {
             if (player.Id == AuthenticationService.Instance.PlayerId)
             {
-                return true;
+                if (player.Data["Ready"].Value == "si")
+                    return true;
             }
         }
         return false;
@@ -429,7 +432,8 @@ public class TestLobby : MonoBehaviour
         {
             if (player.Id != AuthenticationService.Instance.PlayerId)
             {
-                return true;
+                if (player.Data["Ready"].Value == "si")
+                    return true;
             }
         }
         return false;
