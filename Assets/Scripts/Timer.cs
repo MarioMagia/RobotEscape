@@ -5,16 +5,20 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-   
+
     [SerializeField] private TextMeshProUGUI generalTimerText;
     [SerializeField] private TextMeshProUGUI levelCountdownText;
 
 
-    
+
     private float timerUp = 0f;
     private float timerDown = 300f;
 
     private bool isPaused = false;
+    private int numCheckpoint = 1;
+
+    private ArrayList checkpointTimes = new ArrayList();
+
 
     private void Start()
     {
@@ -25,19 +29,21 @@ public class Timer : MonoBehaviour
         InvokeRepeating("UpdateTimer", 1f, 1f);
     }
 
+
+
     // Método para actualizar el temporizador
     private void UpdateTimer()
     {
         if (!isPaused)
         {
 
-        // Incrementar el temporizador general
-        timerUp += 1f;
+            // Incrementar el temporizador general
+            timerUp += 1f;
 
-        // Restar a la cuenta atras
-        timerDown -= 1f;
+            // Restar a la cuenta atras
+            timerDown -= 1f;
 
-        formatTime();
+            formatTime();
         }
     }
 
@@ -64,6 +70,14 @@ public class Timer : MonoBehaviour
 
     }
 
+    // Método para reiniciar el temporizador general
+    public void ResetTimer(float tiempo)
+    {
+        timerUp = 0;
+        formatTime();
+
+    }
+
     // Método para formatear el tiempo
     public void formatTime()
     {
@@ -78,4 +92,28 @@ public class Timer : MonoBehaviour
         levelCountdownText.text = string.Format("{0:00}:{1:00}", minutesDown, secondsDown);
 
     }
+
+    public string getTime()
+    {
+        //Cogemos el tiempo de la cuenta atras 
+        string time = levelCountdownText.text;        
+        return time;
+
+    }
+
+    //Funcion para guardar un
+    public void saveTimes(string time) {
+        
+        string checkpointKey = "Checkpoint " + numCheckpoint;
+        checkpointTimes.Add(new KeyValuePair<string, string>(checkpointKey, time));
+        numCheckpoint++; // Incrementamos el número de checkpoint
+
+        foreach (KeyValuePair<string, string> pair in checkpointTimes)
+        {
+            Debug.Log(pair.Key + ", Tiempo: " + pair.Value);
+        }
+    }
+
+
+
 }
