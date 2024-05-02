@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Levels/LevelPrueba.unity
     guid: e351b8ab78e21d84c93d4163978e7ad8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: e9b4c62293c310441b74d7a2467def5b
   - enabled: 1
