@@ -6150,6 +6150,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpointTime
       objectReference: {fileID: 0}
+    - target: {fileID: 1563627005604631698, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalScale.z
