@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class GetTime : MonoBehaviour
+public class GetTime : NetworkBehaviour
 {
     string time;
     private Timer Timer;
+
+    [SerializeField] private string checkpointName;
 
     int playerCount = 0;
 
@@ -24,7 +26,7 @@ public class GetTime : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            playerChechpointTime();
+            playerChechpointTimeRpc();
 
             //Debug.Log("Tiempo: " + time);
             //Guardamos el tiempo
@@ -37,22 +39,25 @@ public class GetTime : MonoBehaviour
     }
 
     [Rpc(SendTo.Owner)]
-    private void playerChechpointTime()
+    private void playerChechpointTimeRpc()
     {
         playerCount++;
         if (playerCount > 1)
         {
             //Cogemos el tiempo de la cuenta atras que tenemos en el momento
             time = Timer.getTime();
-            Timer.saveTimes(time);
-            destoryCheckpoint();
+            Timer.saveTimes(time,checkpointName);
+            destoryCheckpointRpc();
         }
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    private void destoryCheckpoint()
+    [Rpc(SendTo.Server)]
+    private void destoryCheckpointRpc()
     {
-        Destroy(this.gameObject);
+        //Buscamos el componente Networkobject dentro del checkpoint teleport
+        NetworkObject networkObject = this.gameObject.GetComponent<NetworkObject>();
+        //Lo eliminamos
+        networkObject.Despawn(true);
 
     }
 

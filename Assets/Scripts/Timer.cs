@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI generalTimerText;
     [SerializeField] private TextMeshProUGUI levelCountdownText;
+    
 
 
 
@@ -15,7 +16,7 @@ public class Timer : MonoBehaviour
     private float timerDown = 300f;
 
     private bool isPaused = false;
-    private int numCheckpoint = 1;
+    
 
     private ArrayList checkpointTimes = new ArrayList();
 
@@ -101,12 +102,12 @@ public class Timer : MonoBehaviour
 
     }
 
-    //Funcion para guardar un
-    public void saveTimes(string time) {
+    //Funcion para guardar el tiempo cuando se destruya el checkpoint
+    public void saveTimes(string time,string name) {
         
-        string checkpointKey = "Checkpoint " + numCheckpoint;
+        string checkpointKey = "Checkpoint " + name;
         checkpointTimes.Add(new KeyValuePair<string, string>(checkpointKey, time));
-        numCheckpoint++; // Incrementamos el número de checkpoint
+        
 
         foreach (KeyValuePair<string, string> pair in checkpointTimes)
         {
