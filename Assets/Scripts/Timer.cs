@@ -8,12 +8,11 @@ public class Timer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI generalTimerText;
     [SerializeField] private TextMeshProUGUI levelCountdownText;
-    
-
+    [SerializeField] private GameObject LoseCanvas;
 
 
     private float timerUp = 0f;
-    private float timerDown = 300f;
+    private float timerDown = 2f;
 
     private bool isPaused = false;
     
@@ -37,14 +36,21 @@ public class Timer : MonoBehaviour
     {
         if (!isPaused)
         {
+            if (timerDown > 0)
+            {
+                // Incrementar el temporizador general
+                timerUp += 1f;
 
-            // Incrementar el temporizador general
-            timerUp += 1f;
+                // Restar a la cuenta atras
+                timerDown -= 1f;
 
-            // Restar a la cuenta atras
-            timerDown -= 1f;
-
-            formatTime();
+                formatTime();
+            }
+            else {
+                LoseCanvas.SetActive(true);
+                isPaused = true;
+                
+            }
         }
     }
 
