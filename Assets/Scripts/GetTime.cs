@@ -8,6 +8,8 @@ public class GetTime : NetworkBehaviour
     string time;
     private Timer Timer;
 
+    private bool pasado=false;
+
     [SerializeField] private string checkpointName;
 
     int playerCount = 0;
@@ -26,14 +28,17 @@ public class GetTime : NetworkBehaviour
 
         if (other.CompareTag("Player"))
         {
-            playerChechpointTimeRpc();
+
+            if (!pasado)
+            {
+                playerChechpointTimeRpc();
+                pasado = true;
+            }
 
             //Debug.Log("Tiempo: " + time);
-            //Guardamos el tiempo
+           
             
-            //Destruimos el objeto del checkpoint para que no puedes volver a registrar tiempo si vuelves para atras
-            //Destroy(this.gameObject);
-
+           
         }
         
     }
@@ -41,6 +46,7 @@ public class GetTime : NetworkBehaviour
     [Rpc(SendTo.Owner)]
     private void playerChechpointTimeRpc()
     {
+      
         playerCount++;
         if (playerCount > 1)
         {
