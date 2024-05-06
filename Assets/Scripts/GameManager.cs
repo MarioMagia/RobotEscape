@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
     public void ChangeSceneMethod(string scene)
     {
         SceneManager.LoadScene(scene);
+        
+       
     }
     /*
     IEnumerator disappearText() {

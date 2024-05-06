@@ -42,11 +42,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 965447763033021367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a07dc121cec9196449ced6d70cdbcc09, type: 3}
+  m_Script: {fileID: 11500000, guid: 87e5394d1251b4646bfdeed4f82a418b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompletingRequirement: Player
-  endGamePanel: {fileID: 0}
 --- !u!65 &3499752510899776969
 BoxCollider:
   m_ObjectHideFlags: 0

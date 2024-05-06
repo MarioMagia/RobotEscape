@@ -704,6 +704,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 658745118}
     m_Modifications:
+    - target: {fileID: 769072961898957856, guid: 76b88e18b013de34a95bddd308f636f7,
+        type: 3}
+      propertyPath: m_text
+      value: ROBOT ESCAPE
+      objectReference: {fileID: 0}
     - target: {fileID: 2081716904521840409, guid: 76b88e18b013de34a95bddd308f636f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
