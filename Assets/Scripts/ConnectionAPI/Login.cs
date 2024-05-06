@@ -26,7 +26,7 @@ public class Login : MonoBehaviour
             LoginData loginData = new LoginData();
             loginData.email = logindata[0];
             loginData.password = logindata[1];
-            StartCoroutine(loginAPI("http://localhost:3666/users/login", JsonUtility.ToJson(loginData)));
+            StartCoroutine(loginAPI(Settings.URL+"/users/login", JsonUtility.ToJson(loginData)));
             // Now you can parse/process the fileContents as needed
         }
         else
