@@ -18,10 +18,10 @@ public class EndGameManager : MonoBehaviour
 
     public void ReturnLobby() {
 
-        GameManager.Instance.ChangeSceneMethod("Playground");
+        GameManager.Instance.ChangeSceneMethod("Lobby");
     }
     public void Exit() {
-        GameManager.Instance.ChangeSceneMethod("Playground");
+        GameManager.Instance.ChangeSceneMethod("MainMenu");
 
     }
 }

@@ -1099,11 +1099,11 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6930928445235239878, guid: 5ca394c07a6ada94c827081011777895,
+      - m_Target: {fileID: 4120349414163250132, guid: c5291432b4b604b4298f3bf0dd361680,
           type: 3}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ChangeSceneMethod
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Timer, Assembly-CSharp
+        m_MethodName: ReturnMainMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

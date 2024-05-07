@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
-public class Timer : MonoBehaviour
+public class Timer : NetworkBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI generalTimerText;
@@ -12,7 +14,7 @@ public class Timer : MonoBehaviour
 
 
     private float timerUp = 0f;
-    private float timerDown = 2f;
+    private float timerDown = 10f;
 
     private bool isPaused = false;
     
@@ -47,8 +49,8 @@ public class Timer : MonoBehaviour
                 formatTime();
             }
             else {
-                LoseCanvas.SetActive(true);
-                isPaused = true;
+                LoseRpc();
+                
                 
             }
         }
@@ -119,6 +121,23 @@ public class Timer : MonoBehaviour
         {
             Debug.Log(pair.Key + ", Tiempo: " + pair.Value);
         }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void LoseRpc()
+    {
+        LoseCanvas.SetActive(true);
+        isPaused = true;
+
+    }
+
+   
+    public void ReturnMainMenu()
+    {
+        NetworkManager.Singleton.Shutdown();        
+
+        SceneManager.LoadScene("MainMenu");
+
     }
 
 

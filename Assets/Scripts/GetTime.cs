@@ -52,7 +52,9 @@ public class GetTime : NetworkBehaviour
         {
             //Cogemos el tiempo de la cuenta atras que tenemos en el momento
             time = Timer.getTime();
+            //Guardamos el tiempo
             Timer.saveTimes(time,checkpointName);
+            //Llamamos a la funcion para destruir el checkpoint
             destoryCheckpointRpc();
         }
     }

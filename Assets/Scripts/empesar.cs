@@ -82,9 +82,13 @@ public class empesar : MonoBehaviour
     {
         game.Empezado();
         SceneManager.LoadScene(level_selection.options[level_selection.value].text);
+        
         SceneManager.activeSceneChanged += (arg0, arg1) =>
         {
-            NetworkManager.Singleton.StartHost();
+            if (arg1.name == level_selection.options[level_selection.value].text)
+            {
+                NetworkManager.Singleton.StartHost();
+            }
         };
     }
     public static void crearCLient(string sala)
