@@ -131,12 +131,17 @@ public class Timer : NetworkBehaviour
 
     }
 
-   
+    
     public void ReturnMainMenu()
     {
         NetworkManager.Singleton.Shutdown();        
 
         SceneManager.LoadScene("MainMenu");
+        
+        //NetworkManager.SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);
+        
+
+
 
     }
 
