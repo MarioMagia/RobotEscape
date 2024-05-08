@@ -129,6 +129,7 @@ public class TestLobby : MonoBehaviour
         catch (LobbyServiceException e)
         {
             botones.FallodeConexion();
+            Debug.Log(e);
         }
     }
 
@@ -215,6 +216,7 @@ public class TestLobby : MonoBehaviour
         catch (LobbyServiceException e)
         {
             botones.FallodeConexion();
+            Debug.Log(e);
         }
     }
 
