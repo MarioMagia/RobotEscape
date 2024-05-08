@@ -36,11 +36,12 @@ public class TestLobby : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        botones = FindObjectOfType<botones>();
         Instance = this;
     }
     private async void Start()
     {
-        Random random = new Random();
+            Random random = new Random();
         InitializationOptions initializationOptions = new InitializationOptions();
 #if UNITY_EDITOR
         initializationOptions.SetProfile(GetCloneNameEnd());
@@ -49,13 +50,16 @@ public class TestLobby : MonoBehaviour
 #endif
         await UnityServices.InitializeAsync(initializationOptions);
 
-        AuthenticationService.Instance.SignedIn += () =>
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            AuthenticationService.Instance.SignedIn += () =>
         {
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
         };
 
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
         botones = FindAnyObjectByType<botones>();
         nombreJug = NameGenerator.GetName(AuthenticationService.Instance.PlayerId);
     }

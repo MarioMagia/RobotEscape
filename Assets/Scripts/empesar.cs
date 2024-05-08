@@ -100,7 +100,8 @@ public class empesar : MonoBehaviour
                                 "127.0.0.1",  // IP que entra por el input
                                 7777 // Puerto server
                             );
-            NetworkManager.Singleton.StartClient();
+            if (arg1.name == sala)
+                NetworkManager.Singleton.StartClient();
         };
 
     }
