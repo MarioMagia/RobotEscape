@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class Timer : NetworkBehaviour
 {
@@ -11,6 +12,7 @@ public class Timer : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI generalTimerText;
     [SerializeField] private TextMeshProUGUI levelCountdownText;
     [SerializeField] private GameObject LoseCanvas;
+    [SerializeField] PlayerInput m_PlayerInput;
 
 
     private float timerUp = 0f;
@@ -128,6 +130,8 @@ public class Timer : NetworkBehaviour
     {
         LoseCanvas.SetActive(true);
         isPaused = true;
+        m_PlayerInput.actions.FindActionMap("Player").Disable();
+        m_PlayerInput.actions.FindActionMap("UI").Enable();
 
     }
 
