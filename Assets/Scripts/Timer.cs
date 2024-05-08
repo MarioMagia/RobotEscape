@@ -131,17 +131,22 @@ public class Timer : NetworkBehaviour
 
     }
 
-    
-    public void ReturnMainMenu()
+    [Rpc(SendTo.Server)]
+    public void ReturnMainMenuRpc()
     {
-        NetworkManager.Singleton.Shutdown();        
+        foreach (var ConnectedClient in NetworkManager.ConnectedClientsIds) {
+            NetworkManager.Singleton.DisconnectClient(ConnectedClient);
+        }        
+        
+        NetworkManager.Singleton.Shutdown();
 
-        SceneManager.LoadScene("MainMenu");
+        /*GameObject network = FindAnyObjectByType<NetworkManager>().gameObject;
+        Debug.Log(network+ "Encontrado objeto NetworkManager");
+        Destroy(network);*/
+
+        //SceneManager.LoadScene("MainMenu");
         
         //NetworkManager.SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);
-        
-
-
 
     }
 

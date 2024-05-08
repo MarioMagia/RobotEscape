@@ -10165,7 +10165,7 @@ PrefabInstance:
     - target: {fileID: 3111653523208351724, guid: ef9c4155f63bcbb4fae1d6a2a68108bd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReturnMainMenu
+      value: ReturnMainMenuRpc
       objectReference: {fileID: 0}
     - target: {fileID: 3111653523208351724, guid: ef9c4155f63bcbb4fae1d6a2a68108bd,
         type: 3}

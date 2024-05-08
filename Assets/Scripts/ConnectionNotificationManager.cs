@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 /// This will provide you with a single location to register for client
 /// connect and disconnect events.  
 /// </summary>
-public class ConnectionNotificationManager : MonoBehaviour
+public class ConnectionNotificationManager : NetworkBehaviour
 {
     public static ConnectionNotificationManager Singleton { get; internal set; }
 
@@ -74,7 +74,18 @@ public class ConnectionNotificationManager : MonoBehaviour
     private void OnClientDisconnectCallback(ulong clientId)
     {
         OnClientConnectionNotification?.Invoke(clientId, ConnectionStatus.Disconnected);
-        NetworkManager.Singleton.Shutdown();
+
+        
+        if (NetworkManager.Singleton != null)
+        {
+           /* Debug.Log(NetworkManager.Singleton.ShutdownInProgress);
+            Destroy(NetworkManager.Singleton.gameObject);*/
+        }
+
+        /*GameObject network = FindAnyObjectByType<NetworkManager>().gameObject;
+        Debug.Log(network + "Encontrado objeto NetworkManager");
+        Destroy(network);*/
+        //NetworkManager.Singleton.Shutdown();
         SceneManager.LoadScene("MainMenu");
     }
 }
