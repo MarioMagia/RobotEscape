@@ -307,7 +307,8 @@ public class TestLobby : MonoBehaviour
         Debug.Log("Lobby changed");
         changes.ApplyToLobby(lobbyUnido);
         level.SetText(lobbyUnido.Data["Nivel"].Value);
-        mode.SetText(lobbyUnido.Data["Mode"].Value);  
+        mode.SetText(lobbyUnido.Data["Mode"].Value);
+        
         if (changes.PlayerLeft.Changed)
         {
             if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)

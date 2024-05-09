@@ -21,9 +21,9 @@ public class Timer : NetworkBehaviour
 
     private ArrayList checkpointTimes = new ArrayList();
 
-
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
         //Mostramos el tiempo al inico
         formatTime();
 

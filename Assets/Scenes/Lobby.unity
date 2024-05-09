@@ -516,6 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level_selection: {fileID: 1909827839}
+  mode_selection: {fileID: 157588278}
   Ready: {fileID: 1928453868}
   textoReady1: {fileID: 1013794234}
   textoReady2: {fileID: 1873238683}
@@ -2321,7 +2322,6 @@ GameObject:
   - component: {fileID: 1023514436}
   - component: {fileID: 1023514435}
   - component: {fileID: 1023514434}
-  - component: {fileID: 1023514437}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -2376,6 +2376,7 @@ MonoBehaviour:
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: d54d3ef95de0c0842b5ae754f98ef7a2, type: 2}
+      - {fileID: 11400000, guid: f2d9c0ff8e3ba3e41ba6776cd4d4b4bf, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -2409,18 +2410,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1023514437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1023514433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ae249e2871acca4fadff2fcc566dbaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1128359405
 GameObject:
   m_ObjectHideFlags: 0

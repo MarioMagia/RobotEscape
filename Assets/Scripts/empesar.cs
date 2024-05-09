@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class empesar : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown level_selection;
+    [SerializeField] private TMP_Dropdown mode_selection;
     [SerializeField] private Button Ready;
     [SerializeField] private TMP_Text textoReady1;
     [SerializeField] private TMP_Text textoReady2;
@@ -18,8 +19,6 @@ public class empesar : MonoBehaviour
     private void Awake()
     {
         game = FindObjectOfType<TestLobby>();
-        level_selection.onValueChanged.AddListener(delegate { level_selectionValueChanged(level_selection); });
-        Ready.onClick.AddListener(() => { Incio(); });
         if (game.iReady())
         {
             textoReady1.text = "Ready";
@@ -30,10 +29,19 @@ public class empesar : MonoBehaviour
             textoReady1.text = "Ready";
             textoReady1.color = Color.green;
         }
+        game = FindObjectOfType<TestLobby>();
+        level_selection.onValueChanged.AddListener(delegate { level_selectionValueChanged(level_selection); });
+        mode_selection.onValueChanged.AddListener(delegate { mode_selectionValueChanged(mode_selection); });
+        Ready.onClick.AddListener(() => { Incio(); });
+        
     }
     void level_selectionValueChanged(TMP_Dropdown change)
     {
         game.ChangeLevel(change.options[change.value].text);
+    }
+    void mode_selectionValueChanged(TMP_Dropdown change)
+    {
+        game.ChangeMode(change.options[change.value].text);
     }
     void Incio()
     {
@@ -85,6 +93,8 @@ public class empesar : MonoBehaviour
         
         SceneManager.activeSceneChanged += (arg0, arg1) =>
         {
+            PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
+            PlayerPrefs.Save();
             if (arg1.name == level_selection.options[level_selection.value].text)
             {
                 NetworkManager.Singleton.StartHost();
@@ -96,6 +106,8 @@ public class empesar : MonoBehaviour
         SceneManager.LoadScene(sala);
         SceneManager.activeSceneChanged += (arg0, arg1) =>
         {
+            PlayerPrefs.SetString("MODO", sala);
+            PlayerPrefs.Save();
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
                                 "127.0.0.1",  // IP que entra por el input
                                 7777 // Puerto server

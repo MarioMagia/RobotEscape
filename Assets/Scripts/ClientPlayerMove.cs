@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using StarterAssets;
 using Unity.Netcode;
@@ -13,7 +14,7 @@ public class ClientPlayerMove : NetworkBehaviour
 {
     [SerializeField]
     ServerPlayerMove m_ServerPlayerMove;
-    
+
     [SerializeField]
     CharacterController m_CharacterController;
 
@@ -77,11 +78,9 @@ public class ClientPlayerMove : NetworkBehaviour
             m_CapsuleCollider.enabled = true;
             return;
         }
-
-        // player input is only enabled on owning players
         m_PlayerInput.enabled = true;
         m_ThirdPersonController.enabled = true;
-        m_CharacterController.enabled = true;        
+        m_CharacterController.enabled = true;
         var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = m_CameraFollow;
     }
@@ -116,10 +115,10 @@ public class ClientPlayerMove : NetworkBehaviour
     }
     void OnTakeMark()
     {
-            Debug.Log("TOCAAAA");
-            detect.TM();
+        Debug.Log("TOCAAAA");
+        detect.TM();
 
-            
+
     }
 
     void OnPauseMenu()
