@@ -41,6 +41,8 @@ public class ClientPlayerMove : NetworkBehaviour
 
     RaycastHit[] m_HitColliders = new RaycastHit[4];
 
+    public bool gameFinish;
+
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -58,6 +60,7 @@ public class ClientPlayerMove : NetworkBehaviour
         endGamePanel = Instantiate(endGamePanel);
         endGamePanel.SetActive(false);
         pauseScreen = Instantiate(pauseScreen);
+        gameFinish = false;
     }
 
     public GameObject GetEndGamePanel()
@@ -124,6 +127,7 @@ public class ClientPlayerMove : NetworkBehaviour
 
     void OnPauseMenu()
     {
+        if(gameFinish) return;
         Debug.Log("Pause input");
         int pauseState = pauseScreen.GetComponent<PauseMenu>().changePauseState();
         if (pauseState == 1)

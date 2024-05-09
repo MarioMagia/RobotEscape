@@ -5,36 +5,64 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DetectCollisions : MonoBehaviour
+public class DetectCollisions : NetworkBehaviour
 {
-
-    private GameObject endGamePanel;
-
-    [SerializeField]
-    PlayerInput m_PlayerInput;
-    void Start()
-    {   
-        // Find the ClientPlayerMove script and get the instantiated endGamePanel
-        ClientPlayerMove clientPlayerMove = FindObjectOfType<ClientPlayerMove>();
-        if (clientPlayerMove != null)
+    private int playersWaiting = 0;
+    private GameObject player;
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Player"))
         {
-            endGamePanel = clientPlayerMove.GetEndGamePanel();
+            player = other.gameObject;
+            AddPlayersWaitingRpc();
         }
     }
-    // Start is called before the first frame update
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("Meta")) {
-            if (endGamePanel != null)
-            {
-                Debug.Log("Existe");
-                endGamePanel.SetActive(true);
-                GameManager.Instance.SetGameState(GameManager.GameState.End);
-            }
-            else {
-                Debug.Log("No existe");
-            }
-            m_PlayerInput.actions.FindActionMap("Player").Disable();
-            m_PlayerInput.actions.FindActionMap("UI").Enable();
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            RemovePlayersWaitingRpc();
         }
+            
+    }
+
+    [Rpc(SendTo.Server)]
+    private void AddPlayersWaitingRpc()
+    {
+        playersWaiting++;
+        if(playersWaiting > 1)
+        {
+            FinishLevelRpc();
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void RemovePlayersWaitingRpc()
+    {
+        playersWaiting--;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void FinishLevelRpc()
+    {
+        ClientPlayerMove playerMove = player.GetComponent<ClientPlayerMove>();
+        playerMove.gameFinish = true;
+        GameObject endGamePanel = playerMove.GetEndGamePanel();
+        PlayerInput input = player.GetComponent<PlayerInput>();
+        if (endGamePanel != null)
+        {
+            Debug.Log("Existe");
+            endGamePanel.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Debug.Log("No existe");
+        }
+        input.actions.FindActionMap("Player").Disable();
+        input.actions.FindActionMap("UI").Enable();
+        
+        
     }
 }

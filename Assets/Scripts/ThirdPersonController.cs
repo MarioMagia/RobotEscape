@@ -528,13 +528,5 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.position, FootstepAudioVolume);
             }
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == "Meta")
-            {
-                Debug.Log("Has llegado al final");
-                ManagerJuego.Instance.ChangeSceneMethod("Scene 2");
-            }
-        }
     }
 }
