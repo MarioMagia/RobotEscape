@@ -125,7 +125,7 @@ public class Timer : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.ClientsAndHost)]
     private void LoseRpc()
     {
         LoseCanvas.SetActive(true);
