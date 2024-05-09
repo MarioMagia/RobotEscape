@@ -133,20 +133,9 @@ public class Timer : NetworkBehaviour
 
     [Rpc(SendTo.Server)]
     public void ReturnMainMenuRpc()
-    {
-        foreach (var ConnectedClient in NetworkManager.ConnectedClientsIds) {
-            NetworkManager.Singleton.DisconnectClient(ConnectedClient);
-        }        
+    {  
         
         NetworkManager.Singleton.Shutdown();
-
-        /*GameObject network = FindAnyObjectByType<NetworkManager>().gameObject;
-        Debug.Log(network+ "Encontrado objeto NetworkManager");
-        Destroy(network);*/
-
-        //SceneManager.LoadScene("MainMenu");
-        
-        //NetworkManager.SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);
 
     }
 

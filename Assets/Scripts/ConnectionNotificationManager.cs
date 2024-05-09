@@ -78,14 +78,9 @@ public class ConnectionNotificationManager : NetworkBehaviour
         
         if (NetworkManager.Singleton != null)
         {
-           /* Debug.Log(NetworkManager.Singleton.ShutdownInProgress);
-            Destroy(NetworkManager.Singleton.gameObject);*/
+           Debug.Log(NetworkManager.Singleton.ShutdownInProgress);
+           Destroy(NetworkManager.Singleton.gameObject);
         }
-
-        /*GameObject network = FindAnyObjectByType<NetworkManager>().gameObject;
-        Debug.Log(network + "Encontrado objeto NetworkManager");
-        Destroy(network);*/
-        //NetworkManager.Singleton.Shutdown();
         SceneManager.LoadScene("MainMenu");
     }
 }
