@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 167246706042522326}
   - component: {fileID: 6930928445235239878}
+  - component: {fileID: 3810389277992276069}
   m_Layer: 0
   m_Name: '[ Game Manager ]'
   m_TagString: Untagged
@@ -46,3 +47,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 9032616161167077299, guid: bb14c878b1c657c488a2aa4e813ce777, type: 3}
   nivel: {fileID: 0}
+--- !u!114 &3810389277992276069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8699678886305575457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4c100d16c0f864687c2dac4a4d16ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nuevaFontText: {fileID: 12800000, guid: c9f6d0e7bc8541498c9a4799ba184ede, type: 3}
+  nuevaFontTextMesh: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
