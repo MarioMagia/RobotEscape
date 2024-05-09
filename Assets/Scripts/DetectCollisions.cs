@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class DetectCollisions : NetworkBehaviour
 {
+    [SerializeField]
+    private GameObject endGamePanel;
     private int playersWaiting = 0;
     private GameObject player;
     private void OnTriggerEnter(Collider other) {
@@ -47,7 +49,6 @@ public class DetectCollisions : NetworkBehaviour
     {
         ClientPlayerMove playerMove = player.GetComponent<ClientPlayerMove>();
         playerMove.gameFinish = true;
-        GameObject endGamePanel = playerMove.GetEndGamePanel();
         PlayerInput input = player.GetComponent<PlayerInput>();
         if (endGamePanel != null)
         {

@@ -34,9 +34,6 @@ public class ClientPlayerMove : NetworkBehaviour
     GameObject pauseScreen;
 
     [SerializeField]
-    GameObject endGamePanel;
-
-    [SerializeField]
     DetectMarks detect;
 
     RaycastHit[] m_HitColliders = new RaycastHit[4];
@@ -57,15 +54,8 @@ public class ClientPlayerMove : NetworkBehaviour
         m_ThirdPersonController.enabled = false;
         m_CapsuleCollider.enabled = false;
         m_CharacterController.enabled = false;
-        endGamePanel = Instantiate(endGamePanel);
-        endGamePanel.SetActive(false);
         pauseScreen = Instantiate(pauseScreen);
         gameFinish = false;
-    }
-
-    public GameObject GetEndGamePanel()
-    {
-        return endGamePanel;
     }
 
     public override void OnNetworkSpawn()
