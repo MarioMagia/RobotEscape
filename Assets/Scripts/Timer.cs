@@ -21,7 +21,7 @@ public class Timer : NetworkBehaviour
 
     private ArrayList checkpointTimes = new ArrayList();
 
-    public override void OnNetworkSpawn()
+    public void Inicio()
     {
         base.OnNetworkSpawn();
         //Mostramos el tiempo al inico
@@ -122,8 +122,13 @@ public class Timer : NetworkBehaviour
             Debug.Log(pair.Key + ", Tiempo: " + pair.Value);
         }
     }
+    public void historyMode()
+    {
+        generalTimerText.gameObject.SetActive(false);
+        levelCountdownText.gameObject.SetActive(false);
+    }
 
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.ClientsAndHost)]
     private void LoseRpc()
     {
         LoseCanvas.SetActive(true);

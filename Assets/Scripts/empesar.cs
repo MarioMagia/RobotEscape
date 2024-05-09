@@ -94,6 +94,7 @@ public class empesar : MonoBehaviour
         SceneManager.activeSceneChanged += (arg0, arg1) =>
         {
             PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
+            Debug.Log(PlayerPrefs.GetString("MODO"));
             PlayerPrefs.Save();
             if (arg1.name == level_selection.options[level_selection.value].text)
             {
@@ -106,8 +107,6 @@ public class empesar : MonoBehaviour
         SceneManager.LoadScene(sala);
         SceneManager.activeSceneChanged += (arg0, arg1) =>
         {
-            PlayerPrefs.SetString("MODO", sala);
-            PlayerPrefs.Save();
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
                                 "127.0.0.1",  // IP que entra por el input
                                 7777 // Puerto server
