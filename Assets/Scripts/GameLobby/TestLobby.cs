@@ -317,13 +317,14 @@ public class TestLobby : MonoBehaviour
                 canvaLobby.gameObject.SetActive(false);
                 canvaPreLobby.gameObject.SetActive(true);
             }
-        }      
+        }
+        Debug.Log(changes.Data.Value["Empezado"].Changed);
         if (changes.Data.Value["Empezado"].Changed)
         {
             Debug.Log("ERMERESFD");
             if (lobbyUnido.Data.TryGetValue("Nivel", out DataObject dataObject))
             {
-                empesar.crearCLient(dataObject.Value);
+                FindAnyObjectByType<empesar>().crearClient(dataObject.Value);
             }
         }
     }

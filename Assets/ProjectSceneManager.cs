@@ -26,6 +26,10 @@ public class ProjectSceneManager : MonoBehaviour
     public void ReloadPlayerRpc()
     {
         Debug.Log("Holaaaajsdsajda");
-        NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ReloadPlayer>().Reload();
+        if(NetworkManager.Singleton.LocalClient.PlayerObject != null)
+        {
+            NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ReloadPlayer>().Reload();
+        }
+        
     }
 }

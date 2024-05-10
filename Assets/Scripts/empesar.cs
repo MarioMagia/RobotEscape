@@ -13,6 +13,7 @@ public class empesar : MonoBehaviour
     [SerializeField] private Button Ready;
     [SerializeField] private TMP_Text textoReady1;
     [SerializeField] private TMP_Text textoReady2;
+    [SerializeField] private GameObject ProjectSceneManager;
     TestLobby game;
     // Start is called before the first frame update
     private void Awake()
@@ -87,11 +88,15 @@ public class empesar : MonoBehaviour
         {
             if (arg1.name == level_selection.options[level_selection.value].text)
             {
-                NetworkManager.Singleton.StartHost();
+                bool started = NetworkManager.Singleton.StartHost();
+                if (started && !(GameObject.Find("[ Game Manager ]")))
+                {
+                    Instantiate(ProjectSceneManager);
+                }
             }
         };
     }
-    public static void crearCLient(string sala)
+    public void crearClient(string sala)
     {
         SceneManager.LoadScene(sala);
         SceneManager.activeSceneChanged += (arg0, arg1) =>
@@ -101,7 +106,15 @@ public class empesar : MonoBehaviour
                                 7777 // Puerto server
                             );
             if (arg1.name == sala)
-                NetworkManager.Singleton.StartClient();
+            {
+                bool started = NetworkManager.Singleton.StartClient();
+                if(started && !(GameObject.Find("[ Game Manager ]")))
+                {
+                    Instantiate(ProjectSceneManager);
+                }
+                
+            }
+                
         };
 
     }
