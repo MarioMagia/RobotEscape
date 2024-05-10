@@ -4,11 +4,28 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ProjectSceneManager : NetworkBehaviour
+public class ProjectSceneManager : MonoBehaviour
 {
-    [Rpc(SendTo.Server)]
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+        NetworkManager.Singleton.SceneManager.OnLoadComplete += SceneManager_OnLoadComplete;
+    }
+
     public void LoadNetworkSceneRpc(string sceneName)
     {
-        NetworkManager.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        
+    }
+
+    private void SceneManager_OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    {
+        ReloadPlayerRpc();
+    }
+
+    public void ReloadPlayerRpc()
+    {
+        Debug.Log("Holaaaajsdsajda");
+        NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ReloadPlayer>().Reload();
     }
 }

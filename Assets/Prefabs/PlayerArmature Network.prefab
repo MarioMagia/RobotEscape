@@ -246,6 +246,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6783898021571193688}
+    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7186579017189600030}
   m_SourcePrefab: {fileID: 100100000, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
 --- !u!95 &2373873035001032563 stripped
 Animator:
@@ -344,9 +348,8 @@ MonoBehaviour:
   m_PlayerInput: {fileID: 9032616161167077311}
   pauseScreen: {fileID: 8134047326023975247, guid: d37847047004e794888ec990cc3243e0,
     type: 3}
-  endGamePanel: {fileID: 3654992312206397999, guid: a5a221e43e0bae54d9d9491c327979c4,
-    type: 3}
   detect: {fileID: 4989753237841064067}
+  gameFinish: 0
 --- !u!65 &1089808891961780866
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -457,6 +460,20 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &7186579017189600030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032616161167077299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b5fccf2787d3f428ff17a60c37ae17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 9032616161167077304}
+  playerMove: {fileID: -6510389577705073598}
 --- !u!114 &9032616161167077304 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544,
