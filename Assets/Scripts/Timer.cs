@@ -16,7 +16,7 @@ public class Timer : NetworkBehaviour
 
 
     private float timerUp = 0f;
-    private float timerDown = 10f;
+    private float timerDown = 10000f;
 
     private bool isPaused = false;
     
