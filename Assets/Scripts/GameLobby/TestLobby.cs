@@ -30,6 +30,7 @@ public class TestLobby : MonoBehaviour
     [SerializeField] private TMP_Text mode;
     [SerializeField] private TMP_Text player1;
     [SerializeField] private TMP_Text player2;
+    [SerializeField] private Canvas canvaConnection;
     [SerializeField] private Canvas canvaPreLobby;
     [SerializeField] private Canvas canvaLobby;
     botones botones;
@@ -41,7 +42,7 @@ public class TestLobby : MonoBehaviour
     }
     private async void Start()
     {
-            Random random = new Random();
+        Random random = new Random();
         InitializationOptions initializationOptions = new InitializationOptions();
 #if UNITY_EDITOR
         initializationOptions.SetProfile(GetCloneNameEnd());
@@ -57,8 +58,15 @@ public class TestLobby : MonoBehaviour
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
         };
+        AuthenticationService.Instance.SignInFailed += async (err) =>
+        {
+            canvaConnection.gameObject.GetComponentInChildren<TMP_Text>().SetText("Failed to connect, trying again...");
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        };
 
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            canvaConnection.gameObject.SetActive(false);
+            canvaPreLobby.gameObject.SetActive(true);
         }
         botones = FindAnyObjectByType<botones>();
         nombreJug = NameGenerator.GetName(AuthenticationService.Instance.PlayerId);
@@ -308,7 +316,7 @@ public class TestLobby : MonoBehaviour
         changes.ApplyToLobby(lobbyUnido);
         level.SetText(lobbyUnido.Data["Nivel"].Value);
         mode.SetText(lobbyUnido.Data["Mode"].Value);
-        
+
         if (changes.PlayerLeft.Changed)
         {
             if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
@@ -318,15 +326,24 @@ public class TestLobby : MonoBehaviour
                 canvaLobby.gameObject.SetActive(false);
                 canvaPreLobby.gameObject.SetActive(true);
             }
-        }      
+        }
         if (changes.Data.Value["Empezado"].Changed)
         {
             Debug.Log("ERMERESFD");
-            if (lobbyUnido.Data.TryGetValue("Nivel", out DataObject dataObject))
-            {
-                empesar.crearCLient(dataObject.Value);
-            }
+            StartCoroutine(ExampleCoroutine());
         }
+    }
+    IEnumerator ExampleCoroutine()
+    {
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        empesar empesar = FindObjectOfType<empesar>();
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(5);
+        empesar.crearCLient(lobbyUnido.Data["Nivel"].Value);
+
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
     public bool imHost()
     {
@@ -404,7 +421,7 @@ public class TestLobby : MonoBehaviour
     public async void ChangeStatus()
     {
         ready = !ready;
-        string estado = ready ? "si":"no";
+        string estado = ready ? "si" : "no";
         try
         {
             await LobbyService.Instance.UpdatePlayerAsync(lobbyUnido.Id, AuthenticationService.Instance.PlayerId, new UpdatePlayerOptions
