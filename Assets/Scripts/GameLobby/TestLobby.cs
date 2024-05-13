@@ -136,7 +136,7 @@ public class TestLobby : MonoBehaviour
         }
         catch (LobbyServiceException e)
         {
-            botones.FallodeConexion();
+            botones.FallodeConexion("Error al crear Lobby");
             Debug.Log(e);
         }
     }
@@ -223,7 +223,7 @@ public class TestLobby : MonoBehaviour
         }
         catch (LobbyServiceException e)
         {
-            botones.FallodeConexion();
+            botones.FallodeConexion("Error al unirse al Lobby");
             Debug.Log(e);
         }
     }
@@ -291,7 +291,17 @@ public class TestLobby : MonoBehaviour
     {
         try
         {
-            await LobbyService.Instance.RemovePlayerAsync(lobbyUnido.Id, AuthenticationService.Instance.PlayerId);
+            if (imHost())
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(lobbyUnido.Id);
+            }
+            else
+            {
+                await LobbyService.Instance.RemovePlayerAsync(lobbyUnido.Id, AuthenticationService.Instance.PlayerId);
+            }
+            lobbyUnido = null;
+            canvaLobby.gameObject.SetActive(false);
+            canvaPreLobby.gameObject.SetActive(true);
         }
         catch (LobbyServiceException e)
         {
@@ -339,7 +349,7 @@ public class TestLobby : MonoBehaviour
         Debug.Log("Started Coroutine at timestamp : " + Time.time);
         empesar empesar = FindObjectOfType<empesar>();
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         empesar.crearCLient(lobbyUnido.Data["Nivel"].Value);
 
         //After we have waited 5 seconds print the time again.
