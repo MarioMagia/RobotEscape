@@ -46,6 +46,8 @@ public class Login : MonoBehaviour
                 string responseText = request.downloadHandler.text;
                 MessageData messageData = JsonUtility.FromJson<MessageData>(responseText);
                 FindFirstObjectByType<TMP_Text>().text = messageData.msg;
+                PlayerPrefs.SetInt("UserId", messageData.data.id);
+                PlayerPrefs.SetString("Username", messageData.data.username);
                 if(request.responseCode == 200)
                 {
                     #if UNITY_EDITOR
@@ -73,6 +75,18 @@ public class Login : MonoBehaviour
 public class MessageData
 {
     public string msg;
+    public UserData data;
+}
+[System.Serializable]
+public class UserData
+{
+    public int id;
+    public string email;
+    public string username;
+    public string password;
+    public string name;
+    public string surname;
+    public string sessionId;
 }
 [System.Serializable]
 public class LoginData

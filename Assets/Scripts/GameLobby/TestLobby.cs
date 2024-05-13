@@ -61,7 +61,8 @@ public class TestLobby : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
         botones = FindAnyObjectByType<botones>();
-        nombreJug = NameGenerator.GetName(AuthenticationService.Instance.PlayerId);
+        string name = PlayerPrefs.GetString("Username");
+        nombreJug = name != null? name : NameGenerator.GetName(AuthenticationService.Instance.PlayerId);
     }
 #if UNITY_EDITOR
     static string GetCloneNameEnd()
@@ -227,6 +228,7 @@ public class TestLobby : MonoBehaviour
         {
             Data = new Dictionary<string, PlayerDataObject> {
                         { "NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nombreJug) },
+                        { "PlayerId", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, PlayerPrefs.GetInt("UserId").ToString())},
                         {
             "Ready", new PlayerDataObject(
                 visibility: PlayerDataObject.VisibilityOptions.Member,
@@ -412,6 +414,7 @@ public class TestLobby : MonoBehaviour
                 Data = new Dictionary<string, PlayerDataObject>
             {
                 {"NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nombreJug) },
+                { "PlayerId", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, PlayerPrefs.GetInt("UserId").ToString())},
                 {"Ready", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, estado) }
             }
             });
