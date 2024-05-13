@@ -13,7 +13,7 @@ public class Match : MonoBehaviour
         StartMatchBody body = new StartMatchBody();
         body.id_host = idHost.ToString();
         body.id_client = idClient.ToString();
-        StartCoroutine(StartMatchAPI(Settings.URL + "/users/login", JsonUtility.ToJson(body)));
+        StartCoroutine(StartMatchAPI(Settings.URL + "/match/startMatch", JsonUtility.ToJson(body)));
         return false;
     }
 
@@ -28,10 +28,6 @@ public class Match : MonoBehaviour
                 MessageData messageData = JsonUtility.FromJson<MessageData>(responseText);
                 if (request.responseCode == 200)
                 {
-#if UNITY_EDITOR
-#else
-                    File.Delete(filePath);
-#endif
                     SceneManager.LoadScene("MainMenu");
                 }
             }
