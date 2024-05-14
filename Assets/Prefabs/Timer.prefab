@@ -72,3 +72,5 @@ MonoBehaviour:
     type: 3}
   LoseCanvas: {fileID: 1646302997429957793, guid: ef9c4155f63bcbb4fae1d6a2a68108bd,
     type: 3}
+  m_PlayerInput: {fileID: 9032616161167077311, guid: bb14c878b1c657c488a2aa4e813ce777,
+    type: 3}

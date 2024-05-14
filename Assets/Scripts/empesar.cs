@@ -23,6 +23,7 @@ public class empesar : MonoBehaviour
     [SerializeField] private TMP_Text textoReady2;
     [SerializeField] private TMP_Text lobbyCode;
     [SerializeField] private Button CopytoClip;
+    [SerializeField] private GameObject ProjectSceneManager;
     TestLobby game;
     private static string code;
     // Start is called before the first frame update
@@ -115,6 +116,10 @@ public class empesar : MonoBehaviour
                 code  = await StartHostWithRelay();
                 PlayerPrefs.SetString("code", code);
                 PlayerPrefs.Save();
+                if (code !=null && !(GameObject.Find("[ Game Manager ]")))
+                {
+                    Instantiate(ProjectSceneManager);
+                }
             }
         };
     }
@@ -125,7 +130,16 @@ public class empesar : MonoBehaviour
         {
             code = PlayerPrefs.GetString("code");
             Debug.Log(code);
-                await StartClientWithRelay(code);
+                
+                if (arg1.name == sala)
+            {
+                bool started = await StartClientWithRelay(code);
+                if(started && !(GameObject.Find("[ Game Manager ]")))
+                {
+                    Instantiate(ProjectSceneManager);
+                }
+                
+            }
                 /*NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
                                     "127.0.0.1",  // IP que entra por el input
                                     7777 // Puerto server
