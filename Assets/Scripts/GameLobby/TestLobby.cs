@@ -349,7 +349,7 @@ public class TestLobby : MonoBehaviour
         Debug.Log("Started Coroutine at timestamp : " + Time.time);
         empesar empesar = FindObjectOfType<empesar>();
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         empesar.crearCLient(lobbyUnido.Data["Nivel"].Value);
 
         //After we have waited 5 seconds print the time again.
