@@ -15443,21 +15443,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2621712703364657668}
     m_Modifications:
-    - target: {fileID: 125079527733173763, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193464668410306957, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1500107889265609428, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3074630411808740677, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
         type: 3}
       propertyPath: m_Mesh
@@ -15492,11 +15477,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 5731059894406458290, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7300499662591301414, guid: 436e09e9dd37fbd41a5429a0cc0f5349,
         type: 3}
