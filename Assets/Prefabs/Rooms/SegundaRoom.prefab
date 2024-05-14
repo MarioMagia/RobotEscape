@@ -5448,6 +5448,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.000001, y: 0.20000114, z: 6.0000005}
   m_Center: {x: 3, y: -0.1000003, z: 3.0000002}
+--- !u!1 &3283001435768241785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8947998041201076061}
+  - component: {fileID: 717120149042867272}
+  m_Layer: 0
+  m_Name: PuertaInvisible
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8947998041201076061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283001435768241785}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0005, z: -1.5300102}
+  m_LocalScale: {x: 1, y: 1.1834, z: 1.4980532}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4753958743707707389}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &717120149042867272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283001435768241785}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.27971685, y: 2.0527518, z: 1.4714353}
+  m_Center: {x: 0.0069100335, y: 1.0237604, z: 3.0000048}
 --- !u!1 &3357801987210674048
 GameObject:
   m_ObjectHideFlags: 0
@@ -6587,7 +6640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 579925730
+  GlobalObjectIdHash: 562366949
   InScenePlacedSourceGlobalObjectIdHash: 1535638340
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -13322,7 +13375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 449014616
+  GlobalObjectIdHash: 541639164
   InScenePlacedSourceGlobalObjectIdHash: 1535638340
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -15271,6 +15324,7 @@ Transform:
   - {fileID: 2945254199494438376}
   - {fileID: 5751093427745846263}
   - {fileID: 7177005246744068574}
+  - {fileID: 8947998041201076061}
   m_Father: {fileID: 2621712703364657668}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &8701751765064620082
@@ -15666,7 +15720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2802306370
+  GlobalObjectIdHash: 1135271792
   InScenePlacedSourceGlobalObjectIdHash: 1535638340
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4119144043313576737}
-  puertaInvisible: {fileID: 0}
+  puertaInvisible: {fileID: 8152411755454937786}
   haspuertainvisible: 1
   sonido: {fileID: 0}
 --- !u!65 &2497662518017579924
@@ -176,6 +176,7 @@ Transform:
   - {fileID: 7072077014247507453}
   - {fileID: 375285883020352482}
   - {fileID: 2982348027491117515}
+  - {fileID: 5637509892555807491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &4501727792230722511
@@ -455,3 +456,56 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3000087, y: 9.000004, z: 2.104749}
   m_Center: {x: 0.0000032484531, y: 4.500002, z: 4.9776254}
+--- !u!1 &8152411755454937786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5637509892555807491}
+  - component: {fileID: 845288532901208918}
+  m_Layer: 0
+  m_Name: PuertaInvisible
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5637509892555807491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152411755454937786}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0005, z: -1.5300102}
+  m_LocalScale: {x: 1, y: 1.1834, z: 1.4980532}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 793691058443980776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &845288532901208918
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152411755454937786}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.27971685, y: 2.0527518, z: 1.4714353}
+  m_Center: {x: 0.0069100335, y: 1.0237604, z: 3.0000048}
