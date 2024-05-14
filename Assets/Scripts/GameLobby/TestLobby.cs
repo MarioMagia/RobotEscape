@@ -58,16 +58,20 @@ public class TestLobby : MonoBehaviour
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
         };
-        AuthenticationService.Instance.SignInFailed += async (err) =>
-        {
-            canvaConnection.gameObject.GetComponentInChildren<TMP_Text>().SetText("Failed to connect, trying again...");
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        };
+            AuthenticationService.Instance.SignInFailed += async (err) =>
+            {
+                canvaConnection.gameObject.GetComponentInChildren<TMP_Text>().SetText("Failed to connect, trying again...");
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            };
 
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
+        if(AuthenticationService.Instance.IsSignedIn)
+        {
             canvaConnection.gameObject.SetActive(false);
             canvaPreLobby.gameObject.SetActive(true);
-        }
+        }   
+        
         botones = FindAnyObjectByType<botones>();
         nombreJug = NameGenerator.GetName(AuthenticationService.Instance.PlayerId);
     }
@@ -110,7 +114,8 @@ public class TestLobby : MonoBehaviour
                 {
                     {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, nivel) },
                     {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, "no") },
-                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, "history") }
+                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, "history") },
+                    {"RCode", new DataObject(DataObject.VisibilityOptions.Public, "") }
                 }
             };
             player1.SetText(nombreJug);
@@ -349,8 +354,11 @@ public class TestLobby : MonoBehaviour
         Debug.Log("Started Coroutine at timestamp : " + Time.time);
         empesar empesar = FindObjectOfType<empesar>();
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(5);
-        empesar.crearCLient(lobbyUnido.Data["Nivel"].Value);
+        while (lobbyUnido.Data["RCode"].Value == "")
+        {
+            yield return new WaitForSeconds(0);
+        }
+        empesar.crearClient(lobbyUnido.Data["Nivel"].Value, lobbyUnido.Data["RCode"].Value);
 
         //After we have waited 5 seconds print the time again.
         Debug.Log("Finished Coroutine at timestamp : " + Time.time);
@@ -418,6 +426,33 @@ public class TestLobby : MonoBehaviour
                 {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Nivel"].Value) },
                 {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Empezado"].Value) },
                 {"Mode", new DataObject(DataObject.VisibilityOptions.Public, mode) }
+            }
+            });
+            lobbyUnido = lobbyCreado;
+
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+    public async void ChangeCode(string code)
+    {
+        try
+        {
+            var callbacks = new LobbyEventCallbacks();
+            callbacks.LobbyChanged += (lobby) =>
+            {
+                Debug.Log("Lobby changed: " + lobby);
+            };
+            lobbyCreado = await Lobbies.Instance.UpdateLobbyAsync(lobbyCreado.Id, new UpdateLobbyOptions
+            {
+                Data = new Dictionary<string, DataObject>
+            {
+                {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Nivel"].Value) },
+                {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Empezado"].Value) },
+                {"Mode", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Mode"].Value) },
+                {"RCode", new DataObject(DataObject.VisibilityOptions.Public, code) }
             }
             });
             lobbyUnido = lobbyCreado;

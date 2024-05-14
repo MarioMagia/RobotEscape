@@ -25,7 +25,7 @@ public class empesar : MonoBehaviour
     [SerializeField] private Button CopytoClip;
     [SerializeField] private GameObject ProjectSceneManager;
     TestLobby game;
-    private static string code;
+    private static string code = null;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -44,7 +44,8 @@ public class empesar : MonoBehaviour
         level_selection.onValueChanged.AddListener(delegate { level_selectionValueChanged(level_selection); });
         mode_selection.onValueChanged.AddListener(delegate { mode_selectionValueChanged(mode_selection); });
         Ready.onClick.AddListener(() => { Incio(); });
-        CopytoClip.onClick.AddListener(() => {
+        CopytoClip.onClick.AddListener(() =>
+        {
             string testString = lobbyCode.text;
             testString.CopyToClipboard();
         });
@@ -105,49 +106,55 @@ public class empesar : MonoBehaviour
     {
         game.Empezado();
         SceneManager.LoadScene(level_selection.options[level_selection.value].text);
-        
-        SceneManager.activeSceneChanged += async (arg0, arg1) =>
+        SceneManager.activeSceneChanged += OnSceneChanged;
+    }
+    private async void OnSceneChanged(Scene arg0, Scene arg1)
+    {
+        Debug.Log("HOLA");
+        Debug.Log(arg1.name + " HOLA " + arg0.name);
+        if (arg1.name != "MainMenu")
         {
             PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
             Debug.Log(PlayerPrefs.GetString("MODO"));
             PlayerPrefs.Save();
             if (arg1.name == level_selection.options[level_selection.value].text)
             {
-                code  = await StartHostWithRelay();
+                code = await StartHostWithRelay();
                 PlayerPrefs.SetString("code", code);
                 PlayerPrefs.Save();
-                if (code !=null && !(GameObject.Find("[ Game Manager ]")))
+                if (code != null && !(GameObject.Find("[ Game Manager ]")))
                 {
                     Instantiate(ProjectSceneManager);
                 }
             }
-        };
+        }
+        else if (arg1.name == "MainMenu")
+        {
+            AuthenticationService.Instance.SignOut(true);
+            AuthenticationService.Instance.ClearSessionToken();
+            SceneManager.activeSceneChanged -= OnSceneChanged;
+        }
     }
-    public void crearCLient(string sala)
+    public void crearClient(string sala, string code)
     {
         SceneManager.LoadScene(sala);
         SceneManager.activeSceneChanged += async (arg0, arg1) =>
         {
-            code = PlayerPrefs.GetString("code");
-            Debug.Log(code);
-                
-                if (arg1.name == sala)
+            bool started = await StartClientWithRelay(code);
+            if (started && !(GameObject.Find("[ Game Manager ]")))
             {
-                bool started = await StartClientWithRelay(code);
-                if(started && !(GameObject.Find("[ Game Manager ]")))
-                {
-                    Instantiate(ProjectSceneManager);
-                }
-                
+                Instantiate(ProjectSceneManager);
+
             }
-                /*NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
-                                    "127.0.0.1",  // IP que entra por el input
-                                    7777 // Puerto server
-                                );
-                if (arg1.name == sala)
-                    NetworkManager.Singleton.StartClient();*/
-            
-            
+
+            /*NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
+                                "127.0.0.1",  // IP que entra por el input
+                                7777 // Puerto server
+                            );
+            if (arg1.name == sala)
+                NetworkManager.Singleton.StartClient();*/
+
+
         };
 
     }

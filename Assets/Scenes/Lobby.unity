@@ -524,6 +524,8 @@ MonoBehaviour:
   textoReady2: {fileID: 1873238683}
   lobbyCode: {fileID: 1454405185}
   CopytoClip: {fileID: 1135357414}
+  ProjectSceneManager: {fileID: 8699678886305575457, guid: 5ca394c07a6ada94c827081011777895,
+    type: 3}
 --- !u!114 &98903830
 MonoBehaviour:
   m_ObjectHideFlags: 0
