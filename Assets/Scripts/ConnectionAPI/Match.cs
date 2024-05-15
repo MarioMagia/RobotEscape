@@ -29,6 +29,7 @@ public class Match : MonoBehaviour
                     body.id_stage = stageData.id;
                     body.id_match = PlayerPrefs.GetInt("MatchId");
                     StartCoroutine(PostAPI(Settings.URL + "/match_stage/enterStage", JsonUtility.ToJson(body)));
+                    StartCoroutine(PostAPI(Settings.URL + "/stages/playStage", JsonUtility.ToJson(body)));
                 }
             }
             else
@@ -79,6 +80,7 @@ public class Match : MonoBehaviour
         }
         body.rooms = rooms;
         StartCoroutine(PostAPI(Settings.URL + "/match_stage/endStage", JsonUtility.ToJson(body)));
+        StartCoroutine(PostAPI(Settings.URL + "/stages/completeStage", JsonUtility.ToJson(body)));
     }
 
     public bool StartMatch(int idHost,int idClient)
@@ -101,6 +103,7 @@ public class Match : MonoBehaviour
                 StartMatchData matchData = JsonUtility.FromJson<StartMatchData>(responseText);
                 if (request.responseCode == 200)
                 {
+                    Debug.Log("Match: " + matchData.insertId);
                     PlayerPrefs.SetInt("MatchId", matchData.insertId);
                 }
             }
