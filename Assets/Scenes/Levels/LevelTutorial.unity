@@ -2699,6 +2699,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e38560d264d83b9408434d57be72e5a7, type: 3}
+--- !u!1 &966517799 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8009367773064356885, guid: 5d603e5c1e23a7c4199a9dbfc91c613c,
+    type: 3}
+  m_PrefabInstance: {fileID: 69862912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1009027471 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5682165192839180532, guid: 5d603e5c1e23a7c4199a9dbfc91c613c,
@@ -5498,6 +5504,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuintaRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 2624104320529836257, guid: 896a09a333fc989498fd2cd1b6dfcadf,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1802831765
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352406292845600156, guid: 896a09a333fc989498fd2cd1b6dfcadf,
+        type: 3}
+      propertyPath: puerta
+      value: 
+      objectReference: {fileID: 966517799}
     - target: {fileID: 4576302040043909490, guid: 896a09a333fc989498fd2cd1b6dfcadf,
         type: 3}
       propertyPath: m_LocalPosition.x
