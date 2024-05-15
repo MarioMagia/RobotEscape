@@ -8356,7 +8356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2083520938
+  GlobalObjectIdHash: 1673899678
   InScenePlacedSourceGlobalObjectIdHash: 1535638340
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -12595,13 +12595,13 @@ Transform:
   - {fileID: 8419492574494938179}
   - {fileID: 7847606585028853339}
   - {fileID: 6497302642338282923}
-  - {fileID: 5478409214828213151}
-  - {fileID: 7653498680788655373}
-  - {fileID: 2307382757389929333}
   - {fileID: 583561687320726973}
   - {fileID: 1650773557003791043}
   - {fileID: 6069155735368225318}
   - {fileID: 5094290784861740120}
+  - {fileID: 5478409214828213151}
+  - {fileID: 7653498680788655373}
+  - {fileID: 2307382757389929333}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8817029919933006220
