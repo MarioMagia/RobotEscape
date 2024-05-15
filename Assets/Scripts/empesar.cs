@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Mono.Cecil.Cil;
+using UnityEditor.Rendering;
 
 public class empesar : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class empesar : MonoBehaviour
     [SerializeField] private Button CopytoClip;
     [SerializeField] private GameObject ProjectSceneManager;
     TestLobby game;
+    public GameObject prefabToSpawn;
     private static string code = null;
     // Start is called before the first frame update
     private void Awake()
@@ -110,8 +112,6 @@ public class empesar : MonoBehaviour
     }
     private async void OnSceneChanged(Scene arg0, Scene arg1)
     {
-        Debug.Log("HOLA");
-        Debug.Log(arg1.name + " HOLA " + arg0.name);
         if (arg1.name != "MainMenu")
         {
             PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
@@ -119,10 +119,8 @@ public class empesar : MonoBehaviour
             PlayerPrefs.Save();
             if (arg1.name == level_selection.options[level_selection.value].text)
             {
-                code = await StartHostWithRelay();
-                PlayerPrefs.SetString("code", code);
-                PlayerPrefs.Save();
-                if (code != null && !(GameObject.Find("[ Game Manager ]")))
+                FindObjectOfType<SpawneoPlayers>().SpawnPlayer(NetworkManager.Singleton.LocalClientId);
+                if (!GameObject.Find("[ Game Manager ]"))
                 {
                     Instantiate(ProjectSceneManager);
                 }
@@ -135,13 +133,12 @@ public class empesar : MonoBehaviour
             SceneManager.activeSceneChanged -= OnSceneChanged;
         }
     }
-    public void crearClient(string sala, string code)
+    public void crearClient(string sala)
     {
         SceneManager.LoadScene(sala);
         SceneManager.activeSceneChanged += async (arg0, arg1) =>
         {
-            bool started = await StartClientWithRelay(code);
-            if (started && !(GameObject.Find("[ Game Manager ]")))
+            if (!(GameObject.Find("[ Game Manager ]")))
             {
                 Instantiate(ProjectSceneManager);
 

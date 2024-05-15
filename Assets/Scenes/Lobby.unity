@@ -526,6 +526,8 @@ MonoBehaviour:
   CopytoClip: {fileID: 1135357414}
   ProjectSceneManager: {fileID: 8699678886305575457, guid: 5ca394c07a6ada94c827081011777895,
     type: 3}
+  prefabToSpawn: {fileID: 9032616161167077299, guid: bb14c878b1c657c488a2aa4e813ce777,
+    type: 3}
 --- !u!114 &98903830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2883,8 +2885,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1023514434}
-    PlayerPrefab: {fileID: 9032616161167077299, guid: bb14c878b1c657c488a2aa4e813ce777,
-      type: 3}
+    PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: d54d3ef95de0c0842b5ae754f98ef7a2, type: 2}
@@ -2906,7 +2907,7 @@ MonoBehaviour:
     EnableNetworkLogs: 1
     OldPrefabList: []
   RunInBackground: 1
-  LogLevel: 0
+  LogLevel: 1
 --- !u!4 &1023514436
 Transform:
   m_ObjectHideFlags: 0

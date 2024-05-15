@@ -8,6 +8,12 @@ using UnityEngine;
 using System;
 using Random = System.Random;
 using TMPro;
+using Unity.Netcode.Transports.UTP;
+using Unity.Netcode;
+using Unity.Networking.Transport.Relay;
+
+using Unity.Services.Relay;
+
 #if UNITY_EDITOR
 using ParrelSync;
 #endif
@@ -112,10 +118,10 @@ public class TestLobby : MonoBehaviour
                 Player = GetPlayer(true),
                 Data = new Dictionary<string, DataObject>
                 {
-                    {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, nivel) },
-                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, "no") },
-                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, "history") },
-                    {"RCode", new DataObject(DataObject.VisibilityOptions.Public, "") }
+                    {"Nivel", new DataObject(DataObject.VisibilityOptions.Member, nivel) },
+                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Member, "no") },
+                    {"Mode", new DataObject(DataObject.VisibilityOptions.Member, "history") },
+                    {"RCode", new DataObject(DataObject.VisibilityOptions.Member, "") }
                 }
             };
             player1.SetText(nombreJug);
@@ -126,6 +132,31 @@ public class TestLobby : MonoBehaviour
             callbacks.PlayerJoined += onPlayerJoined;
             await Lobbies.Instance.SubscribeToLobbyEventsAsync(lobby.Id, callbacks);
             lobbyCreado = lobby;
+
+
+            var allocation = await Relay.Instance.CreateAllocationAsync(2);
+            // Obtener el join code del Relay
+            var joinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            Debug.Log("Relay join code: " + joinCode);
+
+            // Añadir los datos del Relay al lobby
+            await Lobbies.Instance.UpdateLobbyAsync(lobbyCreado.Id, new UpdateLobbyOptions
+            {
+                Data = new Dictionary<string, DataObject>
+                {
+                    { "RCode", new DataObject(DataObject.VisibilityOptions.Member, joinCode) }
+                }
+            });
+
+            Debug.Log("Relay join code added to lobby data");
+
+            // Configurar el servidor con Relay en NGO
+            var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            transport.SetRelayServerData(new RelayServerData(allocation, "dtls"));
+
+            // Iniciar el servidor con NGO
+            NetworkManager.Singleton.StartHost();
+
             Debug.Log("LOBY CODIGO : " + lobbyCreado.LobbyCode);
             codeText.SetText(lobbyCreado.LobbyCode);
             Debug.Log("HOST CODIGO : " + lobbyCreado.HostId);
@@ -215,6 +246,21 @@ public class TestLobby : MonoBehaviour
             callbacks.PlayerLeft += onPlayerLeft;
             callbacks.PlayerDataChanged += onPlayerDataChange;
             await Lobbies.Instance.SubscribeToLobbyEventsAsync(lobby.Id, callbacks);
+
+            string relayJoinCode = lobbyUnido.Data["RCode"].Value;
+            Debug.Log("Relay join code: " + relayJoinCode);
+
+            // Unirse a la allocation de Relay usando el join code
+            var joinAllocation = await Relay.Instance.JoinAllocationAsync(relayJoinCode);
+            Debug.Log("Joined Relay allocation");
+
+            // Configurar la dirección del cliente para unirse al servidor Relay usando NGO
+            var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            transport.SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+
+            // Iniciar el cliente con NGO
+            NetworkManager.Singleton.StartClient();
+
             codeText.SetText(lobbyUnido.LobbyCode);
             level.SetText(lobbyUnido.Data["Nivel"].Value);
             mode.SetText(lobbyUnido.Data["Mode"].Value);
@@ -262,9 +308,7 @@ public class TestLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, DataObject>
                 {
-                    {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, nivel) },
-                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Empezado"].Value) },
-                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Mode"].Value) }
+                    {"Nivel", new DataObject(DataObject.VisibilityOptions.Member, nivel) }
                 }
             });
             lobbyUnido = lobbyCreado;
@@ -358,7 +402,7 @@ public class TestLobby : MonoBehaviour
         {
             yield return new WaitForSeconds(0);
         }
-        empesar.crearClient(lobbyUnido.Data["Nivel"].Value, lobbyUnido.Data["RCode"].Value);
+        empesar.crearClient(lobbyUnido.Data["Nivel"].Value);
 
         //After we have waited 5 seconds print the time again.
         Debug.Log("Finished Coroutine at timestamp : " + Time.time);
@@ -384,9 +428,7 @@ public class TestLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, DataObject>
                 {
-                    {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Nivel"].Value) },
-                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, "si") },
-                    {"Mode", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Mode"].Value) }
+                    {"Empezado", new DataObject(DataObject.VisibilityOptions.Member, "si") }
                 }
             });
         }
@@ -423,9 +465,7 @@ public class TestLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, DataObject>
             {
-                {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Nivel"].Value) },
-                {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Empezado"].Value) },
-                {"Mode", new DataObject(DataObject.VisibilityOptions.Public, mode) }
+                {"Mode", new DataObject(DataObject.VisibilityOptions.Member, mode) }
             }
             });
             lobbyUnido = lobbyCreado;
@@ -449,10 +489,7 @@ public class TestLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, DataObject>
             {
-                {"Nivel", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Nivel"].Value) },
-                {"Empezado", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Empezado"].Value) },
-                {"Mode", new DataObject(DataObject.VisibilityOptions.Public, lobbyCreado.Data["Mode"].Value) },
-                {"RCode", new DataObject(DataObject.VisibilityOptions.Public, code) }
+                {"RCode", new DataObject(DataObject.VisibilityOptions.Member, code) }
             }
             });
             lobbyUnido = lobbyCreado;
@@ -473,7 +510,6 @@ public class TestLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, PlayerDataObject>
             {
-                {"NombreJug", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, nombreJug) },
                 {"Ready", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, estado) }
             }
             });
