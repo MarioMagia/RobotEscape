@@ -26,8 +26,6 @@ public class empesar : MonoBehaviour
     [SerializeField] private Button CopytoClip;
     [SerializeField] private GameObject ProjectSceneManager;
     TestLobby game;
-    public GameObject prefabToSpawn;
-    private static string code = null;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -107,11 +105,13 @@ public class empesar : MonoBehaviour
     public void crearHost()
     {
         game.Empezado();
-        SceneManager.LoadScene(level_selection.options[level_selection.value].text);
+        NetworkManager.Singleton.SceneManager.LoadScene(level_selection.options[level_selection.value].text, LoadSceneMode.Single);
+        //SceneManager.LoadScene(level_selection.options[level_selection.value].text);
         SceneManager.activeSceneChanged += OnSceneChanged;
     }
     private async void OnSceneChanged(Scene arg0, Scene arg1)
     {
+        Debug.Log("Nois fuimos");
         if (arg1.name != "MainMenu")
         {
             PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
@@ -119,7 +119,6 @@ public class empesar : MonoBehaviour
             PlayerPrefs.Save();
             if (arg1.name == level_selection.options[level_selection.value].text)
             {
-                FindObjectOfType<SpawneoPlayers>().SpawnPlayer(NetworkManager.Singleton.LocalClientId);
                 if (!GameObject.Find("[ Game Manager ]"))
                 {
                     Instantiate(ProjectSceneManager);
@@ -135,9 +134,10 @@ public class empesar : MonoBehaviour
     }
     public void crearClient(string sala)
     {
-        SceneManager.LoadScene(sala);
+        //SceneManager.LoadScene(sala);
         SceneManager.activeSceneChanged += async (arg0, arg1) =>
         {
+            Debug.Log("Nois fuimos");
             if (!(GameObject.Find("[ Game Manager ]")))
             {
                 Instantiate(ProjectSceneManager);

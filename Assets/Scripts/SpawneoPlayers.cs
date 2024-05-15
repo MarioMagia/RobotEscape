@@ -6,30 +6,33 @@ using Unity.Networking.Transport;
 using Unity.Services.Lobbies.Models;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawneoPlayers : NetworkBehaviour
 {
     // Start is called before the first frame update
-    public GameObject playerPrefab; // Prefab del jugador
+    [SerializeField]private GameObject playerPrefab; // Prefab del jugador
 
     // Método para spawnear el jugador
-    
-    public void SpawnPlayer(ulong connection)
-    {
-        GameObject hostObject = Instantiate(playerPrefab);
-        if(IsServer)
-        {
-            hostObject.GetComponent<NetworkObject>().Spawn();
-        }
-        if(!IsServer)
-        {
-            SpawnPlayerRpc();
-        }
 
-    }
-    [Rpc(SendTo.NotMe)]
-    public void SpawnPlayerRpc()
+    private void Start()
     {
-        SpawnPlayer(NetworkManager.Singleton.LocalClientId);
+        DontDestroyOnLoad(this.gameObject);
+    }
+    public override void OnNetworkSpawn()
+    {
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += EsceneCargada;
+    }
+
+    private void EsceneCargada(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        if(IsHost && sceneName == "LevelTutorial")
+        {
+            foreach(ulong id in clientsCompleted)
+            {
+                GameObject jugador = Instantiate(playerPrefab);
+                jugador.GetComponent<NetworkObject>().SpawnAsPlayerObject(id);
+            }
+        }
     }
 }

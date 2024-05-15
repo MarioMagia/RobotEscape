@@ -375,37 +375,25 @@ public class TestLobby : MonoBehaviour
         changes.ApplyToLobby(lobbyUnido);
         level.SetText(lobbyUnido.Data["Nivel"].Value);
         mode.SetText(lobbyUnido.Data["Mode"].Value);
-
-        if (changes.PlayerLeft.Changed)
+        if (lobbyUnido != null)
         {
-            if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
+            if (changes.PlayerLeft.Changed)
             {
-                LeaveLobby();
-                lobbyUnido = null;
-                canvaLobby.gameObject.SetActive(false);
-                canvaPreLobby.gameObject.SetActive(true);
+                if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
+                {
+                    LeaveLobby();
+                    lobbyUnido = null;
+                    canvaLobby.gameObject.SetActive(false);
+                    canvaPreLobby.gameObject.SetActive(true);
+                }
+            }            
+            if (changes.Data.Value["Empezado"].Changed)
+            {
+                Debug.Log("ERMERESFD");
+                empesar empesar = FindObjectOfType<empesar>();
+                empesar.crearClient(lobbyUnido.Data["Nivel"].Value);
             }
         }
-        if (changes.Data.Value["Empezado"].Changed)
-        {
-            Debug.Log("ERMERESFD");
-            StartCoroutine(ExampleCoroutine());
-        }
-    }
-    IEnumerator ExampleCoroutine()
-    {
-        //Print the time of when the function is first called.
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
-        empesar empesar = FindObjectOfType<empesar>();
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        while (lobbyUnido.Data["RCode"].Value == "")
-        {
-            yield return new WaitForSeconds(0);
-        }
-        empesar.crearClient(lobbyUnido.Data["Nivel"].Value);
-
-        //After we have waited 5 seconds print the time again.
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
     public bool imHost()
     {
