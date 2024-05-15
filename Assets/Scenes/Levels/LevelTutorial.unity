@@ -5647,11 +5647,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4602719454170404029, guid: d6475ef21bbaf40429f55993288e72a7,
-        type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 2083520938
-      objectReference: {fileID: 0}
     - target: {fileID: 4617416922422480767, guid: d6475ef21bbaf40429f55993288e72a7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6768,10 +6763,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1134130933512610, guid: 77570c983440b5e4bae5d85b2cad2109, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 449014616
-      objectReference: {fileID: 0}
     - target: {fileID: 26340485472424263, guid: 77570c983440b5e4bae5d85b2cad2109,
         type: 3}
       propertyPath: m_Mesh
@@ -6782,11 +6773,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 333438194}
-    - target: {fileID: 323212054336759861, guid: 77570c983440b5e4bae5d85b2cad2109,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -7
-      objectReference: {fileID: 0}
     - target: {fileID: 1256999523757944521, guid: 77570c983440b5e4bae5d85b2cad2109,
         type: 3}
       propertyPath: m_Mesh
