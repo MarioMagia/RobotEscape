@@ -5482,74 +5482,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890552998}
   m_CullTransparentMesh: 1
---- !u!1001 &1919064782
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5548154041111978480, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_Name
-      value: CatWalk Stairs Wide
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0005171945
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 81
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.70710784
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.70710576
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90.00001
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 63d248e67db58c04aa37512e19848568, type: 3}
 --- !u!1001 &1922035689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5894,74 +5826,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f7f3dde7ae722a4aafffe20691ad702, type: 3}
---- !u!1001 &2045584310
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5548154041111978480, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_Name
-      value: CatWalk Stairs Wide (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0005171945
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 81
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.70710784
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.70710576
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90.00001
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548154041112411600, guid: 63d248e67db58c04aa37512e19848568,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 63d248e67db58c04aa37512e19848568, type: 3}
 --- !u!1 &2069715086
 GameObject:
   m_ObjectHideFlags: 0
@@ -6557,6 +6421,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b71edc43d6ebd1c4aaec56287f587914, type: 3}
+--- !u!1001 &4665693023968002315
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1285389850995034152, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_Name
+      value: EscalerasMetallicas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -17.585402
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.000014747697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 91.12091
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710784
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70710576
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208770986348629847, guid: c8fac094d96847843adaecb1929e0662,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c8fac094d96847843adaecb1929e0662, type: 3}
 --- !u!1001 &4901775733011714868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7962,6 +7894,5 @@ SceneRoots:
   - {fileID: 1922035689}
   - {fileID: 6489420099553683443}
   - {fileID: 3483096076615723021}
-  - {fileID: 2045584310}
   - {fileID: 772810738}
-  - {fileID: 1919064782}
+  - {fileID: 4665693023968002315}
