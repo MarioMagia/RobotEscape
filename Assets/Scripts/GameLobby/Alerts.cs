@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class AlertController : MonoBehaviour
 {
-    public TMP_Text alertText;
-    public float displayDuration = 3f;
+    [SerializeField]private TMP_Text alertText;
+    [SerializeField] private float displayDuration = 3f;
 
     private bool isDisplaying = false;
 
@@ -15,14 +15,14 @@ public class AlertController : MonoBehaviour
         {
             isDisplaying = true;
             alertText.text = message;
-            alertText.gameObject.SetActive(true);
+            this.gameObject.SetActive(true);
             Invoke("HideAlert", displayDuration);
         }
     }
 
     private void HideAlert()
     {
-        alertText.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
         isDisplaying = false;
     }
 }

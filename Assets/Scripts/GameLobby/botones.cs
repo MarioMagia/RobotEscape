@@ -26,12 +26,12 @@ public class botones : MonoBehaviour
     }
     public void FallodeConexion(string mensaje = "Error")
     {
-        FindObjectOfType<AlertController>().ShowAlert(mensaje);
+        canvaAlerta.GetComponent<AlertController>().ShowAlert(mensaje);
         canvaPreLobby.gameObject.SetActive(true);
         canvaLobby.gameObject.SetActive(false);
     }
     public void AlertasAcciones(string mensaje = "Esperando")
     {
-        FindObjectOfType<AlertController>().ShowAlert(mensaje);
+        canvaAlerta.GetComponent<AlertController>().ShowAlert(mensaje);
     }
 }

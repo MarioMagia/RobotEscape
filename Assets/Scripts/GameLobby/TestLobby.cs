@@ -274,8 +274,8 @@ public class TestLobby : MonoBehaviour
         }
         catch (LobbyServiceException e)
         {
-            botones.FallodeConexion("Error al unirse al Lobby");
-            Debug.Log(e);
+            botones.FallodeConexion("Error al unirse al Lobby");            
+            Debug.Log("HOLASDASD");
         }
     }
 
