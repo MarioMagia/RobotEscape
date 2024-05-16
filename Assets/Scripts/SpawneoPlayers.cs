@@ -26,7 +26,7 @@ public class SpawneoPlayers : NetworkBehaviour
 
     private void EsceneCargada(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        if(IsHost && sceneName == "LevelTutorial")
+        if(IsHost && sceneName != "MainMenu")
         {
             foreach(ulong id in clientsCompleted)
             {
