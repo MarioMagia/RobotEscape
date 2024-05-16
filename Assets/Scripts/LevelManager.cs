@@ -18,5 +18,6 @@ public class LevelManager : MonoBehaviour
     public void loadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        Destroy(GameObject.Find("NetworkManager"));
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using StarterAssets;
 using Unity.Netcode;
@@ -13,7 +14,7 @@ public class ClientPlayerMove : NetworkBehaviour
 {
     [SerializeField]
     ServerPlayerMove m_ServerPlayerMove;
-    
+
     [SerializeField]
     CharacterController m_CharacterController;
 
@@ -71,13 +72,40 @@ public class ClientPlayerMove : NetworkBehaviour
             m_CapsuleCollider.enabled = true;
             return;
         }
-
-        // player input is only enabled on owning players
         m_PlayerInput.enabled = true;
         m_ThirdPersonController.enabled = true;
-        m_CharacterController.enabled = true;        
+        m_CharacterController.enabled = true;
         var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = m_CameraFollow;
+        if (IsServer)
+        {
+            NetworkManager.OnClientConnectedCallback += OnClientConnected;
+        }
+    }
+
+    private void OnClientConnected(ulong obj)
+    {
+        if (NetworkManager.ConnectedClientsList.Count == 2)
+        {
+            if (PlayerPrefs.GetString("MODO").ToLower() != "history")
+            {
+                IniciarRpc();
+            }
+            else
+            {
+                Iniciar2Rpc();
+            }
+        }
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void IniciarRpc()
+    {
+        FindAnyObjectByType<Timer>().Inicio();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void Iniciar2Rpc()
+    {
+        FindAnyObjectByType<Timer>().historyMode();
     }
 
     public void Restart()
@@ -144,10 +172,10 @@ public class ClientPlayerMove : NetworkBehaviour
     }
     void OnTakeMark()
     {
-            Debug.Log("TOCAAAA");
-            detect.TM();
+        Debug.Log("TOCAAAA");
+        detect.TM();
 
-            
+
     }
 
     void OnPauseMenu()
