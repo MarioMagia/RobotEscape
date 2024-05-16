@@ -53,7 +53,7 @@ public class TestLobby : MonoBehaviour
 #if UNITY_EDITOR
         initializationOptions.SetProfile(GetCloneNameEnd());
 #else
-        initializationOptions.SetProfile("original"+ random.Next(100));
+        initializationOptions.SetProfile(PlayerPrefs.GetString("Username"));
 #endif
         await UnityServices.InitializeAsync(initializationOptions);
 

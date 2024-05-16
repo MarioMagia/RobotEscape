@@ -105,7 +105,6 @@ public class empesar : MonoBehaviour
     {
         game.Empezado();
         NetworkManager.Singleton.SceneManager.LoadScene(level_selection.options[level_selection.value].text, LoadSceneMode.Single);
-        //SceneManager.LoadScene(level_selection.options[level_selection.value].text);
         SceneManager.activeSceneChanged += OnSceneChanged;
     }
     private async void OnSceneChanged(Scene arg0, Scene arg1)
@@ -126,14 +125,11 @@ public class empesar : MonoBehaviour
         }
         else if (arg1.name == "MainMenu")
         {
-            AuthenticationService.Instance.SignOut(true);
-            AuthenticationService.Instance.ClearSessionToken();
             SceneManager.activeSceneChanged -= OnSceneChanged;
         }
     }
     public void crearClient(string sala)
     {
-        //SceneManager.LoadScene(sala);
         SceneManager.activeSceneChanged += async (arg0, arg1) =>
         {
             Debug.Log("Nois fuimos");
@@ -142,14 +138,6 @@ public class empesar : MonoBehaviour
                 Instantiate(ProjectSceneManager);
 
             }
-
-            /*NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
-                                "127.0.0.1",  // IP que entra por el input
-                                7777 // Puerto server
-                            );
-            if (arg1.name == sala)
-                NetworkManager.Singleton.StartClient();*/
-
 
         };
 
