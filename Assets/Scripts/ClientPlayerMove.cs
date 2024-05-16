@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using StarterAssets;
 using Unity.Netcode;
@@ -13,7 +14,7 @@ public class ClientPlayerMove : NetworkBehaviour
 {
     [SerializeField]
     ServerPlayerMove m_ServerPlayerMove;
-    
+
     [SerializeField]
     CharacterController m_CharacterController;
 
@@ -34,12 +35,11 @@ public class ClientPlayerMove : NetworkBehaviour
     GameObject pauseScreen;
 
     [SerializeField]
-    GameObject endGamePanel;
-
-    [SerializeField]
     DetectMarks detect;
 
     RaycastHit[] m_HitColliders = new RaycastHit[4];
+
+    public bool gameFinish;
 
     void Awake()
     {
@@ -55,14 +55,9 @@ public class ClientPlayerMove : NetworkBehaviour
         m_ThirdPersonController.enabled = false;
         m_CapsuleCollider.enabled = false;
         m_CharacterController.enabled = false;
-        endGamePanel = Instantiate(endGamePanel);
-        endGamePanel.SetActive(false);
         pauseScreen = Instantiate(pauseScreen);
-    }
-
-    public GameObject GetEndGamePanel()
-    {
-        return endGamePanel;
+        pauseScreen.transform.SetParent(transform);
+        gameFinish = false;
     }
 
     public override void OnNetworkSpawn()
@@ -77,11 +72,72 @@ public class ClientPlayerMove : NetworkBehaviour
             m_CapsuleCollider.enabled = true;
             return;
         }
+        m_PlayerInput.enabled = true;
+        m_ThirdPersonController.enabled = true;
+        m_CharacterController.enabled = true;
+        var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        cinemachineVirtualCamera.Follow = m_CameraFollow;
+        if (IsServer)
+        {
+            NetworkManager.OnClientConnectedCallback += OnClientConnected;
+        }
+    }
+
+    private void OnClientConnected(ulong obj)
+    {
+        if (NetworkManager.ConnectedClientsList.Count == 2)
+        {
+            if (PlayerPrefs.GetString("MODO").ToLower() != "history")
+            {
+                IniciarRpc();
+            }
+            else
+            {
+                Iniciar2Rpc();
+            }
+        }
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void IniciarRpc()
+    {
+        FindAnyObjectByType<Timer>().Inicio();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void Iniciar2Rpc()
+    {
+        FindAnyObjectByType<Timer>().historyMode();
+    }
+
+    public void Restart()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // ThirdPersonController & CharacterController are enabled only on owning clients. Ghost player objects have
+        // these two components disabled, and will enable a CapsuleCollider. Per the CharacterController documentation: 
+        // https://docs.unity3d.com/Manual/CharacterControllers.html, a Character controller can push rigidbody
+        // objects aside while moving but will not be accelerated by incoming collisions. This means that a primitive
+        // CapsuleCollider must instead be used for ghost clients to simulate collisions between owning players and 
+        // ghost clients.
+        m_ThirdPersonController.enabled = false;
+        m_CapsuleCollider.enabled = false;
+        m_CharacterController.enabled = false;
+        
+        gameFinish = false;
+
+        enabled = IsClient;
+        if (!IsOwner)
+        {
+            enabled = false;
+            m_CharacterController.enabled = false;
+            m_CapsuleCollider.enabled = true;
+            return;
+        }
 
         // player input is only enabled on owning players
         m_PlayerInput.enabled = true;
         m_ThirdPersonController.enabled = true;
-        m_CharacterController.enabled = true;        
+        m_CharacterController.enabled = true;
         var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = m_CameraFollow;
     }
@@ -116,14 +172,15 @@ public class ClientPlayerMove : NetworkBehaviour
     }
     void OnTakeMark()
     {
-            Debug.Log("TOCAAAA");
-            detect.TM();
+        Debug.Log("TOCAAAA");
+        detect.TM();
 
-            
+
     }
 
     void OnPauseMenu()
     {
+        if(gameFinish) return;
         Debug.Log("Pause input");
         int pauseState = pauseScreen.GetComponent<PauseMenu>().changePauseState();
         if (pauseState == 1)

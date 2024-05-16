@@ -24,7 +24,7 @@ public class Login : MonoBehaviour
             string[] logindata = File.ReadAllText(filePath).Split(";");
             Debug.Log("File Contents: " + logindata[0]+", " + logindata[1]);
             LoginData loginData = new LoginData();
-            loginData.email = logindata[0];
+            loginData.username = logindata[0];
             loginData.password = logindata[1];
             StartCoroutine(loginAPI(Settings.URL+"/users/login", JsonUtility.ToJson(loginData)));
             // Now you can parse/process the fileContents as needed
@@ -46,6 +46,8 @@ public class Login : MonoBehaviour
                 string responseText = request.downloadHandler.text;
                 MessageData messageData = JsonUtility.FromJson<MessageData>(responseText);
                 FindFirstObjectByType<TMP_Text>().text = messageData.msg;
+                PlayerPrefs.SetInt("UserId", messageData.data.id);
+                PlayerPrefs.SetString("Username", messageData.data.username);
                 if(request.responseCode == 200)
                 {
                     #if UNITY_EDITOR
@@ -73,10 +75,22 @@ public class Login : MonoBehaviour
 public class MessageData
 {
     public string msg;
+    public UserData data;
+}
+[System.Serializable]
+public class UserData
+{
+    public int id;
+    public string email;
+    public string username;
+    public string password;
+    public string name;
+    public string surname;
+    public string sessionId;
 }
 [System.Serializable]
 public class LoginData
 {
-    public string email;
+    public string username;
     public string password;
 }

@@ -171,6 +171,38 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
             _activeHUD = Instantiate(HUD);
         }
+
+        public void Restart()
+        {
+            volumenPasos();
+
+            // get a reference to our main camera
+            if (_mainCamera == null)
+            {
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            }
+            _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+
+            _hasAnimator = TryGetComponent(out _animator);
+            options = GetComponent<GameOptions>();
+            _controller = GetComponent<CharacterController>();
+            _input = GetComponent<StarterAssetsInputs>();
+            tp = GetComponent<Teleport>();
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+            _playerInput = GetComponent<PlayerInput>();
+#else
+			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
+#endif
+            _playerInput.actions.FindActionMap("UI").Disable();
+            _playerInput.actions.FindActionMap("Player").Enable();
+            AssignAnimationIDs();
+
+            // reset our timeouts on start
+            _jumpTimeoutDelta = JumpTimeout;
+            _fallTimeoutDelta = FallTimeout;
+            _activeHUD = Instantiate(HUD);
+        }
+
         private void Update()
         {
             volumenPasos();
@@ -526,14 +558,6 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.position, FootstepAudioVolume);
-            }
-        }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == "Meta")
-            {
-                Debug.Log("Has llegado al final");
-                ManagerJuego.Instance.ChangeSceneMethod("Scene 2");
             }
         }
     }
