@@ -77,36 +77,8 @@ public class ClientPlayerMove : NetworkBehaviour
         m_CharacterController.enabled = true;
         var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = m_CameraFollow;
-        if (IsServer)
-        {
-            NetworkManager.OnClientConnectedCallback += OnClientConnected;
-        }
     }
 
-    private void OnClientConnected(ulong obj)
-    {
-        if (NetworkManager.ConnectedClientsList.Count == 2)
-        {
-            if (PlayerPrefs.GetString("MODO").ToLower() != "history")
-            {
-                IniciarRpc();
-            }
-            else
-            {
-                Iniciar2Rpc();
-            }
-        }
-    }
-    [Rpc(SendTo.ClientsAndHost)]
-    public void IniciarRpc()
-    {
-        FindAnyObjectByType<Timer>().Inicio();
-    }
-    [Rpc(SendTo.ClientsAndHost)]
-    public void Iniciar2Rpc()
-    {
-        FindAnyObjectByType<Timer>().historyMode();
-    }
 
     public void Restart()
     {

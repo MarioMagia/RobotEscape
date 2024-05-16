@@ -108,8 +108,10 @@ public class TestLobby : MonoBehaviour
         LobbyPalpito();
         LobbyActualizacion();
     }
-    public async void CreateLobby(string nombreLobby, int maxJug)
+    public async void CreateLobby()
     {
+        string nombreLobby = "Lobby";
+        int maxJug = 2;
         string nivel = "LevelTutorial";
         try
         {
@@ -401,6 +403,7 @@ public class TestLobby : MonoBehaviour
     {
         if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
         {
+
             return true;
         }
         return false;

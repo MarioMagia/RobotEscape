@@ -16,7 +16,7 @@ public class botones : MonoBehaviour
 
     private void Awake()
     {
-        botonCrearLobby.onClick.AddListener(()=> { TestLobby.Instance.CreateLobby("Lobby", 2); });
+        botonCrearLobby.onClick.AddListener(()=> { TestLobby.Instance.CreateLobby(); });
         botonUnirLobby.onClick.AddListener(() => { TestLobby.Instance.JoinLobby(codigo.text); }) ;
     }
     public void UnirLobby()
