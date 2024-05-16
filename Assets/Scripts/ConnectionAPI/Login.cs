@@ -24,7 +24,7 @@ public class Login : MonoBehaviour
             string[] logindata = File.ReadAllText(filePath).Split(";");
             Debug.Log("File Contents: " + logindata[0]+", " + logindata[1]);
             LoginData loginData = new LoginData();
-            loginData.email = logindata[0];
+            loginData.username = logindata[0];
             loginData.password = logindata[1];
             StartCoroutine(loginAPI(Settings.URL+"/users/login", JsonUtility.ToJson(loginData)));
             // Now you can parse/process the fileContents as needed
@@ -91,6 +91,6 @@ public class UserData
 [System.Serializable]
 public class LoginData
 {
-    public string email;
+    public string username;
     public string password;
 }
