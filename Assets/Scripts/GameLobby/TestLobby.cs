@@ -181,6 +181,7 @@ public class TestLobby : MonoBehaviour
     private void onPlayerJoined(List<LobbyPlayerJoined> list)
     {
         player2.SetText(list[0].Player.Data["NombreJug"].Value);
+        PlayerPrefs.SetInt("ClientId", int.Parse(list[0].Player.Data["PlayerId"].Value));
     }
 
     private void onPlayerLeft(List<int> list)

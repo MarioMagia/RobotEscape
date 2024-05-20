@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using StarterAssets;
 using Unity.Netcode;
@@ -34,6 +35,8 @@ public class DetectCollisions : NetworkBehaviour
         playersWaiting++;
         if(playersWaiting > 1)
         {
+            ArrayList times = FindObjectOfType<Timer>().GetTimes();
+            FindObjectOfType<Match>().EndStage(times);
             FinishLevelRpc();
         }
     }

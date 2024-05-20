@@ -112,6 +112,11 @@ public class Timer : NetworkBehaviour
 
     }
 
+    public ArrayList GetTimes()
+    {
+        return checkpointTimes;
+    }
+
     //Funcion para guardar el tiempo cuando se destruya el checkpoint
     public void saveTimes(string time,string name) {
         
