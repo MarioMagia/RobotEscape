@@ -107,14 +107,18 @@ public class empesar : MonoBehaviour
         NetworkManager.Singleton.SceneManager.LoadScene(level_selection.options[level_selection.value].text, LoadSceneMode.Single);
         //SceneManager.LoadScene(level_selection.options[level_selection.value].text);
         SceneManager.activeSceneChanged += OnSceneChanged;
-        FindObjectOfType<Match>().StartMatch(PlayerPrefs.GetInt("UserId"), PlayerPrefs.GetInt("ClientId"));
+        PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
+        if (PlayerPrefs.GetString("MODO").ToLower() == "time trial")
+        {
+            FindObjectOfType<Match>().StartMatch(PlayerPrefs.GetInt("UserId"), PlayerPrefs.GetInt("ClientId"));
+        }
+        
     }
     private async void OnSceneChanged(Scene arg0, Scene arg1)
     {
         Debug.Log("Nois fuimos a "+arg1.name);
         if (arg1.name != "MainMenu")
         {
-            PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
             Debug.Log(PlayerPrefs.GetString("MODO"));
             PlayerPrefs.Save();
             if (arg1.name == level_selection.options[level_selection.value].text)
@@ -124,7 +128,11 @@ public class empesar : MonoBehaviour
                     Instantiate(ProjectSceneManager);
                 }
             }
-            FindObjectOfType<Match>().EnterStage(arg1.name);
+            if (PlayerPrefs.GetString("MODO").ToLower() == "time trial")
+            {
+                FindObjectOfType<Match>().EnterStage(arg1.name);
+            }
+                
             SceneManager.activeSceneChanged -= OnSceneChanged;
         }
         else if (arg1.name == "MainMenu")

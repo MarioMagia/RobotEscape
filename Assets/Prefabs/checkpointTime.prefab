@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1059438870223533383}
   - component: {fileID: 131322978774570030}
   - component: {fileID: 2390750274730579076}
-  - component: {fileID: 2855958715049658144}
+  - component: {fileID: 4323131440291419015}
   m_Layer: 0
   m_Name: checkpointTime
   m_TagString: Time
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 64128807
+  GlobalObjectIdHash: 3366141644
   InScenePlacedSourceGlobalObjectIdHash: 2862196715
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -128,7 +128,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &2855958715049658144
+--- !u!114 &4323131440291419015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,4 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285505da6f733eb48959ec5f73bd6ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointName: Inicio
+  checkpointName: 

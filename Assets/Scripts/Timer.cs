@@ -106,9 +106,7 @@ public class Timer : NetworkBehaviour
 
     public string getTime()
     {
-        //Cogemos el tiempo de la cuenta atras 
-        string time = levelCountdownText.text;        
-        return time;
+        return timerUp.ToString();
 
     }
 
@@ -120,7 +118,7 @@ public class Timer : NetworkBehaviour
     //Funcion para guardar el tiempo cuando se destruya el checkpoint
     public void saveTimes(string time,string name) {
         
-        string checkpointKey = "Checkpoint " + name;
+        string checkpointKey = name;
         checkpointTimes.Add(new KeyValuePair<string, string>(checkpointKey, time));
         
 

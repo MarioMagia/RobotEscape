@@ -80,6 +80,7 @@ public class ClientPlayerMove : NetworkBehaviour
         if (IsServer)
         {
             NetworkManager.OnClientConnectedCallback += OnClientConnected;
+            OnClientConnected(ulong.MinValue);
         }
     }
 

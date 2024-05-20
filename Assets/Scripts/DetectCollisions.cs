@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using StarterAssets;
 using Unity.Netcode;
@@ -12,6 +13,7 @@ public class DetectCollisions : NetworkBehaviour
     private GameObject endGamePanel;
     private int playersWaiting = 0;
     private GameObject player;
+    [SerializeField] private string checkpointId;
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -33,10 +35,54 @@ public class DetectCollisions : NetworkBehaviour
     private void AddPlayersWaitingRpc()
     {
         playersWaiting++;
-        if(playersWaiting > 1)
+        if (playersWaiting > 1)
         {
-            ArrayList times = FindObjectOfType<Timer>().GetTimes();
-            FindObjectOfType<Match>().EndStage(times);
+            if (PlayerPrefs.GetString("MODO").ToLower() == "time trial")
+            {
+                Timer timer = FindAnyObjectByType<Timer>();
+                string time = timer.getTime();
+                timer.saveTimes(time, checkpointId);
+                ArrayList times = timer.GetTimes();
+
+                // Initialize a new list to store formatted times
+                List<Dictionary<string, string>> formattedTimesList = new List<Dictionary<string, string>>();
+
+                for (int i = 0; i < times.Count; i++)
+                {
+                    var kvp = (KeyValuePair<string, string>)times[i];
+                    if (i == 0)
+                    {
+                        // Add the first time entry as is
+                        formattedTimesList.Add(new Dictionary<string, string>
+                    {
+                        { "id", kvp.Key },
+                        { "time", TimeFormatter.FormatTime(int.Parse(kvp.Value)) }
+                    });
+                    }
+                    else
+                    {
+                        int previousTimeSeconds = int.Parse(((KeyValuePair<string, string>)times[i - 1]).Value);
+                        int currentTimeSeconds = int.Parse(kvp.Value);
+                        int differenceSeconds = currentTimeSeconds - previousTimeSeconds;
+
+                        formattedTimesList.Add(new Dictionary<string, string>
+                    {
+                        { "id", kvp.Key },
+                        { "time", TimeFormatter.FormatTime(differenceSeconds) }
+                    });
+                    }
+                }
+
+                // Convert formattedTimesList back to ArrayList
+                ArrayList formattedTimes = new ArrayList();
+                foreach (var item in formattedTimesList)
+                {
+                    formattedTimes.Add(new KeyValuePair<string, string>(item["id"], item["time"]));
+                }
+
+                FindObjectOfType<Match>().EndStage(formattedTimes);
+            }
+
             FinishLevelRpc();
         }
     }

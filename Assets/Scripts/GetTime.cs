@@ -10,7 +10,7 @@ public class GetTime : NetworkBehaviour
 
     private bool pasado=false;
 
-    [SerializeField] private string checkpointName;
+    [SerializeField] private string checkpointId;
 
     int playerCount = 0;
 
@@ -53,7 +53,7 @@ public class GetTime : NetworkBehaviour
             //Cogemos el tiempo de la cuenta atras que tenemos en el momento
             time = Timer.getTime();
             //Guardamos el tiempo
-            Timer.saveTimes(time,checkpointName);
+            Timer.saveTimes(time,checkpointId);
             //Llamamos a la funcion para destruir el checkpoint
             destoryCheckpointRpc();
         }
