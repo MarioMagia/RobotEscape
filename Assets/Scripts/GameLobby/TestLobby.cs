@@ -29,6 +29,7 @@ public class TestLobby : MonoBehaviour
     private float actualizacionLobby;
     private string nombreJug;
     private bool ready;
+    [SerializeField] private GameObject SpawnPrefab;
     [SerializeField] private TMP_Text codeText;
     [SerializeField] private TMP_Dropdown level_selection;
     [SerializeField] private TMP_Dropdown mode_selection;
@@ -72,12 +73,12 @@ public class TestLobby : MonoBehaviour
 
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
-        if(AuthenticationService.Instance.IsSignedIn)
+        if (AuthenticationService.Instance.IsSignedIn)
         {
             canvaConnection.gameObject.SetActive(false);
             canvaPreLobby.gameObject.SetActive(true);
-        }   
-        
+        }
+
         botones = FindAnyObjectByType<botones>();
         string name = PlayerPrefs.GetString("Username", NameGenerator.GetName(AuthenticationService.Instance.PlayerId));
         nombreJug = name;
@@ -196,6 +197,11 @@ public class TestLobby : MonoBehaviour
     }
     private void onPlayerDataChange(Dictionary<int, Dictionary<string, ChangedOrRemovedLobbyValue<PlayerDataObject>>> dictionary)
     {
+        if(lobbyCreado != null)
+        {
+            GameObject spawneo = Instantiate(SpawnPrefab);
+            spawneo.GetComponent<NetworkObject>().Spawn();
+        }
         Debug.Log("player cambios");
     }
     private void onLobbyDeleted()
@@ -277,7 +283,7 @@ public class TestLobby : MonoBehaviour
         }
         catch (LobbyServiceException e)
         {
-            botones.FallodeConexion("Error al unirse al Lobby");            
+            botones.FallodeConexion("Error al unirse al Lobby");
             Debug.Log("HOLASDASD");
         }
     }
@@ -390,7 +396,7 @@ public class TestLobby : MonoBehaviour
                     canvaLobby.gameObject.SetActive(false);
                     canvaPreLobby.gameObject.SetActive(true);
                 }
-            }            
+            }
             if (changes.Data.Value["Empezado"].Changed)
             {
                 Debug.Log("ERMERESFD");
@@ -539,6 +545,7 @@ public class TestLobby : MonoBehaviour
         return false;
     }
 }
+
 public static class NameGenerator
 {
     public static string GetName(string userId)

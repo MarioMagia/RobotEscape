@@ -16,7 +16,8 @@ public class botones : MonoBehaviour
 
     private void Awake()
     {
-        botonCrearLobby.onClick.AddListener(()=> { TestLobby.Instance.CreateLobby(); });
+        botonCrearLobby.onClick.AddListener(()=> {
+            canvaAlerta.GetComponent<AlertController>().ShowAlert("Creando Lobby..."); TestLobby.Instance.CreateLobby(); });
         botonUnirLobby.onClick.AddListener(() => { TestLobby.Instance.JoinLobby(codigo.text); }) ;
     }
     public void UnirLobby()

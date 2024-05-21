@@ -6,53 +6,40 @@ using UnityEngine.SceneManagement;
 public class SpawneoPlayers : NetworkBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]private GameObject playerPrefab; // Prefab del jugador
-    // Método para spawnear el jugador
+    [SerializeField] private GameObject playerPrefab; // Prefab del jugador
 
-    private void Start()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
     public override void OnNetworkSpawn()
     {
+        DontDestroyOnLoad(this.gameObject);
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += EsceneCargada;
     }
-
-    private void OnClientConnected()
+    [Rpc(SendTo.ClientsAndHost)]
+    private void InicioTimersRpc()
     {
-        if (NetworkManager.ConnectedClientsList.Count == 2)
+        Debug.Log("Iniciando");
+        if (PlayerPrefs.GetString("MODO").ToLower() != "history")
         {
-            if (PlayerPrefs.GetString("MODO").ToLower() != "history")
-            {
-                IniciarRpc();
-            }
-            else
-            {
-                Iniciar2Rpc();
-            }
+            Debug.Log("Iniciando1");
+            FindAnyObjectByType<Timer>().Inicio();
         }
-    }
-    [Rpc(SendTo.ClientsAndHost)]
-    public void IniciarRpc()
-    {
-        FindAnyObjectByType<Timer>().Inicio();
-    }
+        else
+        {
+            Debug.Log("Iniciando2");
+            FindAnyObjectByType<Timer>().historyMode();
+        }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    public void Iniciar2Rpc()
-    {
-        FindAnyObjectByType<Timer>().historyMode();
     }
     private void EsceneCargada(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        if(IsHost && sceneName != "MainMenu")
+        Debug.Log("Cargado");
+        if (IsHost && sceneName != "MainMenu")
         {
-            foreach(ulong id in clientsCompleted)
+            foreach (ulong id in clientsCompleted)
             {
                 GameObject jugador = Instantiate(playerPrefab);
-                jugador.GetComponent<NetworkObject>().SpawnAsPlayerObject(id,true);
+                jugador.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
             }
-            OnClientConnected();
+            InicioTimersRpc();
         }
     }
 }

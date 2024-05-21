@@ -109,7 +109,6 @@ public class empesar : MonoBehaviour
     }
     private async void OnSceneChanged(Scene arg0, Scene arg1)
     {
-        Debug.Log("Nois fuimos");
         if (arg1.name != "MainMenu")
         {
             PlayerPrefs.SetString("MODO", mode_selection.options[mode_selection.value].text);
