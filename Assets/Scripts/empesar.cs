@@ -104,8 +104,8 @@ public class empesar : MonoBehaviour
     public void crearHost()
     {
         game.Empezado();
-        NetworkManager.Singleton.SceneManager.LoadScene(level_selection.options[level_selection.value].text, LoadSceneMode.Single);
         SceneManager.activeSceneChanged += OnSceneChanged;
+        NetworkManager.Singleton.SceneManager.LoadScene(level_selection.options[level_selection.value].text, LoadSceneMode.Single);
     }
     private async void OnSceneChanged(Scene arg0, Scene arg1)
     {
