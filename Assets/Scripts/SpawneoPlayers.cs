@@ -13,21 +13,28 @@ public class SpawneoPlayers : NetworkBehaviour
         DontDestroyOnLoad(this.gameObject);
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += EsceneCargada;
     }
-    [Rpc(SendTo.ClientsAndHost)]
-    private void InicioTimersRpc()
+    private void InicioTimers()
     {
         Debug.Log("Iniciando");
         if (PlayerPrefs.GetString("MODO").ToLower() != "history")
         {
-            Debug.Log("Iniciando1");
-            FindAnyObjectByType<Timer>().Inicio();
+            Debug.Log("Iniciando1"); InicioTimeTrialRpc();
         }
         else
         {
-            Debug.Log("Iniciando2");
-            FindAnyObjectByType<Timer>().historyMode();
+            Debug.Log("Iniciando2"); InicioHistoryRpc();
         }
 
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void InicioTimeTrialRpc()
+    {
+        FindAnyObjectByType<Timer>().Inicio();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void InicioHistoryRpc()
+    {
+        FindAnyObjectByType<Timer>().historyMode();
     }
     private void EsceneCargada(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
@@ -39,7 +46,7 @@ public class SpawneoPlayers : NetworkBehaviour
                 GameObject jugador = Instantiate(playerPrefab);
                 jugador.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
             }
-            InicioTimersRpc();
+            InicioTimers();
         }
     }
 }
