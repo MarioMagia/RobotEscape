@@ -6735,6 +6735,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 5.859277
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -3.356439
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.8982939
+      objectReference: {fileID: 0}
     - target: {fileID: 1563627005604631698, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_Name
@@ -6753,7 +6768,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.5757
+      value: 12.58
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -6763,7 +6778,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 38.73
+      value: 70.75
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -6814,6 +6829,11 @@ PrefabInstance:
         type: 3}
       propertyPath: checkpointName
       value: Medio
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323131440291419015, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: checkpointId
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7617,6 +7637,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 5.5151763
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -3.3564389
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.7052562
+      objectReference: {fileID: 0}
     - target: {fileID: 1563627005604631698, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_Name
@@ -7635,7 +7670,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.5757
+      value: 12.58
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -7645,7 +7680,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 57.01
+      value: 117.33
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -7696,6 +7731,11 @@ PrefabInstance:
         type: 3}
       propertyPath: checkpointName
       value: Teleport
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323131440291419015, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: checkpointId
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8616,6 +8656,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 8.785767
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -3.356439
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.00000010874471
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.8165482
+      objectReference: {fileID: 0}
     - target: {fileID: 1563627005604631698, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_Name
@@ -8639,7 +8699,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.2965
+      value: 5.3
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -8649,7 +8709,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 122.45
+      value: 142.84
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -8700,6 +8760,11 @@ PrefabInstance:
         type: 3}
       propertyPath: checkpointName
       value: Hielo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323131440291419015, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: checkpointId
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16428,6 +16493,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 5.8125916
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -3.3564389
+      objectReference: {fileID: 0}
+    - target: {fileID: 131322978774570030, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.5412338
+      objectReference: {fileID: 0}
     - target: {fileID: 1563627005604631698, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_Name
@@ -16436,7 +16516,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.5757
+      value: 12.58
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -16446,7 +16526,7 @@ PrefabInstance:
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.98
+      value: 28.62
       objectReference: {fileID: 0}
     - target: {fileID: 2231761037050629672, guid: 39dac3558aca95c4492f513da7841f33,
         type: 3}
@@ -16487,6 +16567,11 @@ PrefabInstance:
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 64128807
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323131440291419015, guid: 39dac3558aca95c4492f513da7841f33,
+        type: 3}
+      propertyPath: checkpointId
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18082,6 +18167,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.z
       value: -3.0361786
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776203129871710434, guid: c0614150ad8a1e64a83becafa92fa52c,
+        type: 3}
+      propertyPath: checkpointId
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7776203129871710434, guid: c0614150ad8a1e64a83becafa92fa52c,
         type: 3}
