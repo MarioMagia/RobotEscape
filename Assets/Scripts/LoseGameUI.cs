@@ -34,9 +34,6 @@ public class LoseGameUI : MonoBehaviour
     {
 
         FindAnyObjectByType<ProjectSceneManager>().LoadNetworkSceneRpc("Lobby");
-        if(NetworkManager.Singleton.IsHost)
-            FindAnyObjectByType<TestLobby>().CreateLobby();
-        else
-            FindAnyObjectByType<TestLobby>().JoinLobby(PlayerPrefs.GetString("lobbyCode"));
+        NetworkManager.Singleton.Shutdown();
     }
 }

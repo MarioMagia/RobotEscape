@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
+
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -190,7 +192,8 @@ public class PauseMenu : MonoBehaviour
     
     public void QuitGame()
     {
-        SceneManager.LoadScene("MainMenu");
+        FindAnyObjectByType<ProjectSceneManager>().LoadNetworkSceneRpc("MainMenu");
+        NetworkManager.Singleton.Shutdown();
     }
 
     public void SetQuality(int qualityIndex)

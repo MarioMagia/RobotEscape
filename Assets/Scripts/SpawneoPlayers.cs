@@ -11,7 +11,7 @@ public class SpawneoPlayers : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         DontDestroyOnLoad(this.gameObject);
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += EsceneCargada;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += EsceneCargada;
     }
     [Rpc(SendTo.ClientsAndHost)]
     private void InicioTimersRpc()
