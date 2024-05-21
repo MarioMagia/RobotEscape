@@ -1123,10 +1123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  down: 0
   MoveSpeed: 2
   SprintSpeed: 5.335
+  CrouchSpeed: 1
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
+  TeleportAudioClip: {fileID: 8300000, guid: 9fc03a91b5216b74394a6166059d68f2, type: 3}
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   FootstepAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
@@ -1140,6 +1143,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
   FootstepAudioVolume: 0.3
+  HUD: {fileID: 0}
+  detectMarks: {fileID: 0}
   JumpHeight: 1.2
   Gravity: -15
   JumpTimeout: 0.3
@@ -1190,8 +1195,9 @@ MonoBehaviour:
   sprint: 0
   mark: 0
   teleport: 0
-  takemark: 0
   teleportTaken: 0
+  getDown: 0
+  pauseMenu: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -1306,7 +1312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1957633848
+  GlobalObjectIdHash: 1508096214
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

@@ -35,6 +35,9 @@ namespace StarterAssets
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
 
+        public AudioClip TeleportAudioClip;
+        public AudioClip TakeMarkAudioClip;
+        public AudioClip PlaceMarkAudioClip;
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
@@ -235,6 +238,8 @@ namespace StarterAssets
                 if (_input.mark && Time.time > NextTP)
                 {
                     tp.CrearMarca();
+                    AudioSource.PlayClipAtPoint(PlaceMarkAudioClip, transform.position, 0.6f);
+                
             }
             _input.mark = false;
 
@@ -294,6 +299,7 @@ namespace StarterAssets
                     transform.position = position;
                     NextTP = Time.time + options.TP_CD;
                     tp.BorrarMarca(true);
+                    AudioSource.PlayClipAtPoint(TeleportAudioClip, transform.position, 0.6f);
                 }
             }
             
@@ -309,6 +315,7 @@ namespace StarterAssets
                 {
                     transform.position = position;
                     tp.BorrarMarca(false);
+                    AudioSource.PlayClipAtPoint(TakeMarkAudioClip, transform.position, 0.6f);
                 }
             }
 

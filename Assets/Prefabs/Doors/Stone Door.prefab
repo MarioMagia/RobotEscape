@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 692405890096529434, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_Name
-      value: myDoor Variant
+      value: Stone Door
       objectReference: {fileID: 0}
     - target: {fileID: 1392307627558949603, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ed7e9c97e9f2dd840998071a478c0009, type: 2}
+    - target: {fileID: 8753711053007691677, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
+        type: 3}
+      propertyPath: sonido
+      value: 
+      objectReference: {fileID: 8300000, guid: f8113e93f3dddf641aa6e201a59cd981, type: 3}
     - target: {fileID: 9124456783520085551, guid: e8ea7f5c456d62a40b6d0d9c74d1530d,
         type: 3}
       propertyPath: m_LocalScale.y

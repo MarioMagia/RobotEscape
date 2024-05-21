@@ -148,6 +148,7 @@ public class ClientPlayerMove : NetworkBehaviour
         detect.TM();
 
 
+
     }
 
     void OnPauseMenu()
