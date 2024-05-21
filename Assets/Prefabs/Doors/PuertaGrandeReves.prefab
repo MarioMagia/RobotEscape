@@ -122,7 +122,7 @@ MonoBehaviour:
   animator: {fileID: 5941639485284657673}
   puertaInvisible: {fileID: 7149895541512643380}
   haspuertainvisible: 1
-  sonido: {fileID: 0}
+  sonido: {fileID: 8300000, guid: f8113e93f3dddf641aa6e201a59cd981, type: 3}
 --- !u!65 &7598392801744360763
 BoxCollider:
   m_ObjectHideFlags: 0

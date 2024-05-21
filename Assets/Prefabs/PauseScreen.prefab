@@ -321,10 +321,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4120349414163250132, guid: c5291432b4b604b4298f3bf0dd361680,
-          type: 3}
-        m_TargetAssemblyTypeName: Timer, Assembly-CSharp
-        m_MethodName: ReturnMainMenuRpc
+      - m_Target: {fileID: 3016400720126492966}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

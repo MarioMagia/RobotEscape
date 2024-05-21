@@ -15,6 +15,7 @@ public class ServerObjectPhysics : NetworkBehaviour
     [SerializeField]
     Vector3 Spawnpooinrttregreg;
 
+
     public override void OnNetworkObjectParentChanged(NetworkObject parentNetworkObject)
     {
         SetPhysics(parentNetworkObject == null);
