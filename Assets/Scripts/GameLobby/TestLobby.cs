@@ -79,8 +79,8 @@ public class TestLobby : MonoBehaviour
         }   
         
         botones = FindAnyObjectByType<botones>();
-        string name = PlayerPrefs.GetString("Username");
-        nombreJug = name != null? name : NameGenerator.GetName(AuthenticationService.Instance.PlayerId);
+        string name = PlayerPrefs.GetString("Username", NameGenerator.GetName(AuthenticationService.Instance.PlayerId));
+        nombreJug = name;
     }
 #if UNITY_EDITOR
     static string GetCloneNameEnd()
