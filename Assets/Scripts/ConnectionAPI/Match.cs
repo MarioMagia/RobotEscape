@@ -27,9 +27,18 @@ public class Match : MonoBehaviour
                     PlayerPrefs.SetInt("StageId", stageData.id);
                     MatchStageBody body = new MatchStageBody();
                     body.id_stage = stageData.id;
-                    body.id_match = PlayerPrefs.GetInt("MatchId");
-                    StartCoroutine(PostAPI(Settings.URL + "/match_stage/enterStage", JsonUtility.ToJson(body)));
-                    StartCoroutine(PostAPI(Settings.URL + "/stages/playStage", JsonUtility.ToJson(body)));
+                    body.id_match = PlayerPrefs.GetInt("MatchId",0);
+                    if(body.id_match == 0)
+                    {
+                        yield return new WaitForSeconds(3);
+                        StartCoroutine(GetStageAPI(Settings.URL + "/stages/getStageByName/" + name));
+                    }
+                    else
+                    {
+                        StartCoroutine(PostAPI(Settings.URL + "/match_stage/enterStage", JsonUtility.ToJson(body)));
+                        StartCoroutine(PostAPI(Settings.URL + "/stages/playStage", JsonUtility.ToJson(body)));
+                    }
+                    
                 }
             }
             else
