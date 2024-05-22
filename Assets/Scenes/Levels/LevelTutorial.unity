@@ -18381,6 +18381,16 @@ PrefabInstance:
       propertyPath: m_fontStyle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2176521183724514489, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337562527219352849, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -64
+      objectReference: {fileID: 0}
     - target: {fileID: 3790757224515241556, guid: a5b1b08d7bf4f4043a96545e5410fee2,
         type: 3}
       propertyPath: m_Name
@@ -18411,10 +18421,30 @@ PrefabInstance:
       propertyPath: m_fontStyle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6653058339404661198, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076695139785760492, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -11.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109598755681198108, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -153
+      objectReference: {fileID: 0}
     - target: {fileID: 7508761295545970557, guid: a5b1b08d7bf4f4043a96545e5410fee2,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7825042194533127612, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -77
       objectReference: {fileID: 0}
     - target: {fileID: 7827707163387218074, guid: a5b1b08d7bf4f4043a96545e5410fee2,
         type: 3}
@@ -18424,6 +18454,16 @@ PrefabInstance:
     - target: {fileID: 7827707163387218074, guid: a5b1b08d7bf4f4043a96545e5410fee2,
         type: 3}
       propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113504744130439331, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045724775630852494, guid: a5b1b08d7bf4f4043a96545e5410fee2,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

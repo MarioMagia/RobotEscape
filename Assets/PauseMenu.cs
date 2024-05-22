@@ -174,6 +174,17 @@ public class PauseMenu : MonoBehaviour
         }
 
     }
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus && pauseMenuUI.activeSelf)
+        {
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Disable();
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Enable();
+            Debug.Log("FOCUS");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
     public void QuitScreen(string screen) {
         if (screen == "settings")
         {
@@ -192,8 +203,7 @@ public class PauseMenu : MonoBehaviour
     
     public void QuitGame()
     {
-        FindAnyObjectByType<ProjectSceneManager>().LoadNetworkSceneRpc("MainMenu");
-        NetworkManager.Singleton.Shutdown();
+        NetworkManager.Singleton.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     public void SetQuality(int qualityIndex)
