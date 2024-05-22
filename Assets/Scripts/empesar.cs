@@ -49,6 +49,8 @@ public class empesar : MonoBehaviour
             testString.CopyToClipboard();
         });
 
+        
+
     }
     void level_selectionValueChanged(TMP_Dropdown change)
     {
@@ -60,16 +62,28 @@ public class empesar : MonoBehaviour
     }
     void Incio()
     {
+
         if (game.imHost())
         {
             if (game.iReady() && game.uReady())
             {
                 crearHost();
+                
             }
         }
         else
         {
             game.ChangeStatus();
+        }
+
+        GameObject audioManager = GameObject.Find("MusicMainMenu");
+        if (audioManager != null)
+        {
+            Destroy(audioManager);
+        }
+        else
+        {
+            Debug.Log("Object to destroy not found.");
         }
     }
     void Update()
