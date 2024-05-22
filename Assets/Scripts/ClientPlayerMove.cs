@@ -146,9 +146,6 @@ public class ClientPlayerMove : NetworkBehaviour
     {
         Debug.Log("TOCAAAA");
         detect.TM();
-
-
-
     }
 
     void OnPauseMenu()

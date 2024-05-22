@@ -21,7 +21,17 @@ public class DetectCollisions : NetworkBehaviour
             AddPlayersWaitingRpc();
         }
     }
-
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus && endGamePanel.activeSelf)
+        {
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Disable();
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Enable();
+            Debug.Log("FOCUS");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

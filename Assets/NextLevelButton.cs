@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NextLevelButton : MonoBehaviour
@@ -15,7 +17,7 @@ public class NextLevelButton : MonoBehaviour
 
     void GoToNextLevel()
     {
-        FindAnyObjectByType<ProjectSceneManager>().LoadNetworkSceneRpc(GoTo);
+        NetworkManager.Singleton.SceneManager.LoadScene(GoTo, LoadSceneMode.Single);
     }
 
     // Update is called once per frame

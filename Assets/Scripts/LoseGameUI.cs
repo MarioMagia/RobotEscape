@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoseGameUI : MonoBehaviour
@@ -18,22 +20,30 @@ public class LoseGameUI : MonoBehaviour
         salirMainMenu.onClick.AddListener(SalirMainMenu);
         
     }
-
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Disable();
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Enable();
+            Debug.Log("FOCUS");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
     private void SalirMainMenu()
     {
-        FindAnyObjectByType<ProjectSceneManager>().LoadNetworkSceneRpc("MainMenu");
-        NetworkManager.Singleton.Shutdown();
+        NetworkManager.Singleton.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     private void ReiniciarNivel()
     {
-        FindAnyObjectByType<ProjectSceneManager>().LoadNetworkSceneRpc("LevelTutorial");
+        NetworkManager.Singleton.SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 
     private void VolverLobby()
     {
-
-        FindAnyObjectByType<ProjectSceneManager>().LoadNetworkSceneRpc("Lobby");
+        NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
         NetworkManager.Singleton.Shutdown();
     }
 }
