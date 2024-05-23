@@ -165,18 +165,11 @@ public class TestLobby : MonoBehaviour
             codeText.SetText(lobbyCreado.LobbyCode);
             Debug.Log("HOST CODIGO : " + lobbyCreado.HostId);
             lobbyUnido = lobbyCreado;
-            if (botones != null)
-            {
-                botones.UnirLobby();
-            }
-            else
-            {
-                Debug.LogError("Botones is null!");
-            }
+            botones.UnirLobby();
         }
         catch (LobbyServiceException e)
         {
-            botones.FallodeConexion("Error al crear Lobby");
+            botones.FallodeConexion(e.Message);
             Debug.Log(e);
         }
     }
@@ -198,7 +191,7 @@ public class TestLobby : MonoBehaviour
     }
     private void onPlayerDataChange(Dictionary<int, Dictionary<string, ChangedOrRemovedLobbyValue<PlayerDataObject>>> dictionary)
     {
-        if(lobbyCreado != null)
+        if (lobbyCreado != null)
         {
             GameObject spawneo = Instantiate(SpawnPrefab);
             spawneo.GetComponent<NetworkObject>().Spawn();
@@ -284,7 +277,8 @@ public class TestLobby : MonoBehaviour
         }
         catch (LobbyServiceException e)
         {
-            botones.FallodeConexion("Error al unirse al Lobby");
+
+            botones.FallodeConexion(e.Message);
             Debug.Log("HOLASDASD");
         }
     }
@@ -351,9 +345,9 @@ public class TestLobby : MonoBehaviour
     {
         try
         {
-            if (imHost())
+            if (lobbyCreado.HostId == AuthenticationService.Instance.PlayerId)
             {
-                await LobbyService.Instance.DeleteLobbyAsync(lobbyUnido.Id);
+                await LobbyService.Instance.DeleteLobbyAsync(lobbyCreado.Id);
             }
             else
             {
@@ -408,7 +402,7 @@ public class TestLobby : MonoBehaviour
     }
     public bool imHost()
     {
-        if (lobbyUnido.HostId == AuthenticationService.Instance.PlayerId)
+        if (lobbyCreado!=null)
         {
 
             return true;

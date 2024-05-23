@@ -17,11 +17,14 @@ public class botones : MonoBehaviour
     private void Awake()
     {
         botonCrearLobby.onClick.AddListener(()=> {
-            canvaAlerta.GetComponent<AlertController>().ShowAlert("Creando Lobby..."); TestLobby.Instance.CreateLobby(); });
-        botonUnirLobby.onClick.AddListener(() => { TestLobby.Instance.JoinLobby(codigo.text); }) ;
+            canvaAlerta.GetComponent<AlertController>().ShowAlert2("Creating Lobby..."); TestLobby.Instance.CreateLobby(); });
+        botonUnirLobby.onClick.AddListener(() => {
+            canvaAlerta.GetComponent<AlertController>().ShowAlert2("Joining Lobby..."); TestLobby.Instance.JoinLobby(codigo.text); }) ;
     }
     public void UnirLobby()
     {
+        canvaAlerta.GetComponent<AlertController>().HideAlert();
+        codigo.text = "";
         canvaPreLobby.gameObject.SetActive(false);
         canvaLobby.gameObject.SetActive(true);
     }

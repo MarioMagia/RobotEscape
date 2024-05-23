@@ -19,9 +19,19 @@ public class AlertController : MonoBehaviour
             Invoke("HideAlert", displayDuration);
         }
     }
-
-    private void HideAlert()
+    public void ShowAlert2(string message)
     {
+        if (!isDisplaying)
+        {
+            Cursor.visible = false;
+            isDisplaying = true;
+            alertText.text = message;
+            this.gameObject.SetActive(true);
+        }
+    }
+    public void HideAlert()
+    {
+        Cursor.visible = true;
         this.gameObject.SetActive(false);
         isDisplaying = false;
     }

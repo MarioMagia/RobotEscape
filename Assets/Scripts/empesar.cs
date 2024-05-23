@@ -126,7 +126,7 @@ public class empesar : MonoBehaviour
         }
         NetworkManager.Singleton.SceneManager.LoadScene(level_selection.options[level_selection.value].text, LoadSceneMode.Single);
     }
-    private async void OnSceneChanged(Scene arg0, Scene arg1)
+    private void OnSceneChanged(Scene arg0, Scene arg1)
     {
         if (arg1.name != "MainMenu")
         {
@@ -153,7 +153,7 @@ public class empesar : MonoBehaviour
     }
     public void crearClient(string sala)
     {
-        SceneManager.activeSceneChanged += async (arg0, arg1) =>
+        SceneManager.activeSceneChanged += (arg0, arg1) =>
         {
             Debug.Log("Nois fuimos");
             if (!(GameObject.Find("[ Game Manager ]")))
