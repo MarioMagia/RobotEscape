@@ -16,6 +16,8 @@ namespace StarterAssets
     {
         public bool down = false;
 
+        private float volumeSFXdB;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -33,6 +35,9 @@ namespace StarterAssets
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
 
+        public AudioClip TeleportAudioClip;
+        public AudioClip TakeMarkAudioClip;
+        public AudioClip PlaceMarkAudioClip;
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
@@ -138,6 +143,8 @@ namespace StarterAssets
 
         private void Awake()
         {
+            volumenPasos();
+
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -167,9 +174,42 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
             _activeHUD = Instantiate(HUD);
         }
+
+        public void Restart()
+        {
+            volumenPasos();
+
+            // get a reference to our main camera
+            if (_mainCamera == null)
+            {
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            }
+            _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+
+            _hasAnimator = TryGetComponent(out _animator);
+            options = GetComponent<GameOptions>();
+            _controller = GetComponent<CharacterController>();
+            _input = GetComponent<StarterAssetsInputs>();
+            tp = GetComponent<Teleport>();
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+            _playerInput = GetComponent<PlayerInput>();
+#else
+			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
+#endif
+            _playerInput.actions.FindActionMap("UI").Disable();
+            _playerInput.actions.FindActionMap("Player").Enable();
+            AssignAnimationIDs();
+
+            // reset our timeouts on start
+            _jumpTimeoutDelta = JumpTimeout;
+            _fallTimeoutDelta = FallTimeout;
+            _activeHUD = Instantiate(HUD);
+        }
+
         private void Update()
         {
-            
+            volumenPasos();
+
             StateRevision();
 
                 JumpAndGravity();
@@ -198,8 +238,20 @@ namespace StarterAssets
                 if (_input.mark && Time.time > NextTP)
                 {
                     tp.CrearMarca();
+                    AudioSource.PlayClipAtPoint(PlaceMarkAudioClip, transform.position, 0.6f);
+                
             }
             _input.mark = false;
+
+        }
+
+        private void volumenPasos()
+        {
+            // Obtenemos el valor del sonido de los SFX de PlayerPrefs que viene en db
+            volumeSFXdB = PlayerPrefs.GetFloat("volumeSFX");
+
+            // Lo convertimos de dB a escala lineal (0 a 1) y lo guardamos en FootstepAudioVolume
+            FootstepAudioVolume = Mathf.Pow(10f, volumeSFXdB / 20f);
 
         }
         private void StateRevision()
@@ -247,6 +299,7 @@ namespace StarterAssets
                     transform.position = position;
                     NextTP = Time.time + options.TP_CD;
                     tp.BorrarMarca(true);
+                    AudioSource.PlayClipAtPoint(TeleportAudioClip, transform.position, 0.6f);
                 }
             }
             
@@ -262,6 +315,7 @@ namespace StarterAssets
                 {
                     transform.position = position;
                     tp.BorrarMarca(false);
+                    AudioSource.PlayClipAtPoint(TakeMarkAudioClip, transform.position, 0.6f);
                 }
             }
 
@@ -511,14 +565,6 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.position, FootstepAudioVolume);
-            }
-        }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == "Meta")
-            {
-                Debug.Log("Has llegado al final");
-                GameManager.Instance.ChangeSceneMethod("Scene 2");
             }
         }
     }

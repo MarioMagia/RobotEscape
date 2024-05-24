@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ServerObject : NetworkBehaviour
 {
+
     public event Action boxDespawned;
     // Start is called before the first frame update
     public override void OnNetworkSpawn()

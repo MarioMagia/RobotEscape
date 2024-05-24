@@ -28,16 +28,17 @@ public class ServerPlayerMove : NetworkBehaviour
 
     void OnServerSpawnPlayer()
     {
-        var spawnPosition = Vector3.zero;
+        var spawnPoint = ServerPlayerSpawnPoints.Instance.ConsumeNextSpawnPoint();
+        var spawnPosition = spawnPoint ? spawnPoint.transform.position : Vector3.zero;
         transform.position = spawnPosition;
     }
 
     [Rpc(SendTo.Server)]
     public void PickupObjectServerRpc(ulong objToPickupID)
     {
+        
         NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(objToPickupID, out var objectToPickup);
-        if (objectToPickup == null || objectToPickup.transform.parent != null) return; // object already picked up, server authority says no
-
+        if (objectToPickup == null || (objectToPickup.transform.parent != null && objectToPickup.transform.parent.CompareTag("Player"))) return; // object already picked up, server authority says no
         if (objectToPickup.TryGetComponent(out NetworkObject networkObject) && networkObject.TrySetParent(transform))
         {
             m_PickedUpObject = networkObject;

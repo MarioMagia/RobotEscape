@@ -5,7 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM 
+using UnityEngine.SceneManagement;
+using Unity.Netcode;
+
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 using TMPro;
@@ -24,7 +27,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject controlsMenuUI;
 
-    public AudioMixer audioMixer;
+    [SerializeField] private AudioMixer audioMixer;
 
     public Dropdown resolutionDropdown;
     public GameObject darkLayer;
@@ -38,11 +41,22 @@ public class PauseMenu : MonoBehaviour
 
     public PlayerInput _playerInput;
 
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider SFXSlider;
+
     Resolution[] resolutions;
 
 
     private void Awake()
     {
+        //Configuramos el slider de la musica al iniciar para que se vea en el punto donde lo guardamos
+        musicSlider.value = PlayerPrefs.GetFloat("volumeMusic");
+
+        //Configuramos el slider de los SFX al iniciar  para que se vea en el punto donde lo guardamos
+        SFXSlider.value = PlayerPrefs.GetFloat("volumeSFX"); 
+        
+
+
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -64,54 +78,64 @@ public class PauseMenu : MonoBehaviour
     }
     public int changePauseState()
     {
-        //0 - pauseOut
-        //1 - pauseIn
-        if (controlsShown && (keyboardControlsPanel.activeInHierarchy || gamepadControlsPanel.activeInHierarchy))
+        if (GameManager.Instance.GetGameState() == GameManager.GameState.OnGoing)
         {
-            QuitScreen("controls");
-            return 1;
-        }
-        else if (settingShown || controlsShown)
-        {
-            Cursor.lockState = CursorLockMode.None;
-
-            if (settingShown)
+            //0 - pauseOut
+            //1 - pauseIn
+            if (controlsShown && (keyboardControlsPanel.activeInHierarchy || gamepadControlsPanel.activeInHierarchy))
             {
-                QuitScreen("settings");
-
-            }
-            else if (controlsShown) {
                 QuitScreen("controls");
+                return 1;
+            }
+            else if (settingShown || controlsShown)
+            {
+                Cursor.lockState = CursorLockMode.None;
+
+                if (settingShown)
+                {
+                    QuitScreen("settings");
+
+                }
+                else if (controlsShown)
+                {
+                    QuitScreen("controls");
+
+                }
+                return 1;
 
             }
-            return 1;
+            else if (menuShown)
+            {
 
+                Cursor.lockState = CursorLockMode.Locked;
+                Hide();
+                Cursor.visible = false;
+                return 0;
+            }
+            else
+            {
+                resumeButton.Select();
+                Cursor.lockState = CursorLockMode.None;
+                Show();
+                Cursor.visible = true;
+                return 1;
+            }
         }
-        else if (menuShown)
-        {
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Hide();
-            Cursor.visible = false;
-            return 0;
-        }
-        else
-        {
-            resumeButton.Select();
-            Cursor.lockState = CursorLockMode.None;
-            Show();
-            Cursor.visible = true;
-            return 1;
-        }
+        return 0;
+           
     }
 
     public void Resume() {
-        pauseMenuUI.SetActive(false);
-        darkLayer.SetActive(false);
-        menuShown = false;
-        _playerInput.actions.FindActionMap("UI").Disable();
-        _playerInput.actions.FindActionMap("Player").Enable();
-        Cursor.visible = false;
+        if (GameManager.Instance.GetGameState() == GameManager.GameState.OnGoing)
+        {
+            pauseMenuUI.SetActive(false);
+            darkLayer.SetActive(false);
+            menuShown = false;
+            _playerInput.actions.FindActionMap("UI").Disable();
+            _playerInput.actions.FindActionMap("Player").Enable();
+            Cursor.visible = false;
+        }
+            
 
         // input_Manager.Resume();
     }
@@ -150,6 +174,17 @@ public class PauseMenu : MonoBehaviour
         }
 
     }
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus && pauseMenuUI.activeSelf)
+        {
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Disable();
+            FindObjectOfType<PlayerInput>().actions.FindActionMap("UI").Enable();
+            Debug.Log("FOCUS");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
     public void QuitScreen(string screen) {
         if (screen == "settings")
         {
@@ -168,7 +203,7 @@ public class PauseMenu : MonoBehaviour
     
     public void QuitGame()
     {
-        Application.Quit();
+        NetworkManager.Singleton.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     public void SetQuality(int qualityIndex)
@@ -198,6 +233,24 @@ public class PauseMenu : MonoBehaviour
             keyboardControlsPanel.SetActive(false);
             gamepadControlsPanel.SetActive(true);
         }
+    }
+
+    public void SetVolumeMusic(float volumeMusic)
+    {
+        //Seteamos el audiomixer de Musica con el volumen que escogemos con la barra de volumen
+        audioMixer.SetFloat("volumeMusic", volumeMusic);
+
+        //Guardamos el volumen de la musica que acabamos de configurar en Playerprefs para poder coger ese valor en cualquier otra scene o al iniciar el juego
+        PlayerPrefs.SetFloat("volumeMusic", volumeMusic);
+    }
+
+    public void SetVolumeSFX(float volumeSFX)
+    {
+        //Seteamos el audiomixer de los SFX con el volumen que escogemos con la barra de volumen
+        audioMixer.SetFloat("volumeSFX", volumeSFX);
+
+        //Guardamos el volumen de los SFX que acabamos de configurar en Playerprefs para poder coger ese valor en cualquier otra scene o al iniciar el juego
+        PlayerPrefs.SetFloat("volumeSFX", volumeSFX);
     }
 
 }
