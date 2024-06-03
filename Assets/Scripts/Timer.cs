@@ -16,7 +16,7 @@ public class Timer : NetworkBehaviour
 
 
     private float timerUp = 0f;
-    private float timerDown = 270f;
+    private float timerDown = 20f;
 
     private bool isPaused = false;
     
@@ -140,17 +140,9 @@ public class Timer : NetworkBehaviour
         isPaused = true;
         m_PlayerInput.actions.FindActionMap("Player").Disable();
         m_PlayerInput.actions.FindActionMap("UI").Enable();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
     }
-
-    [Rpc(SendTo.Server)]
-    public void ReturnMainMenuRpc()
-    {  
-        
-        NetworkManager.Singleton.Shutdown();
-
-    }
-
-
 
 }
