@@ -14,6 +14,8 @@ public class OptionsMenu : MonoBehaviour
 
     [SerializeField] private Dropdown resolutionDropdown;
     [SerializeField] private Dropdown renderDropdown;
+
+    [SerializeField] private TMP_Dropdown graphicsDropdown;
     
     
 
@@ -42,6 +44,9 @@ public class OptionsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        graphicsDropdown.value = QualitySettings.GetQualityLevel();
+        graphicsDropdown.RefreshShownValue();
     }
 
 

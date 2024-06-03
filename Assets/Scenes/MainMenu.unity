@@ -1943,6 +1943,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132921855}
   m_CullTransparentMesh: 1
+--- !u!114 &1195343558 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+    type: 3}
+  m_PrefabInstance: {fileID: 7397131670853392088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1248433116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4733,6 +4745,11 @@ PrefabInstance:
       objectReference: {fileID: 1985844397}
     - target: {fileID: 2348269837407198977, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
+      propertyPath: graphicsDropdown
+      value: 
+      objectReference: {fileID: 1195343558}
+    - target: {fileID: 2348269837407198977, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
       propertyPath: gamepadControlsPanel
       value: 
       objectReference: {fileID: 997651038}
@@ -5276,6 +5293,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Text
+      value: VERY LOW
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: LOW
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: MEDIUM
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: HIGH
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[4].m_Text
+      value: VERY HIGH
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863724092477062518, guid: eeb49b103714d4b4b8b674314e47ea77,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[5].m_Text
+      value: ULTRA
       objectReference: {fileID: 0}
     - target: {fileID: 6880874098485250467, guid: eeb49b103714d4b4b8b674314e47ea77,
         type: 3}
