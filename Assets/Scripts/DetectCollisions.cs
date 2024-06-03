@@ -115,6 +115,7 @@ public class DetectCollisions : NetworkBehaviour
             endGamePanel.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            FindAnyObjectByType<Timer>().PauseTimer();
         }
         else
         {

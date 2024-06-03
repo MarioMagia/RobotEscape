@@ -1,3 +1,4 @@
+using SerializableCallback;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -17,6 +18,11 @@ public class NextLevelButton : MonoBehaviour
 
     void GoToNextLevel()
     {
+        if (PlayerPrefs.GetString("MODO").ToLower() == "time trial")
+        {
+            FindObjectOfType<Match>().EnterStage(GoTo);
+        }
+        
         NetworkManager.Singleton.SceneManager.LoadScene(GoTo, LoadSceneMode.Single);
     }
 
