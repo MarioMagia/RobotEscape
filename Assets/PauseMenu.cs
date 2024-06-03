@@ -35,6 +35,8 @@ public class PauseMenu : MonoBehaviour
     public Button resumeButton;
     public Dropdown renderDropdown;
 
+    [SerializeField] private TMP_Dropdown graphicsDropdown;
+
     public TMP_Dropdown controlsDropdown;
     public GameObject keyboardControlsPanel;
     public GameObject gamepadControlsPanel;
@@ -75,6 +77,9 @@ public class PauseMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        graphicsDropdown.value = QualitySettings.GetQualityLevel();
+        graphicsDropdown.RefreshShownValue();
     }
     public int changePauseState()
     {

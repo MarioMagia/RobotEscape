@@ -6842,6 +6842,7 @@ MonoBehaviour:
   darkLayer: {fileID: 5586798986400852966}
   resumeButton: {fileID: 5240744463829703166}
   renderDropdown: {fileID: 6916836646010968267}
+  graphicsDropdown: {fileID: 2538779255004764599}
   controlsDropdown: {fileID: 3244415774983688153}
   keyboardControlsPanel: {fileID: 8323415456731034979}
   gamepadControlsPanel: {fileID: 1685466379520960965}
