@@ -26,7 +26,8 @@ public class Login : MonoBehaviour
             LoginData loginData = new LoginData();
             loginData.username = logindata[0];
             loginData.password = logindata[1];
-            StartCoroutine(loginAPI(Settings.URL+"/users/login", JsonUtility.ToJson(loginData)));
+            //StartCoroutine(loginAPI(Settings.URL+"/users/login", JsonUtility.ToJson(loginData)));
+            bypassLogin(loginData);
             // Now you can parse/process the fileContents as needed
         }
         else
@@ -35,7 +36,15 @@ public class Login : MonoBehaviour
             FindFirstObjectByType<TMP_Text>().text = error;
         }
     }
-
+    void bypassLogin(LoginData loginData){
+        PlayerPrefs.SetInt("UserId", 0);
+        PlayerPrefs.SetString("Username", loginData.username);
+        #if UNITY_EDITOR
+        #else
+        File.Delete(filePath);
+        #endif
+        SceneManager.LoadScene("MainMenu");
+    }
     IEnumerator loginAPI(string url, string body)
     {
         using (UnityWebRequest request = UnityWebRequest.Post(url, body, "application/json"))
