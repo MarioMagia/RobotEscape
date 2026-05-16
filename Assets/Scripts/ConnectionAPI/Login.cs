@@ -32,8 +32,9 @@ public class Login : MonoBehaviour
         }
         else
         {
-            string error = ("File not found at path: " + filePath);
-            FindFirstObjectByType<TMP_Text>().text = error;
+            //string error = ("File not found at path: " + filePath);
+            FindFirstObjectByType<TMP_Text>().text = "Logging as Guest...";
+            bypassLogin(new LoginData(){username = "Guest"});
         }
     }
     void bypassLogin(LoginData loginData){
